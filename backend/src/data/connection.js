@@ -1,6 +1,5 @@
-import mysql from 'mysql';
-
 import config from '../config';
+import mysql from 'mysql';
 
 var pool = mysql.createPool({
   connectionLimit: 2,
