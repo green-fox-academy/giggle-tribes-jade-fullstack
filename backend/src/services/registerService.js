@@ -1,4 +1,4 @@
-import { registerModel } from '../repos/registerModel';
+import { registerData } from '../repos/registerData';
 
 const filterInput = (input) => {
     if ( !input.username && !input.password ) return 'Username and password are required.';
@@ -9,14 +9,24 @@ const filterInput = (input) => {
 };
 
 export const registerService = (input) => {
-    return new Promise( (resolve,reject) => {
+    return new Promise( async (resolve,reject) => {
         const invalidInput = filterInput(input);
         if ( invalidInput ) {
             reject(invalidInput);
         } else {
-            registerModel(input.username,input.password,input.kingdomname)
-                .then( response => resolve(response) )
-                .catch( error => reject(error) );
+            try {
+                const userid = await registerData('user',[input.username,input.password]);
+                const kingdomid = await registerData('kingdom',[input.kingdomname]);
+                await registerData('user_kingdom',[userid,kingdomid]);
+                resolve({
+                    "id" : userid,
+                    "username" : input.username,
+                    "kingdomId" : kingdomid
+                });
+            } catch(error) {
+                if (error.duplication) reject("Username is already taken.");
+                reject(error);
+            }
         }
     });
 };
