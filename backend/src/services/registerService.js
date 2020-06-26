@@ -1,6 +1,6 @@
 import { registerData } from '../repos/registerData';
 
-const filterInput = (input) => {
+export const filterInput = (input) => {
     if ( !input.username && !input.password ) return 'Username and password are required.';
     if ( input.username && !input.password ) return 'Password is required.';
     if ( !input.username && input.password ) return 'Username is required.';
