@@ -1,21 +1,10 @@
-const jwt = require('jsonwebtoken');
+import { authService } from '../services';
 
-export const authUser = (req, res, next) => {
-    const token = req.header('TRIBES_TOKEN');
-    let response = {};
-    if (!token) {
-        response = {error: 'No token provided.'};
-    } else {
-        try {
-            const signedTtoken = jwt.verify(token, process.env.JWT_SECRET);
-            response = {
-                "userId": token.userid,
-                "kingdomId": token.kingdomid
-            };
-        } catch {
-            response = {error: 'Invalid token.'};
-        }  
+export const authUser = async (req, res, next) => {
+    try {
+        req.user = await authService(req.header('TRIBES_TOKEN'),process.env.JWT_SECRET);
+    } catch(err) {
+        req.user = err;
     }
-    req.user = response;
     next();
 };
