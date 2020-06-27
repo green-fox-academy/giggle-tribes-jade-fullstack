@@ -1,0 +1,29 @@
+$headerBackground: #009587;
+$grassGreen: #67a835;
+$error: #db4437;
+$cardFormBackground: rgba(243, 241, 239, 0.8);
+$letterColorOnLeftSide: #5d5e5e;
+@mixin flexStretch {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+}
+
+@mixin flexStart($direction) {
+    display: flex;
+    flex-direction: $direction;
+    align-content: space-around;
+}
+
+@mixin flexDirection($direction) {
+    display: flex;
+    flex-direction: $direction;
+}
+
+@mixin resourcesAmountLeveling {
+    margin-left: 0.4rem;
+    font-family: 'Oxygen', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    align-items: flex-end;
+}
