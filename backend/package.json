@@ -10,7 +10,7 @@
     "start": "nodemon --exec babel-node -r ./node_modules/dotenv/config src/index.js",
     "build": "babel src -d dist",
     "serve": "node dist/index.js",
-    "db-migrate": "node node_modules/db-migrate/bin/db-migrate"
+    "db": "db-migrate"
   },
   "keywords": [],
   "author": "",

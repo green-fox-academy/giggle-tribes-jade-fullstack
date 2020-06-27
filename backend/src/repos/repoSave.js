@@ -1,20 +1,24 @@
 import {db} from '../data/connection';
 
-const registerQuery = {
+const insertQueries = {
     user : 'INSERT INTO user (name,password) VALUES(?,?)',
     kingdom : 'INSERT INTO kingdom (name) VALUES(?)',
     user_kingdom : 'INSERT INTO user_kingdom (user_id,kingdom_id) VALUES(?,?)'
 };
 
-export const registerData = (table,params) => {
+const save = (table,params) => {
     console.log(params)
     return new Promise ( async (resolve,reject) => {
         try {
-            const returnData = (await db.query(registerQuery[table],params,"insertId")).specialReturn;
+            const returnData = (await db.query(insertQueries[table],params)).results.insertId;
             resolve (returnData);
         } catch(error) {
             if (error.code === "ER_DUP_ENTRY") error.duplication = true;
             reject(error);
         }
     });
+};
+
+export const repo = {
+    save
 };

@@ -1,6 +1,6 @@
 import { registerService } from './registerService';
-jest.mock('../repos/registerData');
-import { registerData } from '../repos/registerData';
+jest.mock('../repos/repoSave');
+import { repo } from '../repos/repoSave';
 
 
 const input = {
@@ -17,7 +17,7 @@ class existingUserError extends Error {
   }
 };
 test('existing user error', async () => {
-  registerData.mockImplementation( () => {
+  repo.save.mockImplementation( () => {
     throw new existingUserError();
   });
   try {
@@ -28,7 +28,7 @@ test('existing user error', async () => {
 });
 
 test('new user and kingdom added', async () => {
-  registerData.mockImplementation( () => 2 );
+  repo.save.mockImplementation( () => 2 );
   const result = await registerService(input);
   expect(result).toEqual({
     "id": 2,

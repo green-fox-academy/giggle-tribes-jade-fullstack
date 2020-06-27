@@ -1,4 +1,4 @@
-import { registerData } from '../repos/registerData';
+import { repo } from '../repos/repoSave';
 
 export const filterInput = (input) => {
     if ( !input.username && !input.password ) return 'Username and password are required.';
@@ -15,9 +15,9 @@ export const registerService = (input) => {
             reject(invalidInput);
         } else {
             try {
-                const userid = await registerData('user',[input.username,input.password]);
-                const kingdomid = await registerData('kingdom',[input.kingdomname]);
-                await registerData('user_kingdom',[userid,kingdomid]);
+                const userid = await repo.save('user',[input.username,input.password]);
+                const kingdomid = await repo.save('kingdom',[input.kingdomname]);
+                await repo.save('user_kingdom',[userid,kingdomid]);
                 resolve({
                     'id' : userid,
                     'username' : input.username,
