@@ -19,12 +19,12 @@ export const registerService = (input) => {
                 const kingdomid = await registerData('kingdom',[input.kingdomname]);
                 await registerData('user_kingdom',[userid,kingdomid]);
                 resolve({
-                    "id" : userid,
-                    "username" : input.username,
-                    "kingdomId" : kingdomid
+                    'id' : userid,
+                    'username' : input.username,
+                    'kingdomId' : kingdomid
                 });
             } catch(error) {
-                if (error.duplication) reject("Username is already taken.");
+                if (error.duplication) reject('Username is already taken.');
                 reject(error);
             }
         }
