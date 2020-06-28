@@ -1,7 +1,8 @@
-import { checkUser } from './checkUser';
+import { getUser, getKingdomIdForUser } from '../repos/user';
+import { getToken } from '../repos/token';
 
 export const sessionService = {
-  async checkLogin(input) {
+  async login(input) {
     const username = input.username;
     const password = input.password;
     const errorMessages = {
@@ -12,11 +13,36 @@ export const sessionService = {
     if (username && password) {
       return checkUser(username, password);
     } else if (username && !password) {
-      return { error: errorMessages[1] };
+      return { status: 401, message: { error: errorMessages[1] } };
     } else if (!username && password) {
-      return { error: errorMessages[2] };
+      return { status: 401, message: { error: errorMessages[2] } };
     } else {
-      return { error: errorMessages[3] };
+      return { status: 401, message: { error: errorMessages[3] } };
     }
   },
+};
+
+const checkUser = async (username, password) => {
+  const user = await getUser(username, password);
+
+  if (user.results.length > 0) {
+    const kingdom = await getKingdomIdForUser(user.results[0].id);
+    if (kingdom.results.length > 0) {
+      return {
+        status: 200,
+        message: {
+          status: 'ok',
+          token: await getToken(
+            user.results[0].id,
+            kingdom.results[0].kingdom_id
+          ),
+        },
+      };
+    }
+  } else {
+    return {
+      status: 401,
+      message: { error: 'Username or password is incorrect.' },
+    };
+  }
 };

@@ -2,8 +2,8 @@ import { sessionService } from '../services';
 
 export const sessionController = {
   async post(req, res) {
-    let data = await sessionService.checkLogin(req.body);
+    let data = await sessionService.login(req.body);
 
-    res.status(200).json(data);
+    res.status(data.status).json(data.message); //status needs to be changed 401 or 200
   },
 };
