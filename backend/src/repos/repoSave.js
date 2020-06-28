@@ -6,11 +6,23 @@ const insertQueries = {
     user_kingdom : 'INSERT INTO user_kingdom (user_id,kingdom_id) VALUES(?,?)'
 };
 
+class validationError extends Error {
+    constructor(field) {
+      super();
+      this.validationError = `The ${field} was not provided.`;
+    }
+};
+const paramsValidation = (params) => {
+    Object.keys(params).forEach( key => {
+        if (params[key] === "") throw new validationError(key);
+    });
+    return Object.values(params);
+};
+
 const save = (table,params) => {
-    console.log(params)
     return new Promise ( async (resolve,reject) => {
         try {
-            const returnData = (await db.query(insertQueries[table],params)).results.insertId;
+            const returnData = (await db.query(insertQueries[table],paramsValidation(params))).results.insertId;
             resolve (returnData);
         } catch(error) {
             if (error.code === "ER_DUP_ENTRY") error.duplication = true;

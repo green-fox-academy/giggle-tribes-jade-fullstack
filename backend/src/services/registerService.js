@@ -15,9 +15,9 @@ export const registerService = (input) => {
             reject(invalidInput);
         } else {
             try {
-                const userid = await repo.save('user',[input.username,input.password]);
-                const kingdomid = await repo.save('kingdom',[input.kingdomname]);
-                await repo.save('user_kingdom',[userid,kingdomid]);
+                const userid = await repo.save('user',{'username' : input.username, 'password' : input.password});
+                const kingdomid = await repo.save('kingdom',{'kingdomname' : input.kingdomname});
+                await repo.save('user_kingdom',{'userid' : userid, 'kingdomid' : kingdomid});
                 resolve({
                     'id' : userid,
                     'username' : input.username,
@@ -25,6 +25,7 @@ export const registerService = (input) => {
                 });
             } catch(error) {
                 if (error.duplication) reject('Username is already taken.');
+                if (error.validationError) reject(error.validationError);
                 reject(error);
             }
         }
