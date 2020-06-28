@@ -8,7 +8,7 @@ export const filterInput = (input) => {
     return '';
 };
 
-export const registerService = (input) => {
+export const userService = (input) => {
     return new Promise( async (resolve,reject) => {
         const invalidInput = filterInput(input);
         if ( invalidInput ) {

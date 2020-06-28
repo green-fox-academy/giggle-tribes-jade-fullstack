@@ -1,4 +1,4 @@
-import { filterInput } from './registerService';
+import { filterInput } from './userService';
 
 test('missing password and username', async () => {
   const result = await filterInput({});

@@ -4,7 +4,7 @@ import app from '../src/app';
 
 test('should respond with handled error', done => {
   request(app)
-    .post('/api/register')
+    .post('/api/users')
     .set('Accept', 'application/json')
     .expect('Content-Type', /json/)
     .expect(200)
