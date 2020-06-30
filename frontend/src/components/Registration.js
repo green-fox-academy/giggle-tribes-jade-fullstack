@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import styles from './entryPage.module.scss';
+import styles from './entryPage.module.css';
 import sendRequest from '../services/sendRequest';
 import validateRequiredInputs from '../services/validateRequiredInputs';
 import alertSign from './alert_sign.png';
@@ -12,10 +12,10 @@ function Registration() {
         kingdomName: '',
     });
 
-    const [successMessage, setSuccessMessage] = useState({
-        message: '',
-        isSuccess: false,
-    });
+    // const [successMessage, setSuccessMessage] = useState({
+    //     message: '',
+    //     isSuccess: false,
+    // });
 
     const [errorMessage, setErrorMessage] = useState({
         message: '',
@@ -35,7 +35,7 @@ function Registration() {
 
         if (validationResult.isError) {
             setErrorMessage(validationResult);
-        } else if (validatePassword()) {} else {
+        } else if (validatePassword()) { } else {
             const path = '/register';
             const body = {
                 username: user.username,
@@ -45,10 +45,10 @@ function Registration() {
             let { response, responseBody } = await sendRequest(path, body, 'POST');
             if (response.ok && !responseBody.errorMessage) {
                 history.push('/login');
-                setSuccessMessage({
-                    message: successMessage,
-                    isSuccess: true,
-                });
+                // setSuccessMessage({
+                //     message: successMessage,
+                //     isSuccess: true,
+                // });
             } else {
                 setErrorMessage({
                     message: responseBody.errorMessage,
@@ -71,87 +71,67 @@ function Registration() {
     }
 
     function handleInputChange(event) {
-        setUser({...user, [event.target.name]: event.target.value });
+        setUser({ ...user, [event.target.name]: event.target.value });
     }
 
-    return ( < div className = { styles.page } >
-        <
-        div >
-        <
-        h2 className = { styles.title } > Tribes of Vulpes < /h2> < /
-        div >
+    return (<div className={styles.page}>
+        <div>
+            <h2 className={styles.title} > Tribes of Vulpes </h2> </div >
 
-        <
-        div className = { styles.cardForm } > {
-            successMessage.isSuccess ? ( < p className = { styles.registrationSuccess } >
-                Registration was successful. < /p>
-            ) : ( <
-                form onSubmit = { handleSubmit }
-                method = "post" >
-                <
-                div >
-                <
-                input type = "text"
-                name = "username"
-                value = { user.username }
-                placeholder = "Username"
-                className = { styles.defaultInput }
-                onChange = { handleInputChange }
-                />  < /
-                div >
+        <div className={styles.cardForm}> 
+        {/* {successMessage.isSuccess ? (<p className={styles.registrationSuccess} >
+                Registration was successful. </p>
+            ) : 
+            ( */}
+            <form onSubmit={handleSubmit} method="post">
+                <div>
+                    <input type="text"
+                     name="username"
+                     value={user.username}
+                     placeholder="Username"
+                     className={styles.defaultInput}
+                     onChange={handleInputChange}/>
+                     </div>
 
-                <
-                div >
-                <
-                input type = "password"
-                name = "password"
-                value = { user.password }
-                placeholder = "Password"
-                className = {
-                    errorMessage.isError ? styles.errorInput : styles.defaultInput
-                }
-                onChange = { handleInputChange }
-                onBlur = { validatePassword }
-                />  < /
-                div >
+                <div>
+                    <input type="password"
+                     name="password"
+                     value={user.password}
+                     placeholder="Password"
+                     className={
+                                errorMessage.isError ? styles.errorInput : styles.defaultInput
+                            }
+                            onChange={handleInputChange}
+                            onBlur={validatePassword}/>
+                </div>
 
-                <
-                div > {
-                    errorMessage.isError && ( < div className = { styles.errorLine } >
-                        <
-                        span className = { styles.errorMessage } > { errorMessage.message } < /span>  <
-                        img src = { alertSign }
-                        alt = "alert sign"
-                        className = { styles.errorSign }
-                        />  < /
-                        div >
-                    )
-                } <
-                /div>
+                <div>
+                    {
+                    errorMessage.isError && (<div className={styles.errorLine}>
+                    <span className={styles.errorMessage}> {errorMessage.message} </span>  
+                    <img src={alertSign} alt="alert sign" className={styles.errorSign}/>
+                    </div >)
+                    } 
+                </div>
 
-                <
-                div >
-                <
-                input type = "text"
-                name = "kingdomName"
-                value = { user.kingdomName }
-                placeholder = "Kingdom name"
-                className = { styles.defaultInput }
-                onChange = { handleInputChange }
-                />  < /
-                div >
+                <div>
+                    <input type="text"
+                     name="kingdomName"
+                     value={user.kingdomName}
+                     placeholder="Kingdom name"
+                     className={styles.defaultInput}
+                     onChange={handleInputChange}/>
+                </div>
 
-                <
-                div className = { styles.submitLine } >
-                <
-                button type = "submit"
-                className = { styles.submit } > SIGN UP < /button>  < /
-                div > <
-                /form>
-            )
-        } <
-        /div>  < /
-        div >
+                <div className={styles.submitLine}>
+                    <button type="submit" className={styles.submit}> SIGN UP </button>  
+                </div> 
+                
+                </form>
+            {/* ) */}
+        {/* }  */}
+        </div>  
+        </div >
     );
 }
 
