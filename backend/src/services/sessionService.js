@@ -13,11 +13,11 @@ export const sessionService = {
     if (username && password) {
       return checkUser(username, password);
     } else if (username && !password) {
-      return { status: 401, message: { error: errorMessages[1] } };
+      throw { error: errorMessages[1] };
     } else if (!username && password) {
-      return { status: 401, message: { error: errorMessages[2] } };
+      throw { error: errorMessages[2] };
     } else {
-      return { status: 401, message: { error: errorMessages[3] } };
+      throw { error: errorMessages[3] };
     }
   },
 };
@@ -29,20 +29,14 @@ const checkUser = async (username, password) => {
     const kingdom = await getKingdomIdForUser(user.results[0].id);
     if (kingdom.results.length > 0) {
       return {
-        status: 200,
-        message: {
-          status: 'ok',
-          token: await getToken(
-            user.results[0].id,
-            kingdom.results[0].kingdom_id
-          ),
-        },
+        status: 'ok',
+        token: await getToken(
+          user.results[0].id,
+          kingdom.results[0].kingdom_id
+        ),
       };
     }
   } else {
-    return {
-      status: 401,
-      message: { error: 'Username or password is incorrect.' },
-    };
+    throw { error: 'Username or password is incorrect.' };
   }
 };
