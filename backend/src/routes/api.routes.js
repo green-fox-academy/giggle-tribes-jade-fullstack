@@ -10,6 +10,6 @@ router.use(bodyParser.json());
 
 router.get('/hello', helloController.get);
 
-router.post('/users', userController);
+router.post('/users', userController.add);
 
 export default router;

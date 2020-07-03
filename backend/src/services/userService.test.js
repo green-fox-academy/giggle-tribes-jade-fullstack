@@ -1,4 +1,4 @@
-import { userService } from './userService';
+import { user } from './userService';
 jest.mock('../repos/repoSave');
 import { repo } from '../repos/repoSave';
 
@@ -21,7 +21,7 @@ test('existing user error', async () => {
     throw new existingUserError();
   });
   try {
-    await userService(input);
+    await user.add(input);
   } catch(err) {
     expect(err).toBe('Username is already taken.');
   }
@@ -29,7 +29,7 @@ test('existing user error', async () => {
 
 test('new user and kingdom added', async () => {
   repo.save.mockImplementation( () => 2 );
-  const result = await userService(input);
+  const result = await user.add(input);
   expect(result).toEqual({
     "id": 2,
     "kingdomId": 2,

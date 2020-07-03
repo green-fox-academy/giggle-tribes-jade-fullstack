@@ -1,6 +1,6 @@
 import { repo } from '../repos/repoSave';
 
-export const filterInput = (input) => {
+const filterInput = (input) => {
     if ( !input.username && !input.password ) return 'Username and password are required.';
     if ( input.username && !input.password ) return 'Password is required.';
     if ( !input.username && input.password ) return 'Username is required.';
@@ -8,7 +8,7 @@ export const filterInput = (input) => {
     return '';
 };
 
-export const userService = (input) => {
+const add = (input) => {
     return new Promise( async (resolve,reject) => {
         const invalidInput = filterInput(input);
         if ( invalidInput ) {
@@ -30,4 +30,9 @@ export const userService = (input) => {
             }
         }
     });
+};
+
+export const user = {
+    filterInput,
+    add
 };
