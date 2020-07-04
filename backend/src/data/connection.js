@@ -11,7 +11,7 @@ const pool = mysql.createPool({
 });
 
 export const db = {
-  query(query, values, special) {
+  query(query, values) {
     return new Promise((resolve, reject) => {
       pool.query(query, values, (err, results, fields) => {
         console.log(config);
@@ -20,8 +20,7 @@ export const db = {
 
           return;
         }
-        const specialReturn = (special) ? results[special] : '';
-        resolve({ results, fields, specialReturn  });
+        resolve({ results, fields});
       });
     });
   },
