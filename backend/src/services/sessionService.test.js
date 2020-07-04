@@ -26,7 +26,7 @@ test('All fields are required.', async () => {
 
 test('Username or password is incorrect.', async () => {
   getUser.mockImplementation(async () => {
-    return Promise.resolve({ results: [] });
+    return Promise.resolve([]);
   });
 
   await expect(
@@ -41,12 +41,12 @@ test('Username or password is incorrect.', async () => {
 
 test('Username and password are correct.', async () => {
   getUser.mockImplementation(async () => {
-    return Promise.resolve({
-      results: [{ id: 1, name: 'dummy_username', password: 'dummy_password' }],
-    });
+    return Promise.resolve([
+      { id: 1, name: 'dummy_username', password: 'dummy_password' },
+    ]);
   });
   getKingdomIdForUser.mockImplementation(async () => {
-    return Promise.resolve({ results: [{ user_ID: 1, kingdom_ID: 1 }] });
+    return Promise.resolve([{ user_ID: 1, kingdom_ID: 1 }]);
   });
 
   getToken.mockImplementation(async () => {

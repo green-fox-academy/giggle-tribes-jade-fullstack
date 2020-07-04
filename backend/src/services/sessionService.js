@@ -25,15 +25,12 @@ export const sessionService = {
 const checkUser = async (username, password) => {
   const user = await getUser(username, password);
 
-  if (user.results.length > 0) {
-    const kingdom = await getKingdomIdForUser(user.results[0].id);
-    if (kingdom.results.length > 0) {
+  if (user.length > 0) {
+    const kingdom = await getKingdomIdForUser(user[0].id);
+    if (kingdom.length > 0) {
       return {
         status: 'ok',
-        token: await getToken(
-          user.results[0].id,
-          kingdom.results[0].kingdom_id
-        ),
+        token: await getToken(user[0].id, kingdom[0].kingdom_id),
       };
     }
   } else {
