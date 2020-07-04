@@ -20,11 +20,21 @@ test('invalid token error', async () => {
 test('valid token should be resolved', async () => {
   const token = await jwt.sign(
     {
-      "userId" : "44",
-      "kingdomId" : "26"
+      "userId" : "21",
+      "kingdomId" : "5"
     },
     "secret"
   );
+  const result = await authService(token,"secret");
+  expect(result).toEqual({
+    "userId" : "21",
+    "kingdomId" : "5"
+  });
+});
+
+
+test('valid token should be resolved', async () => {
+  const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI0NCIsImtpbmdkb21JZCI6IjI2IiwiaWF0IjoxNTkzODUzNjMyfQ.tVSCRpB1lD6Cdw4J25VdS-2OkO6pRrF4GbzoTM4TqYI";
   const result = await authService(token,"secret");
   expect(result).toEqual({
     "userId" : "44",
