@@ -60,7 +60,7 @@ h2{
   }
 
 input{
-    border-bottom: 3px solid #009688;
+    border-bottom: 3px solid green;
     width: 100%;
     margin-top: 1.8rem;
     height: 3.5rem;
@@ -70,4 +70,8 @@ input{
     border-right: 0px solid lightgrey;
     background-color: rgba(243, 241, 239, 0);
     outline: none;
+}
+
+input:invalid{
+    border-bottom: 3px solid red;
 }

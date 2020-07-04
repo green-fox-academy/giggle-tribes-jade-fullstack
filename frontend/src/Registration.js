@@ -13,15 +13,19 @@ class Registration extends Component {
               password: '',
               kingdomname: ''
             }
-          }
-          this.handleFormSubmit = this.handleSubmit.bind(this);
+          };
+          this.handleSubmit = this.handleSubmit.bind(this);
         }
 
         
         handleSubmit(event) {
-            event.preventDefault();
             let userData = this.state.newUser;
-        
+            
+            // if(String(userData.password).length < 8){
+            //     alert ('Password must be at least 8 characters long.')
+            //     event.preventDefault();
+            // }
+
             fetch('/login',{
                 method: "POST",
                 body: JSON.stringify(userData),
@@ -51,7 +55,7 @@ class Registration extends Component {
                     </div>
 
                     <div class="password">
-                    <input type="password" name="password" placeholder="Password" required>
+                    <input type="password" name="password" placeholder="Password" required minLength="8">
                     </input>
                     </div>
 
