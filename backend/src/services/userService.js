@@ -32,7 +32,7 @@ const add = (input) => {
     });
 };
 
-export const user = {
+export const userService = {
     filterInput,
     add
 };
