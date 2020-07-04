@@ -1,29 +1,52 @@
 import React, { Component } from 'react';
 import styles from './registration.css';
 import { render } from 'react-dom';
+import { useHistory } from 'react-router-dom';
 
 class Registration extends Component {
-    constructor(props){
+
+    constructor(props) {
         super(props);
-        this.handleSubmit = this.handleSubmit.bind(this);
-    }
+        this.state = {
+            newUser: {
+              username: '',
+              password: '',
+              kingdomname: ''
+            }
+          }
+          this.handleFormSubmit = this.handleSubmit.bind(this);
+        }
 
-    handleSubmit(e){
-        alert('This value is: ' + this.input.value);
-        e.preventDefault();
-    }
-
-    render(){
-        return (<div class="page">
         
-            <div>
+        handleSubmit(event) {
+            event.preventDefault();
+            let userData = this.state.newUser;
+        
+            fetch('/login',{
+                method: "POST",
+                body: JSON.stringify(userData),
+                headers: {
+                  'Accept': 'application/json',
+                  'Content-Type': 'application/json'
+                },
+              }).then(response => {
+                response.json().then(data =>{
+                  console.log("Successful" + data);
+                })
+            })   
+        }
+
+        render() {
+            return (<div class="container">
+        
+            <div class="title">
             <h2>Tribes of Vulpes</h2>
             </div>
 
             <div class="form">
                 <form method="post" onSubmit = {this.handleSubmit}>
                     <div class="username">
-                    <input type="text" name="username" placeholder="Username" ref={(input) => this.input = input} required>
+                    <input type="text" name="username" placeholder="Username" required>
                     </input>
                     </div>
 
@@ -43,7 +66,6 @@ class Registration extends Component {
 
                 </form>
             </div>
-
         </div>
         );
     }
