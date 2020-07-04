@@ -29,7 +29,6 @@ const Menu = () => {
     ]
 
     return (
-        <Router>
             <nav className='Menu'>
                 {menuItems.map( (menuItem) => (
                     <MenuItem key={menuItem.name} name={menuItem.name} link={'/kingdom' + menuItem.link}/>
@@ -38,7 +37,6 @@ const Menu = () => {
                     <Route key={menuItem.link} path={'/kingdom' + menuItem.link} render={ () => (<menuItem.component name={menuItem.name} />) } />
                 ))}
             </nav>
-        </Router>
     );
 };
 
