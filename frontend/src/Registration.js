@@ -20,11 +20,6 @@ class Registration extends Component {
         
         handleSubmit(event) {
             let userData = this.state.newUser;
-            
-            // if(String(userData.password).length < 8){
-            //     alert ('Password must be at least 8 characters long.')
-            //     event.preventDefault();
-            // }
 
             fetch('/login',{
                 method: "POST",
