@@ -1,0 +1,60 @@
+body{
+    background-image: url("/bg3-01.png");
+    background-color: black;
+    background-position: center;
+    /* background-repeat: no-repeat; */
+    /* background-size: cover; */
+    /* color: whitesmoke; */
+}
+
+.page{
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+}
+
+.form{
+    background-color: rgba(169, 169, 169, 0.842);
+    margin: 3.15rem auto;
+    width: 31.5rem;
+    border-radius: 3px;
+    padding-left: 1.5rem;
+    padding-right: 2rem;
+    padding-bottom: 3.5rem;
+    align-items: stretch;
+}
+
+h2{
+    text-align: center;
+    font-size: 4.8rem;
+    margin-top: 4.8%;
+    margin-bottom: 0.24%;
+    color: whitesmoke;
+    justify-content: space-evenly;
+}
+
+.button{
+    width: 9rem;
+    height: 3.4rem;
+    background-color: green;
+    border: 0px;
+    border-radius: 4px;
+    color: white;
+    font-size: 1.25rem;
+    letter-spacing: 1px;
+    margin-top: 3.25rem;
+    box-shadow: 0px 3px 5px #9b9b9b;
+    justify-content: flex-end;
+}
+
+.button:hover {
+    background-color: #75be3e;
+  }
+
+.button:focus {
+    outline: none;
+  }
+
+.submitline{
+    justify-content: flex-end;
+}

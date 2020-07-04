@@ -12,11 +12,6 @@ function Registration() {
         kingdomName: '',
     });
 
-    // const [successMessage, setSuccessMessage] = useState({
-    //     message: '',
-    //     isSuccess: false,
-    // });
-
     const [errorMessage, setErrorMessage] = useState({
         message: '',
         isError: false,
@@ -32,7 +27,6 @@ function Registration() {
             'Username and Password are required.',
             requiredFields
         );
-
         if (validationResult.isError) {
             setErrorMessage(validationResult);
         } else if (validatePassword()) { } else {
@@ -45,10 +39,6 @@ function Registration() {
             let { response, responseBody } = await sendRequest(path, body, 'POST');
             if (response.ok && !responseBody.errorMessage) {
                 history.push('/login');
-                // setSuccessMessage({
-                //     message: successMessage,
-                //     isSuccess: true,
-                // });
             } else {
                 setErrorMessage({
                     message: responseBody.errorMessage,
@@ -76,13 +66,10 @@ function Registration() {
 
     return (<div className={styles.page}>
         <div>
-            <h2 className={styles.title} > Tribes of Vulpes </h2> </div >
+            <h2 className={styles.title}> Tribes of Vulpes </h2> </div>
 
         <div className={styles.cardForm}> 
-        {/* {successMessage.isSuccess ? (<p className={styles.registrationSuccess} >
-                Registration was successful. </p>
-            ) : 
-            ( */}
+        
             <form onSubmit={handleSubmit} method="post">
                 <div>
                     <input type="text"
@@ -91,8 +78,7 @@ function Registration() {
                      placeholder="Username"
                      className={styles.defaultInput}
                      onChange={handleInputChange}/>
-                     </div>
-
+                </div>
                 <div>
                     <input type="password"
                      name="password"
@@ -104,7 +90,6 @@ function Registration() {
                             onChange={handleInputChange}
                             onBlur={validatePassword}/>
                 </div>
-
                 <div>
                     {
                     errorMessage.isError && (<div className={styles.errorLine}>
@@ -113,7 +98,6 @@ function Registration() {
                     </div >)
                     } 
                 </div>
-
                 <div>
                     <input type="text"
                      name="kingdomName"
@@ -122,14 +106,11 @@ function Registration() {
                      className={styles.defaultInput}
                      onChange={handleInputChange}/>
                 </div>
-
                 <div className={styles.submitLine}>
                     <button type="submit" className={styles.submit}> SIGN UP </button>  
                 </div> 
                 
                 </form>
-            {/* ) */}
-        {/* }  */}
         </div>  
         </div >
     );
