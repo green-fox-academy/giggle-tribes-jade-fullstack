@@ -1,11 +1,12 @@
 import React from 'react';
+import WithAuth from './WithAuth';
 
 const MenuComponent = ({name}) => {
     return (
-        <p key={name}>
+        <p>
             Rendered component: {name}
         </p>
     );
 };
 
-export default MenuComponent;
+export default WithAuth(MenuComponent,'/login');

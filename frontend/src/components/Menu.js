@@ -1,7 +1,7 @@
 import React from 'react';
 import {BrowserRouter as Router, Route} from 'react-router-dom';
 import MenuItem from './MenuItem';
-import MenuComponent from './Menucomponent';
+import MenuComponent from './MenuComponent';
 
 const Menu = () => {
 
@@ -32,10 +32,10 @@ const Menu = () => {
         <Router>
             <nav className='Menu'>
                 {menuItems.map( (menuItem) => (
-                    <>
-                        <MenuItem name={menuItem.name} link={'/kingdom' + menuItem.link}/>
-                        <Route path={'/kingdom' + menuItem.link} render={ () => (<menuItem.component name={menuItem.name} />) } />
-                    </>
+                    <MenuItem key={menuItem.name} name={menuItem.name} link={'/kingdom' + menuItem.link}/>
+                ))}
+                {menuItems.map( (menuItem) => (
+                    <Route key={menuItem.link} path={'/kingdom' + menuItem.link} render={ () => (<menuItem.component name={menuItem.name} />) } />
                 ))}
             </nav>
         </Router>

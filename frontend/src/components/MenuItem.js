@@ -3,8 +3,8 @@ import {Link} from 'react-router-dom';
 
 const MenuItem = ({name,link}) => {
     return (
-        <p key={name}>
-            <Link to={link}>{name}</Link>
+        <p>
+            <Link key={link} to={link}>{name}</Link>
         </p>
     );
 };
