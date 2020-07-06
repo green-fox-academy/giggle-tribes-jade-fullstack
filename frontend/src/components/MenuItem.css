@@ -1,0 +1,29 @@
+.menuitem {
+    background-color: #eee;
+    width: 14vh;
+    height: 14vh;
+}
+
+.menuimage {
+    width: 10vh;
+    height: 10vh;
+    background-size: cover;
+}
+
+.menuitem h4 {
+    margin: 0;
+    padding: 0;
+}
+
+.menuimage.Buildings {
+    background-image: url('/icons/menu_buildings.png');
+}
+.menuimage.Troops {
+    background-image: url('/icons/menu_troops.png');
+}
+.menuimage.Battle {
+    background-image: url('/icons/menu_battle.png');
+}
+.menuimage.Leaderboard {
+    background-image: url('/icons/menu_leaderboard.png');
+}
