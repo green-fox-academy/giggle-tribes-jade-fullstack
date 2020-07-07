@@ -52,7 +52,7 @@ test('valid token should response with 200 and result', done => {
   request(app)
     .post('/api/auth')
     .set('Accept', 'application/json')
-    .set('TRIBES_TOKEN', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI0NCIsImtpbmdkb21JZCI6IjI2IiwiaWF0IjoxNTkzODUzNjMyfQ.tVSCRpB1lD6Cdw4J25VdS-2OkO6pRrF4GbzoTM4TqYI')
+    .set('TRIBES_TOKEN', 'validtoken')
     .expect('Content-Type', /json/)
     .expect(200)
     .end((err, data) => {

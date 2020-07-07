@@ -2,37 +2,17 @@ import React from 'react';
 import Menu from './components/Menu';
 import Login from './components/Login';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
-import MenuComponent from './components/MenuComponent';
+import { menuItems } from './components/menuItemsStorage';
 
 function App() {
-
-  const menuItems = [
-    {
-        name: 'Buildings',
-        link: '/buildings',
-        component: MenuComponent
-    },
-    {
-        name: 'Troops',
-        link: '/troops',
-        component: MenuComponent
-    },
-    {
-        name: 'Battle',
-        link: '/battle',
-        component: MenuComponent
-    },
-    {
-        name: 'Leaderboard',
-        link: '/lederboard',
-        component: MenuComponent
-    }
-  ];
 
   return (
     <div className="App">
       <Router>
         <Switch>
+          <Route exact path='/'>
+            <Login />
+          </Route>
           <Route path='/login'>
             <Login />
           </Route>
