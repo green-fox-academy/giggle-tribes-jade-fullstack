@@ -1,18 +1,27 @@
 .menuitem {
     background-color: #eee;
-    width: 14vh;
-    height: 14vh;
+    width: 7em;
+    height: 6em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
 }
 
 .menuimage {
-    width: 10vh;
-    height: 10vh;
+    width: 4em;
+    height: 4em;
     background-size: cover;
 }
 
 .menuitem h4 {
     margin: 0;
     padding: 0;
+}
+
+.menuitem.active {
+    background-color: #2323236c;
 }
 
 .menuimage.Buildings {

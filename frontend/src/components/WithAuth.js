@@ -14,7 +14,6 @@ const WithAuth = (Component, redirectLocation) => {
 
         if (authenticated === null) return null;
         if (!authenticated) return ( <Redirect push to={redirectLocation} /> );
-        //if (!authenticated) { window.location.replace('/login'); }
         if (authenticated) return ( <Component {...props} /> );
     };
 };
