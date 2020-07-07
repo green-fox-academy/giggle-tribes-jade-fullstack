@@ -5,7 +5,7 @@ import {
 
 export const resourceMiddleware = async (req, res, next) => {
   try {
-    await updateResource(req.body);
+    await updateResource(req.params);
     next();
   } catch (error) {
     res.status(400).json(error);
@@ -14,7 +14,7 @@ export const resourceMiddleware = async (req, res, next) => {
 
 const updateResource = async input => {
   const kingdomID = input.kingdomID;
-
+  console.log(kingdomID);
   if (kingdomID) {
     const resources = await getResourceForKingdom(kingdomID);
     if (resources.length > 0) {

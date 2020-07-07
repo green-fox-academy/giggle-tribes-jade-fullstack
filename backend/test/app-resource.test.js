@@ -4,29 +4,14 @@ import app from '../src/app';
 import { getResourceForKingdom } from '../src/repos/resource';
 jest.mock('../src/repos/resource');
 
-test('should respond with 400 - Kingdom ID is required.', done => {
-  request(app)
-    .get('/api/kingdom/resource')
-    .set('Accept', 'application/json')
-    .send({})
-    .expect('Content-Type', /json/)
-    .expect(400)
-    .end((err, data) => {
-      if (err) return done(err);
-      expect(data.body.error).toBe('Kingdom ID is required.');
-      return done();
-    });
-});
-
 test('should respond with 400 - Resource for this kingdom not found.', done => {
   getResourceForKingdom.mockImplementation(async () => {
     return Promise.resolve([]);
   });
 
   request(app)
-    .get('/api/kingdom/resource')
+    .get('/api/kingdom/1/resource')
     .set('Accept', 'application/json')
-    .send({ kingdomID: 1 })
     .expect('Content-Type', /json/)
     .expect(400)
     .end((err, data) => {
@@ -38,7 +23,7 @@ test('should respond with 400 - Resource for this kingdom not found.', done => {
     });
 });
 
-test('should respond with 200 - Resource for this kingdom not found.', done => {
+test('should respond with 200 - Resource for this kingdom found.', done => {
   getResourceForKingdom.mockImplementation(async () => {
     return Promise.resolve([
       {
@@ -57,9 +42,8 @@ test('should respond with 200 - Resource for this kingdom not found.', done => {
   });
 
   request(app)
-    .get('/api/kingdom/resource')
+    .get('/api/kingdom/1/resource')
     .set('Accept', 'application/json')
-    .send({ kingdomID: 1 })
     .expect('Content-Type', /json/)
     .expect(200)
     .end((err, data) => {

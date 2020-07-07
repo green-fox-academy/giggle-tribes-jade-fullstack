@@ -16,8 +16,8 @@ router.use(bodyParser.json());
 router.get('/hello', helloController.get);
 router.post('/sessions', sessionController.post);
 
-router.use(resourceMiddleware);
+router.use('/kingdom/:kingdomID', resourceMiddleware);
 
-router.get('/kingdom/resource', resourceController.get);
+router.get('/kingdom/:kingdomID/resource', resourceController.get);
 
 export default router;
