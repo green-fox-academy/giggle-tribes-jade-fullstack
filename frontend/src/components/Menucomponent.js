@@ -9,4 +9,5 @@ const MenuComponent = ({name}) => {
     );
 };
 
+
 export default WithAuth(MenuComponent,'/login');
