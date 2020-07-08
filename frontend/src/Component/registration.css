@@ -72,6 +72,10 @@ input{
     outline: none;
 }
 
-input:invalid{
+/* input:invalid{
+    border-bottom: 3px solid red;
+} */
+
+.passwordinvalid{
     border-bottom: 3px solid red;
 }
