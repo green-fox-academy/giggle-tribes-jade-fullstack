@@ -19,6 +19,7 @@ const isAuthenticated = () => {
             }
         } );
     });
+    
 };
 
 export const authService = {
