@@ -19,7 +19,7 @@ function App() {
           <Route path='/kingdom'>
             <Menu menuItems={menuItems}/>
             {menuItems.map( (menuItem) => (
-                <Route key={menuItem.link} path={'/kingdom' + menuItem.link} render={ () => (<menuItem.component name={menuItem.name} />) } />
+              <Route key={menuItem.link} path={'/kingdom' + menuItem.link} render={ () => (<menuItem.component name={menuItem.name} />) } />
             ))}
           </Route>
         </Switch> 

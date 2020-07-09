@@ -6,7 +6,7 @@ const insertQueries = {
     user_kingdom : 'INSERT INTO user_kingdom (user_id,kingdom_id) VALUES(?,?)'
 };
 
-class validationError extends Error {
+class ValidationError extends Error {
     constructor(field) {
       super();
       this.validationError = `The ${field} was not provided.`;
@@ -14,7 +14,7 @@ class validationError extends Error {
 };
 const paramsValidation = (params) => {
     Object.keys(params).forEach( key => {
-        if (params[key] === "") throw new validationError(key);
+        if (params[key] === "") throw new ValidationError(key);
     });
     return Object.values(params);
 };

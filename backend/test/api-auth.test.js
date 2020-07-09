@@ -4,7 +4,7 @@ jest.mock('../src/services/authService');
 import { authService } from '../src/services/authService';
 import app from '../src/app';
 
-class authenticationError extends Error {
+class AuthenticationError extends Error {
   constructor(message) {
     super();
     this.error = message;
@@ -13,7 +13,7 @@ class authenticationError extends Error {
 
 test('no token should response with 401', done => {
   authService.mockImplementation( () => {
-    throw new authenticationError('No token provided.');
+    throw new AuthenticationError('No token provided.');
   });
   request(app)
     .post('/api/auth')
@@ -29,7 +29,7 @@ test('no token should response with 401', done => {
 
 test('invalid token should response with 401', done => {
   authService.mockImplementation( () => {
-    throw new authenticationError('Invalid token.');
+    throw new AuthenticationError('Invalid token.');
   });
   request(app)
     .post('/api/auth')
