@@ -25,8 +25,8 @@ const paramsValidation = (params) => {
 export const read = (selection,params) => {
     return new Promise ( async (resolve,reject) => {
         try {
-            const returnData = (await db.query(selectQueries[selection],paramsValidation(params))).results;
-            if (returnData.length === 0) reject('Kingdom-id is improper.');
+            const returnData = (await db.query(selectQueries[selection], paramsValidation(params))).results;
+            if (returnData.length === 0) throw new ValidationError('proper data');
             resolve ( returnData.length === 1 ? returnData[0] : returnData );
         } catch(error) {
             reject(error);
