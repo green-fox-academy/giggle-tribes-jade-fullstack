@@ -9,7 +9,7 @@ const input = {
   kingdomname: 'kingdomname'
 };
 
-class duplicationError extends Error {
+class DuplicationError extends Error {
   constructor() {
     super();
     this.code = "ER_DUP_ENTRY"
@@ -17,7 +17,7 @@ class duplicationError extends Error {
 };
 test('existing user error', async () => {
   db.query.mockImplementation( () => {
-    throw new duplicationError();
+    throw new DuplicationError();
   });
   try {
     await repo.save('user',{'username' : 'username', 'password' : 'password'});

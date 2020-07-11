@@ -1,7 +1,8 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 const cors = require('cors');
-import { helloController, userController, sessionController } from '../controllers';
+import { authUser } from '../middlewares';
+import { helloController, userController, sessionController, authController } from '../controllers';
 
 const router = express.Router();
 
@@ -12,5 +13,9 @@ router.get('/hello', helloController.get);
 router.post('/sessions', sessionController.post);
 
 router.post('/users', userController.add);
+
+router.use(authUser);
+
+router.post('/auth', authController);
 
 export default router;
