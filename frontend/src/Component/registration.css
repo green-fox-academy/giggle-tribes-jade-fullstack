@@ -2,15 +2,11 @@ body{
     background-image: url("/bg3-01.png");
     background-color: black;
     background-position: center;
-    /* background-repeat: no-repeat; */
-    /* background-size: cover; */
-    /* color: whitesmoke; */
 }
 
 .container{
     display: flex;
     flex-direction: column;
-    /* align-items: stretch; */
 }
 
 h2{
@@ -44,10 +40,14 @@ h2{
     letter-spacing: 1px;
     margin-top: 3.25rem;
     box-shadow: 0px 3px 5px #9b9b9b;
-    justify-content: flex-end;
 }
 
 .submitLine {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.button{
     justify-content: flex-end;
 }
 
@@ -72,10 +72,23 @@ input{
     outline: none;
 }
 
-/* input:invalid{
+.red{
     border-bottom: 3px solid red;
-} */
+    
+}
 
-.passwordinvalid{
-    border-bottom: 3px solid red;
+.redimage{
+    display: flex;
+    justify-content: space-evenly;
+    background-image: url("/alert_sign.png");
+    background-repeat: no-repeat;
+    color: red;
+}
+
+.alertnotext{
+    font-size: 0px;
+}
+
+.green{
+    border-bottom: 3px solid green;
 }

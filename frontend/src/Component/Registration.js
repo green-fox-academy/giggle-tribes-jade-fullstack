@@ -3,6 +3,7 @@ import styles from './registration.css';
 import { render } from 'react-dom';
 import { useHistory } from 'react-router-dom';
 
+
 class Registration extends Component {
 
     constructor(props) {
@@ -47,18 +48,13 @@ class Registration extends Component {
         }
 
         handlePassword(e){
-          let value = e.target.value;    
+          let value = e.target.value;
           
-          if(value.length < 8){
-            console.log("password is too short")
-          }else{
-            this.setState( prevState => ({ newUser :
-              {...prevState.newPassword, password: value
-              }
-            }))
-          }
+          this.setState( prevState => ({ newUser :
+            {...prevState.newPassword, password: value
+            }
+          }))
         }
-
 
         handleKingdomname(e){
           let value = e.target.value;
@@ -68,6 +64,18 @@ class Registration extends Component {
           }))
         }
 
+        validPassword(){
+          return !(String(this.state.newUser.password).length < 8)
+        }
+
+        validUsername(){
+          return (String(this.state.newUser.username).length > 0)
+        }
+
+        validKingdomname(){
+          return !(String(this.state.newUser.kingdomname).length < 1)
+        }
+        
 
         render() {
             return (<div className="container">
@@ -78,19 +86,22 @@ class Registration extends Component {
 
             <div className="form">
                 <form method="post" onSubmit = {this.handleSubmit}>
-                    <div className="username">
-                    <input type={"text"} name={"username"} placeholder={"Username"} required onChange = {this.handleUsername}>
+                    <div>
+                    <input type="text" name="username" className={this.validUsername() ? "green" : "red"} placeholder="Username" onChange = {this.handleUsername}>
                     </input>
+                    <div className={this.validUsername() ? "" : "redimage"}><span className={this.validUsername() ? "alertnotext" : ""}>Username must be at least 1 character long!</span></div>
                     </div>
 
-                    <div className="password">
-                    <input type="password" name="password" placeholder="Password" required onChange = {this.handlePassword} minLength="8">
+                    <div>
+                    <input type="password" name="password" className={this.validPassword() ? "green" : "red"} placeholder="Password" onChange = {this.handlePassword}>
                     </input>
+                    <div className={this.validPassword() ? "" : "redimage"}><span className={this.validPassword() ? "alertnotext" : ""}>Password must be at least 8 characters long!</span></div>
                     </div>
 
                     <div className="kingdom">
-                    <input type="text" name="kingdomname" placeholder="Kingdom name" onChange = {this.handleKingdomname}>
+                    <input type="text" name="kingdomname" className={this.validKingdomname() ? "green" : "red"} placeholder="Kingdom name" onChange = {this.handleKingdomname}>
                     </input>
+                    <div className={this.validKingdomname() ? "" : "redimage"}><span className={this.validKingdomname() ? "alertnotext" : ""}>Kingdom name must be at least 1 character long!</span></div>
                     </div>
 
                     <div className="submitLine">
