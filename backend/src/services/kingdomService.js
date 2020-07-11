@@ -57,6 +57,21 @@ const add = (input) => {
     });
 };
 
+const get = () => {
+    return new Promise( async (resolve,reject) => {
+        try {
+            const kingdomsData = (await repo.read('kingdomsData', {}));
+            resolve( {
+                kingdoms : kingdomsData
+            });
+        } catch(error) {
+            if (error.validationError) reject('No data.');
+            reject(error);
+        }
+    });
+};
+
 export const kingdomService = {
-    add
+    add,
+    get
 };

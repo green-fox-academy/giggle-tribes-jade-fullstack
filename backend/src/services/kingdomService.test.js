@@ -95,3 +95,36 @@ test('existing location error', async () => {
     expect(err).toBe('Location is already occupied.');
   }
 });
+
+test('getting kingdom data', async () => {
+  repo.read.mockImplementation( () => {
+    return [{
+      "kingdom_id": 3,
+      "kingdomname": "Dependency Injection",
+      "population": 1,
+      "location": "ENG"
+   }]
+  });
+  const result = await kingdomService.get();
+  expect(result).toStrictEqual({
+    "kingdoms": [
+        {
+            "kingdom_id": 3,
+            "kingdomname": "Dependency Injection",
+            "population": 1,
+            "location": "ENG"
+        }
+    ]
+  });
+});
+
+test('no kingdoms throw error', async () => {
+  repo.read.mockImplementation( () => {
+    throw new ValidationError();
+  });
+  try {
+    await kingdomService.get(input);
+  } catch(err) {
+    expect(err).toBe('No data.');
+  }
+});

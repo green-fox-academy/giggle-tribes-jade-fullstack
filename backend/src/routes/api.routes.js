@@ -15,6 +15,7 @@ router.post('/sessions', sessionController.post);
 router.post('/users', userController.add);
 
 router.post('/kingdoms/:kingdomId/map', kingdomController.add);
+router.get('/kingdoms/map', kingdomController.get);
 
 router.use(authUser);
 
