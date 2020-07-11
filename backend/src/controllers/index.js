@@ -1,1 +1,5 @@
 export * from './helloController';
+export * from './authController';
+export * from './userController';
+export * from './sessionController';
+

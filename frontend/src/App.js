@@ -1,26 +1,35 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import Menu from './components/Menu';
+import Login from './components/Login';
+import Registration from './components/Registration';
+import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
+import { menuItems } from './components/menuItemsStorage';
 
 function App() {
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Router>
+        <Switch>
+          <Route exact path='/'>
+            <Login />
+          </Route>
+          <Route path='/login'>
+            <Login />
+          </Route>
+          <Route path='/registration'>
+              <Registration />
+          </Route>
+          <Route path='/kingdom'>
+            <Menu menuItems={menuItems}/>
+            {menuItems.map( (menuItem) => (
+              <Route key={menuItem.link} path={'/kingdom' + menuItem.link} render={ () => (<menuItem.component name={menuItem.name} />) } />
+            ))}
+          </Route>
+        </Switch> 
+      </Router>
     </div>
   );
-}
+};
 
 export default App;
