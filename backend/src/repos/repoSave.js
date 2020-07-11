@@ -3,7 +3,8 @@ import {db} from '../data/connection';
 const insertQueries = {
     user : 'INSERT INTO user (name,password) VALUES(?,?)',
     kingdom : 'INSERT INTO kingdom (name) VALUES(?)',
-    user_kingdom : 'INSERT INTO user_kingdom (user_id,kingdom_id) VALUES(?,?)'
+    user_kingdom : 'INSERT INTO user_kingdom (user_id,kingdom_id) VALUES(?,?)',
+    location : 'INSERT INTO location (kingdom_id,code) VALUES(?,?)'
 };
 
 class ValidationError extends Error {
@@ -19,7 +20,7 @@ const paramsValidation = (params) => {
     return Object.values(params);
 };
 
-const save = (table,params) => {
+export const save = (table,params) => {
     return new Promise ( async (resolve,reject) => {
         try {
             const returnData = (await db.query(insertQueries[table],paramsValidation(params))).results.insertId;
@@ -31,6 +32,3 @@ const save = (table,params) => {
     });
 };
 
-export const repo = {
-    save
-};
