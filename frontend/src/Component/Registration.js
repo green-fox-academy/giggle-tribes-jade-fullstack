@@ -51,7 +51,7 @@ class Registration extends Component {
           let value = e.target.value;
           
           this.setState( prevState => ({ newUser :
-            {...prevState.newPassword, password: value
+            {...prevState.newUser, password: value
             }
           }))
         }
@@ -59,18 +59,20 @@ class Registration extends Component {
         handleKingdomname(e){
           let value = e.target.value;
           this.setState( prevState => ({ newUser :
-            {...prevState.newKingdomname, kingdomname: value
+            {...prevState.newUser, kingdomname: value
             }
           }))
         }
+        
+        validUsername(){
+          console.log(this.state.newUser);
+          return (this.state.newUser.username.length > 0)
+        }
 
         validPassword(){
-          return !(String(this.state.newUser.password).length < 8)
+          return !(String(this.state.newUser.password).length < 8);
         }
 
-        validUsername(){
-          return (String(this.state.newUser.username).length > 0)
-        }
 
         validKingdomname(){
           return !(String(this.state.newUser.kingdomname).length < 1)
