@@ -10,7 +10,7 @@ const input = {
 };
 
 
-class existingUserError extends Error {
+class ExistingUserError extends Error {
   constructor() {
     super();
     this.duplication = true;
@@ -18,7 +18,7 @@ class existingUserError extends Error {
 };
 test('existing user error', async () => {
   repo.save.mockImplementation( () => {
-    throw new existingUserError();
+    throw new ExistingUserError();
   });
   try {
     await userService.add(input);

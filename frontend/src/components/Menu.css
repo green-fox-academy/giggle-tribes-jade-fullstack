@@ -1,0 +1,5 @@
+.Menu {
+    display: flex;
+    background-color: rgba(238, 238, 238, 0.548);
+    width: min-content;
+}
