@@ -18,8 +18,8 @@ afterEach(() => {
 });
 
 it('renders Header without crashing without token', async () => {
-  global.localStorage = jest.fn(() => {
-    return {};
+  Storage.prototype.getItem = jest.fn(key => {
+    return;
   });
   await act(async () => {
     render(<Header />, container);
@@ -27,8 +27,8 @@ it('renders Header without crashing without token', async () => {
 });
 
 it('renders Header without crashing with token but without kingdomName', async () => {
-  global.localStorage = jest.fn(() => {
-    return { token: 'dummy_token' };
+  Storage.prototype.getItem = jest.fn(key => {
+    return 'dummy_token';
   });
   await act(async () => {
     render(<Header />, container);
@@ -36,8 +36,8 @@ it('renders Header without crashing with token but without kingdomName', async (
 });
 
 it('renders Header without crashing with token and kingdomName', async () => {
-  global.localStorage = jest.fn(() => {
-    return { token: 'dummy_token' };
+  Storage.prototype.getItem = jest.fn(key => {
+    return 'dummy_token';
   });
   await act(async () => {
     render(<Header kingdomName={'Test'} />, container);
@@ -45,8 +45,8 @@ it('renders Header without crashing with token and kingdomName', async () => {
 });
 
 it('matches snapshot without token', async () => {
-  global.localStorage = jest.fn(() => {
-    return {};
+  Storage.prototype.getItem = jest.fn(key => {
+    return;
   });
 
   await act(async () => {
@@ -57,8 +57,8 @@ it('matches snapshot without token', async () => {
 });
 
 it('matches snapshot with token without kingdomID', async () => {
-  global.localStorage = jest.fn(() => {
-    return { token: 'dummy_token' };
+  Storage.prototype.getItem = jest.fn(key => {
+    return 'dummy_token';
   });
 
   await act(async () => {
@@ -70,10 +70,6 @@ it('matches snapshot with token without kingdomID', async () => {
 
 it('matches snapshot with token and kingdomName', async () => {
   Storage.prototype.getItem = jest.fn(key => {
-    return 'dummy_token';
-  });
-
-  global.localStorage.getItem = jest.fn(key => {
     return 'dummy_token';
   });
 
