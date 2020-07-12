@@ -65,7 +65,7 @@ class Registration extends Component {
         }
         
         validUsername(){
-          console.log(this.state.newUser);
+          // console.log(this.state.newUser);
           return (this.state.newUser.username.length > 0)
         }
 
@@ -87,7 +87,7 @@ class Registration extends Component {
             </div>
 
             <div className="form">
-                <form method="post" onSubmit = {this.handleSubmit}>
+                <form method="post" action="./api/user" onSubmit = {this.handleSubmit}>
                     <div>
                     <input type="text" name="username" className={this.validUsername() ? "green" : "red"} placeholder="Username" onChange = {this.handleUsername}>
                     </input>
