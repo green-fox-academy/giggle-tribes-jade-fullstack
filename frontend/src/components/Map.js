@@ -1,13 +1,20 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { ComposableMap, Geographies, Geography } from 'react-simple-maps';
 
-const Map = () => {
-    return (
-        <>
-        <p>Login screen.</p>
-        <Link to='/kingdom'>kingdom</Link>
-        </>
-    );
-};
+
+const geoUrl =
+  '/maps/world-110m.json';
+
+const Map = () => (
+  <div>
+    <ComposableMap>
+      <Geographies geography={geoUrl}>
+        {({ geographies }) =>
+          geographies.map(geo => <Geography key={geo.rsmKey} geography={geo} />)
+        }
+      </Geographies>
+    </ComposableMap>
+  </div>
+);
 
 export default Map;
