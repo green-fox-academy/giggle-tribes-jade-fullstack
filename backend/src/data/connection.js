@@ -20,7 +20,6 @@ export const db = {
 
           return;
         }
-        
         resolve({ results, fields});
       });
     });
