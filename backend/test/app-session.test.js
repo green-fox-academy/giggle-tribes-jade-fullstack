@@ -3,8 +3,8 @@ import request from 'supertest';
 import app from '../src/app';
 import { getUser, getKingdomIdForUser } from '../src/repos/user';
 jest.mock('../src/repos/user');
-import { getToken } from '../src/repos/token';
-jest.mock('../src/repos/token');
+import { getToken } from '../src/services/tokenService';
+jest.mock('../src/services/tokenService');
 
 test('should respond with 401 - Password is required.', done => {
   request(app)
