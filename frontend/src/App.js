@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './App.css';
 import Resource from './components/resource/Resource';
 
 function App() {
-  const [kingdomID, setKingdomID] = useState(null);
+  const kingdomID = 1;
 
   return (
     <div className="App">

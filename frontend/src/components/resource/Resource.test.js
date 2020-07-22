@@ -51,10 +51,5 @@ it('matches snapeshot', async () => {
     render(<Resource kingdomID={1} />, container);
   });
 
-  expect(container.innerHTML).toMatchInlineSnapshot(
-    `"<div class=\\"resources\\"><img class=\\"resource farm\\" src=\\"farm.svg\\" alt=\\"farm icon\\"><div class=\\"resource food\\"><div><h1>6824</h1><img class=\\"food\\" src=\\"FoodIcon.svg\\" alt=\\"food icon\\"></div><p> / minute</p></div><img class=\\"resource mine\\" src=\\"mine.svg\\" alt=\\"mine icon\\"><div class=\\"resource gold\\"><div><h1>6824</h1><img class=\\"gold\\" src=\\"GoldIcon.svg\\" alt=\\"gold icon\\"></div><p> / minute</p></div></div>"`
-  );
-  //const tree = renderer.create(<Resource kingdomID={1} />).toJSON();
-
-  // expect(tree).toMatchSnapshot();
+  expect(container.innerHTML).toMatchSnapshot();
 });
