@@ -1,4 +1,5 @@
-import { repo } from '../repos/repoHandler';
+import { userRepo } from '../repos/userRepo';
+import { kingdomRepo } from '../repos/kingdomRepo';
 
 const filterInput = (input) => {
     if ( !input.username && !input.password ) return 'Username and password are required.';
@@ -15,9 +16,9 @@ const add = (input) => {
             reject(invalidInput);
         } else {
             try {
-                const userid = await repo.save('user', {'username' : input.username, 'password' : input.password});
-                const kingdomid = await repo.save('kingdom', {'kingdomname' : input.kingdomname});
-                await repo.save('user_kingdom', {'userid' : userid, 'kingdomid' : kingdomid});
+                const userid = await userRepo.add({'username' : input.username, 'password' : input.password});
+                const kingdomid = await kingdomRepo.add('kingdom', {'kingdomname' : input.kingdomname});
+                await kingdomRepo.add('user_kingdom', {'userid' : userid, 'kingdomid' : kingdomid});
                 resolve({
                     'id' : userid,
                     'username' : input.username,

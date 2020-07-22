@@ -1,4 +1,5 @@
-import { repo } from '../repos/repoHandler';
+import { kingdomRepo } from '../repos/kingdomRepo';
+import { locationRepo } from '../repos/locationRepo';
 
 const returnObject = (input,data) => ({
     "id" : input.kingdomId,
@@ -42,14 +43,21 @@ const returnObject = (input,data) => ({
     }
   });
 
+  
+const isKingdomLocated = async (input) => {
+  const isLocated = await kingdomRepo.get('kingdomNullLocation', {'kingdom_id' : input.kingdomId});
+  if ( isLocated.length === 0 ) throw new Error('located');
+};
+
 const add = (input) => {
     return new Promise( async (resolve,reject) => {
         try {
-            await repo.read('kingdomNullLocation', {'kingdom_id' : input.kingdomId});
-            const kingdomBase = (await repo.read('kingdomBaseData', {'kingdom_id' : input.kingdomId}));
-            await repo.save('location', {'kingdomid' : input.kingdomId, 'code' : input.countryCode});
+            await isKingdomLocated(input);
+            const kingdomBase = (await kingdomRepo.get('kingdomBaseData', {'kingdom_id' : input.kingdomId}));
+            await locationRepo.add({'kingdomid' : input.kingdomId, 'code' : input.countryCode});
             resolve( returnObject(input,kingdomBase) );
         } catch(error) {
+            if (error.message === 'located') reject('Kingdom is already located.');
             if (error.duplication) reject('Location is already occupied.');
             if (error.validationError) reject('Invalid kingdom id.');
             reject(error);
@@ -60,7 +68,7 @@ const add = (input) => {
 const get = () => {
     return new Promise( async (resolve,reject) => {
         try {
-            const kingdomsData = (await repo.read('kingdomsData', {}));
+            const kingdomsData = (await kingdomRepo.get('kingdomsData', {}));
             resolve( {
                 kingdoms : kingdomsData
             });
