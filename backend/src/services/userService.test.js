@@ -1,6 +1,9 @@
 import { userService } from './userService';
-jest.mock('../repos/repoHandler');
-import { repo } from '../repos/repoHandler';
+jest.mock('../repos/userRepo');
+jest.mock('../repos/kingdomRepo');
+import { userRepo } from '../repos/userRepo';
+import { kingdomRepo } from '../repos/kingdomRepo';
+
 
 
 const input = {
@@ -17,7 +20,7 @@ class ExistingUserError extends Error {
   }
 };
 test('existing user error', async () => {
-  repo.save.mockImplementation( () => {
+  userRepo.add.mockImplementation( () => {
     throw new ExistingUserError();
   });
   try {
@@ -28,11 +31,12 @@ test('existing user error', async () => {
 });
 
 test('new user and kingdom added', async () => {
-  repo.save.mockImplementation( () => 2 );
+  userRepo.add.mockImplementation( () => 2 );
+  kingdomRepo.add.mockImplementation( () => 3 );
   const result = await userService.add(input);
   expect(result).toEqual({
     "id": 2,
-    "kingdomId": 2,
+    "kingdomId": 3,
     "username": "username"
   });
 });

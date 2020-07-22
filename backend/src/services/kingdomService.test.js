@@ -1,6 +1,8 @@
 import { kingdomService } from './kingdomService';
-jest.mock('../repos/repoHandler');
-import { repo } from '../repos/repoHandler';
+jest.mock('../repos/locationRepo');
+jest.mock('../repos/kingdomRepo');
+import { locationRepo } from '../repos/locationRepo';
+import { kingdomRepo } from '../repos/kingdomRepo';
 
 
 const input = {
@@ -12,12 +14,6 @@ class ExistingLocationError extends Error {
   constructor() {
     super();
     this.duplication = true;
-  }
-};
-class ValidationError extends Error {
-  constructor(field) {
-    super();
-    this.validationError = `The proper data was not provided.`;
   }
 };
 
@@ -64,17 +60,16 @@ const returnObject = {
 };
 
 test('location set for kingdom', async () => {
-  repo.read.mockImplementation( () => {
+  kingdomRepo.get.mockImplementation( () => {
     return {'userid' : 1, 'kingdomname' : 'London'}
   });
+  locationRepo.add.mockImplementation( () => 0 );
   const result = await kingdomService.add(input);
   expect(result).toStrictEqual(returnObject);
 });
 
 test('kingdom id doesnt match', async () => {
-  repo.read.mockImplementation( () => {
-    throw new ValidationError();
-  });
+  kingdomRepo.get.mockImplementation( () => [] );
   try {
     await kingdomService.add(input);
   } catch(err) {
@@ -83,10 +78,10 @@ test('kingdom id doesnt match', async () => {
 });
 
 test('existing location error', async () => {
-  repo.read.mockImplementation( () => {
+  kingdomRepo.get.mockImplementation( () => {
     return {'userid' : 1, 'kingdomname' : 'London'}
   });
-  repo.save.mockImplementation( () => {
+  locationRepo.add.mockImplementation( () => {
     throw new ExistingLocationError();
   });
   try {
@@ -97,7 +92,7 @@ test('existing location error', async () => {
 });
 
 test('getting kingdom data', async () => {
-  repo.read.mockImplementation( () => {
+  kingdomRepo.get.mockImplementation( () => {
     return [{
       "kingdom_id": 3,
       "kingdomname": "Dependency Injection",
@@ -116,15 +111,4 @@ test('getting kingdom data', async () => {
         }
     ]
   });
-});
-
-test('no kingdoms throw error', async () => {
-  repo.read.mockImplementation( () => {
-    throw new ValidationError();
-  });
-  try {
-    await kingdomService.get(input);
-  } catch(err) {
-    expect(err).toBe('No data.');
-  }
 });

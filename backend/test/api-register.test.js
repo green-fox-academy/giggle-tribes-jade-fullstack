@@ -1,7 +1,7 @@
 import request from 'supertest';
 
-jest.mock('../src/repos/repoSave');
-import { repo } from '../src/repos/repoHandler';
+jest.mock('../src/repos/userRepo');
+import { userRepo } from '../src/repos/userRepo';
 import app from '../src/app';
 
 class validationError extends Error {
@@ -10,7 +10,7 @@ class validationError extends Error {
     this.validationError = `This is a mocked error.`;
   }
 };
-repo.save.mockImplementation( () => {
+userRepo.add.mockImplementation( () => {
   throw new validationError();
 });
 

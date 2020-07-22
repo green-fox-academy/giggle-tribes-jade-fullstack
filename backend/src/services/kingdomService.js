@@ -57,9 +57,8 @@ const add = (input) => {
             await locationRepo.add({'kingdomid' : input.kingdomId, 'code' : input.countryCode});
             resolve( returnObject(input,kingdomBase) );
         } catch(error) {
-            if (error.message === 'located') reject('Kingdom is already located.');
+            if (error.message === 'located') reject('Invalid kingdom id.');
             if (error.duplication) reject('Location is already occupied.');
-            if (error.validationError) reject('Invalid kingdom id.');
             reject(error);
         }
     });
