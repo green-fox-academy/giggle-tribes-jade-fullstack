@@ -21,9 +21,9 @@ router.post('/sessions', sessionController.post);
 router.post('/users', userController.add);
 
 router.use(authUser);
+router.post('/auth', authController);
 router.use('/kingdom/:kingdomID', resourceMiddleware);
 
-router.post('/auth', authController);
 router.get('/kingdom/:kingdomID/resource', resourceController.get);
 
 export default router;
