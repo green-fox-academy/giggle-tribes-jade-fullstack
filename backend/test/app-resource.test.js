@@ -3,6 +3,13 @@ import request from 'supertest';
 import app from '../src/app';
 import { getResourceForKingdom } from '../src/repos/resource';
 jest.mock('../src/repos/resource');
+jest.mock('../src/services/authService');
+import { authService } from '../src/services/authService';
+
+authService.mockImplementation(() => ({
+  userId: '44',
+  kingdomId: '26',
+}));
 
 test('should respond with 400 - Resource for this kingdom not found.', done => {
   getResourceForKingdom.mockImplementation(async () => {

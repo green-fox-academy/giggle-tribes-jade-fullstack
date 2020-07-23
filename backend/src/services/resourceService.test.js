@@ -27,7 +27,7 @@ test('GetResource - Resource for this kingdom not found.', async () => {
 
 test('GetResource - Resource for kingdom found.', async () => {
   getResourceForKingdom.mockImplementation(async () => {
-    return Promise.resolve([
+    return await Promise.resolve([
       {
         type: 'food',
         amount: 500,
@@ -43,11 +43,7 @@ test('GetResource - Resource for kingdom found.', async () => {
     ]);
   });
 
-  const result = await resourceService.getResource({
-    kingdomID: '1',
-  });
-
-  expect(result).toStrictEqual({
+  expect(await resourceService.getResource({ kingdomID: '1' })).toStrictEqual({
     resources: [
       {
         type: 'food',

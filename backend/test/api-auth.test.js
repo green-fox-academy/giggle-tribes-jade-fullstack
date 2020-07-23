@@ -9,10 +9,10 @@ class AuthenticationError extends Error {
     super();
     this.error = message;
   }
-};
+}
 
 test('no token should response with 401', done => {
-  authService.mockImplementation( () => {
+  authService.mockImplementation(() => {
     throw new AuthenticationError('No token provided.');
   });
   request(app)
@@ -28,7 +28,7 @@ test('no token should response with 401', done => {
 });
 
 test('invalid token should response with 401', done => {
-  authService.mockImplementation( () => {
+  authService.mockImplementation(() => {
     throw new AuthenticationError('Invalid token.');
   });
   request(app)
@@ -45,9 +45,9 @@ test('invalid token should response with 401', done => {
 });
 
 test('valid token should response with 200 and result', done => {
-  authService.mockImplementation( () => ({
-    "userId" : "44",
-    "kingdomId" : "26"
+  authService.mockImplementation(() => ({
+    userId: '44',
+    kingdomId: '26',
   }));
   request(app)
     .post('/api/auth')
@@ -58,8 +58,8 @@ test('valid token should response with 200 and result', done => {
     .end((err, data) => {
       if (err) return done(err);
       expect(data.body).toEqual({
-        "userId" : "44",
-        "kingdomId" : "26"
+        userId: '44',
+        kingdomId: '26',
       });
       return done();
     });
