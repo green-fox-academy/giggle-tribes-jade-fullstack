@@ -14,6 +14,7 @@ export default function Resource({ kingdomID }) {
     await fetch(`http://localhost:5000/api/kingdom/${kingdomID}/resource`, {
       headers: {
         'Content-Type': 'application/json',
+        TRIBES_TOKEN: localStorage.getItem('TRIBES_TOKEN'),
       },
     })
       .then(res => res.json())
