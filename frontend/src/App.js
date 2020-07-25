@@ -18,7 +18,7 @@ function App() {
             <Login />
           </Route>
           <Route exact path='/kingdom/map'>
-            <Map />
+            <Map kingdomId='5'/>
           </Route>
           <Route path='/kingdom'>
             <Menu menuItems={menuItems}/>

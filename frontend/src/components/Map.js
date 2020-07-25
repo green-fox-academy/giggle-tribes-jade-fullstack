@@ -23,9 +23,9 @@ const occupiedFields = () => {
   });
 };
 
-const addLocation = (code) => {
+const addLocation = (code,kingdomId) => {
   return new Promise( (resolve,reject) => {
-    fetch(`${env.BACKEND_URL}/api/kingdoms/${5}/map`, {
+    fetch(`${env.BACKEND_URL}/api/kingdoms/${kingdomId}/map`, {
       method: 'POST',
       headers: {
         "Content-Type": "application/json",
@@ -39,7 +39,7 @@ const addLocation = (code) => {
   });
 };
 
-const Map = () => {
+const Map = ({kingdomId}) => {
 
   const [occupied, setOccupied] = useState([]);
   const [selected, setSelected] = useState('');
@@ -56,9 +56,9 @@ const Map = () => {
     }
   };
 
-  const submitClick = (selected) => {
+  const submitClick = (selected,kingdomId) => {
     if (selected) {
-      addLocation(selected)
+      addLocation(selected,kingdomId)
       .then( (result) => {
         console.log(result);
         if (!result.error) setDone(true);
@@ -87,7 +87,7 @@ const Map = () => {
           }
         </Geographies>
       </ComposableMap>
-      <button type="button" onClick={ () => submitClick(selected) }>Submit</button> 
+      <button type="button" onClick={ () => submitClick(selected,kingdomId) }>Submit</button> 
     </div>
   )
 };
