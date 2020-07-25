@@ -14,7 +14,7 @@ const loggedoutHeaderItems = [
 
 export default function ({ kingdomName }) {
   let headerItems = loggedoutHeaderItems;
-  const isToken = localStorage.getItem('token') ? true : false;
+  const isToken = localStorage.getItem('TRIBES_TOKEN') ? true : false;
 
   if (isToken && kingdomName) {
     headerItems = loggedinHeaderItems;
