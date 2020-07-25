@@ -1,6 +1,5 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import { menuItems } from './components/menuItemsStorage';
 
 import './App.css';
 import Header from './components/header/Header';
@@ -8,7 +7,6 @@ import Resource from './components/resource/Resource';
 import Menu from './components/Menu';
 import Login from './components/Login';
 import Registration from './components/Registration';
-import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import { menuItems } from './components/menuItemsStorage';
 
 function App() {
