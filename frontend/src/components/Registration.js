@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-// import styles from './registration.css';
+import './registration.css';
 // import render from 'react-dom';
 // import { useHistory } from 'react-router-dom';
 import { withRouter } from 'react-router-dom';
