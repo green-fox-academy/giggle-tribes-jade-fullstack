@@ -1,11 +1,14 @@
 import React,{ useState,useEffect } from 'react';
 import { ComposableMap, Geographies, Geography } from 'react-simple-maps';
+import {Redirect} from 'react-router-dom';
 import { env } from '../env';
 import './Map.css';
 
 
 const geoUrl =
   '/maps/world-110m.json';
+
+const redirectLocation = '/login';
 
 const occupiedFields = () => {
   return new Promise( resolve => {
@@ -40,6 +43,7 @@ const Map = () => {
 
   const [occupied, setOccupied] = useState([]);
   const [selected, setSelected] = useState('');
+  const [done, setDone] = useState(false);
 
   useEffect( () => {
     occupiedFields()
@@ -55,10 +59,14 @@ const Map = () => {
   const submitClick = (selected) => {
     if (selected) {
       addLocation(selected)
-        .then(console.log);
+      .then( (result) => {
+        console.log(result);
+        if (!result.error) setDone(true);
+      } );
     }
   };
 
+  if (done) return <Redirect push to={redirectLocation} />;
   return (
     <div>
       <ComposableMap>
