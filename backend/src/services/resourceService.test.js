@@ -108,7 +108,6 @@ describe('UpdateResource function tests', () => {
   });
 });
 
-//CreateResource Tests
 describe('CreateResource function tests', () => {
   test('CreateResource - Creation failed. Kingdom ID is required.', async () => {
     await expect(resourceService.createResource({})).rejects.toStrictEqual({
