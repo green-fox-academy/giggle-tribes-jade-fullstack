@@ -3,6 +3,11 @@ import { getUser, getKingdomIdForUser } from '../repos/user';
 jest.mock('../repos/user');
 import { repo } from '../repos/repoSave';
 jest.mock('../repos/repoSave');
+import {
+  getResourceForKingdom,
+  insertResourceForKingdom,
+} from '../repos/resource';
+jest.mock('../repos/resource');
 
 const input = {
   username: 'username',
@@ -59,6 +64,14 @@ test('Username and password are correct.', async () => {
   getKingdomIdForUser.mockImplementation(async () => {
     return Promise.resolve([{ user_ID: 1, kingdom_ID: 1 }]);
   });
+  getResourceForKingdom.mockImplementation(async () => {
+    return Promise.resolve([]);
+  });
+
+  insertResourceForKingdom.mockImplementation(async () => {
+    return Promise.resolve([{ insertId: 1 }]);
+  });
+
   await expect(
     userService.get({ username: 'dummy_username', password: 'dummy_password' })
   ).toStrictEqual(
