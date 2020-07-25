@@ -1,5 +1,5 @@
 {
-    "dev": {
+ "dev": {
       "driver": "mysql",
       "host": {"ENV": "MYSQL_HOST"},
       "port": {"ENV": "MYSQL_PORT"},
