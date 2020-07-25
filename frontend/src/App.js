@@ -2,6 +2,7 @@ import React from 'react';
 import Menu from './components/Menu';
 import Login from './components/Login';
 import Map from './components/Map';
+import Log from './components/Log';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import { menuItems } from './components/menuItemsStorage';
 
@@ -25,6 +26,7 @@ function App() {
             {menuItems.map( (menuItem) => (
               <Route key={menuItem.link} path={'/kingdom' + menuItem.link} render={ () => (<menuItem.component name={menuItem.name} />) } />
             ))}
+            <Log />
           </Route>
         </Switch> 
       </Router>

@@ -1,0 +1,6 @@
+.logentry div.img {
+    background-image: url('/icons/constructionLog.png');
+    width: 4em;
+    height: 4em;
+    background-size: cover;
+}
