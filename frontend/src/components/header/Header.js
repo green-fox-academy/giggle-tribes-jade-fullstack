@@ -22,10 +22,7 @@ export default function ({ kingdomName }) {
   return (
     <Router>
       <nav className="header">
-        <HeaderTitle
-          name={isToken && kingdomName ? kingdomName : undefined}
-          route="/buildings"
-        />
+        <HeaderTitle name={isToken && kingdomName} route="/buildings" />
         <div className="header">
           {headerItems.map((item, index) => (
             <Link className="header" key={index.toString()} to={item.route}>
