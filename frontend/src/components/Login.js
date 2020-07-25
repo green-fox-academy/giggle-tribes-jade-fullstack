@@ -6,6 +6,8 @@ const Login = () => {
         <>
         <p>Login screen.</p>
         <Link to='/kingdom'>kingdom</Link>
+        <p>Registration screen.</p>
+        <Link to='/registration'>Registration</Link>
         </>
     );
 };

@@ -11,21 +11,26 @@ function App() {
     <div className="App">
       <Router>
         <Switch>
+
           <Route exact path='/'>
             <Login />
           </Route>
+          
           <Route path='/login'>
             <Login />
           </Route>
+          
           <Route path='/registration'>
               <Registration />
           </Route>
+          
           <Route path='/kingdom'>
             <Menu menuItems={menuItems}/>
             {menuItems.map( (menuItem) => (
               <Route key={menuItem.link} path={'/kingdom' + menuItem.link} render={ () => (<menuItem.component name={menuItem.name} />) } />
             ))}
           </Route>
+        
         </Switch> 
       </Router>
     </div>

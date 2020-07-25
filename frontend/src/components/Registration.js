@@ -1,4 +1,4 @@
-import React, { Component, useState } from 'react';
+import React, { Component, useState, isValidElement } from 'react';
 import styles from './registration.css';
 import { render } from 'react-dom';
 import { useHistory } from 'react-router-dom';
@@ -23,9 +23,10 @@ class Registration extends Component {
 
 
         handleSubmit(event) {
+
             let userData = this.state.newUser;
 
-            fetch('/login',{
+            fetch('http://localhost:5000/api/users',{
                 method: "POST",
                 body: JSON.stringify(userData),
                 headers: {
@@ -33,10 +34,13 @@ class Registration extends Component {
                   'Content-Type': 'application/json'
                 },
               }).then(response => {
-                response.json().then(data =>{
-                  console.log("Successful" + data);
+                response.json()
+
                 })
-            })   
+                .then(data =>{
+                      console.log("Successful" + data);
+                    })
+                
         }
 
         handleUsername(e){
@@ -49,7 +53,6 @@ class Registration extends Component {
 
         handlePassword(e){
           let value = e.target.value;
-          
           this.setState( prevState => ({ newUser :
             {...prevState.newUser, password: value
             }
@@ -87,7 +90,9 @@ class Registration extends Component {
             </div>
 
             <div className="form">
-                <form method="post" action="./api/user" onSubmit = {this.handleSubmit}>
+                <form method="post" 
+                action="http://localhost:5000/api/users" 
+                onSubmit = {this.handleSubmit}>
                     <div>
                     <input type="text" name="username" className={this.validUsername() ? "green" : "red"} placeholder="Username" onChange = {this.handleUsername}>
                     </input>
