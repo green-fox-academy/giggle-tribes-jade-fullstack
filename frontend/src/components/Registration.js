@@ -1,13 +1,15 @@
 import React, { Component, useState, isValidElement } from 'react';
 import styles from './registration.css';
-import { render } from 'react-dom';
-import { useHistory, Redirect } from 'react-router-dom';
+import render from 'react-dom';
+import { useHistory } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 
 
 class Registration extends Component {
 
     constructor(props) {
         super(props);
+        console.log(props)
         this.state = {
             newUser: {
               username: '',
@@ -27,6 +29,8 @@ class Registration extends Component {
           event.preventDefault();
 
             let userData = this.state.newUser;
+            //let history = useHistory();
+            const { history } = this.props;
 
             fetch('http://localhost:5000/api/users',{
                 method: "POST",
@@ -42,7 +46,8 @@ class Registration extends Component {
                   if(data.error){
                     alert(data.error)
                   }else{
-                    alert("welcome " + data.username)
+                    // alert("welcome " + data.username)
+                   history.push('/login');
                   }
                 }   
               )
@@ -127,4 +132,4 @@ class Registration extends Component {
     }
 }
 
-export default Registration;
+export default withRouter(Registration);
