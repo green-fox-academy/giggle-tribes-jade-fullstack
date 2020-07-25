@@ -1,7 +1,7 @@
 import React, { Component, useState, isValidElement } from 'react';
 import styles from './registration.css';
 import { render } from 'react-dom';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Redirect } from 'react-router-dom';
 
 
 class Registration extends Component {
@@ -24,6 +24,8 @@ class Registration extends Component {
 
         handleSubmit(event) {
 
+          event.preventDefault();
+
             let userData = this.state.newUser;
 
             fetch('http://localhost:5000/api/users',{
@@ -33,14 +35,17 @@ class Registration extends Component {
                   'Accept': 'application/json',
                   'Content-Type': 'application/json'
                 },
-              }).then(response => {
+              }).then(response => 
                 response.json()
-
-                })
-                .then(data =>{
-                      console.log("Successful" + data);
-                    })
-                
+                ).then(data => {
+                  
+                  if(data.error){
+                    alert(data.error)
+                  }else{
+                    alert("welcome " + data.username)
+                  }
+                }   
+              )
         }
 
         handleUsername(e){
@@ -68,7 +73,6 @@ class Registration extends Component {
         }
         
         validUsername(){
-          // console.log(this.state.newUser);
           return (this.state.newUser.username.length > 0)
         }
 
@@ -83,6 +87,7 @@ class Registration extends Component {
         
 
         render() {
+
             return (<div className="container">
         
             <div className="title">
@@ -90,8 +95,8 @@ class Registration extends Component {
             </div>
 
             <div className="form">
-                <form method="post" 
-                action="http://localhost:5000/api/users" 
+                <form 
+               
                 onSubmit = {this.handleSubmit}>
                     <div>
                     <input type="text" name="username" className={this.validUsername() ? "green" : "red"} placeholder="Username" onChange = {this.handleUsername}>
@@ -117,7 +122,7 @@ class Registration extends Component {
 
                 </form>
             </div>
-        </div>
+          </div>
         );
     }
 }
