@@ -3,6 +3,11 @@ import request from 'supertest';
 jest.mock('../src/repos/repoSave');
 import { repo } from '../src/repos/repoSave';
 import app from '../src/app';
+import {
+  getResourceForKingdom,
+  insertResourceForKingdom,
+} from '../src/repos/resource';
+jest.mock('../src/repos/resource');
 
 class validationError extends Error {
   constructor() {
@@ -12,6 +17,13 @@ class validationError extends Error {
 }
 repo.save.mockImplementation(() => {
   throw new validationError();
+});
+getResourceForKingdom.mockImplementation(async () => {
+  return Promise.resolve([]);
+});
+
+insertResourceForKingdom.mockImplementation(async () => {
+  return Promise.resolve([{ insertId: 1 }]);
 });
 
 test('should respond with handled error', done => {
