@@ -4,3 +4,26 @@
     height: 4em;
     background-size: cover;
 }
+
+.logentry {
+    display: flex;
+    width: 20em;
+    background-color: #23232383;
+    margin-bottom: 0.5em;
+}
+
+.logentry section {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.logentry section header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.logentry h3 {
+    margin: 0;
+    padding: 0;
+}

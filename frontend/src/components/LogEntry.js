@@ -1,15 +1,10 @@
 import React,{ useEffect, useState } from 'react';
+import ProgressBar from './ProgressBar';
 import './LogEntry.css';
 
 const constructionTime = (range) => {
     return range;
 };
-
-const progressPercentage = (progress,range) => {
-    const percentage = progress / range * 100;
-    return Math.round(percentage);
-};
-
 
 const LogEntry = ({header,data}) => {
 
@@ -23,27 +18,19 @@ const LogEntry = ({header,data}) => {
         }
     },[header,data]);
 
-    useEffect(() => {
-        const interval = setInterval(() => {
-          if (progress < range) setProgress(progress + 100);
-        }, 1000);
-        return () => clearInterval(interval);
-    },[progress,range]);
-
-    
     return (
         <div className='logentry'>
             <div className='img'></div>
             {header? <h2>Construction log:</h2> :
-                <>
-                    <section className='data'>
+                <section>
+                    <header>
                         <h3>{data.subject}</h3>
                         <h3>{constructionTime(range)}</h3>
-                    </section>
-                    <section className='meter'>
-                        <h3>{progressPercentage(progress,range)}%</h3>
-                    </section>
-                </>
+                    </header>
+                    <body>
+                        <ProgressBar progress={progress} range={range} />
+                    </body>
+                </section>
             }
         </div>
     );
