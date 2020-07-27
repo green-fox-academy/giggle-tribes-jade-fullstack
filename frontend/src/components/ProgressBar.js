@@ -15,7 +15,7 @@ const ProgressBar = ({progress,range}) => {
 
     useEffect(() => {
         const interval = setInterval(() => {
-          if (meter < range) setMeter(meter + 100);
+          if (meter < range) setMeter(meter + 1);
         }, 1000);
         return () => clearInterval(interval);
     },[meter,range]);

@@ -3,7 +3,10 @@ import ProgressBar from './ProgressBar';
 import './LogEntry.css';
 
 const constructionTime = (range) => {
-    return range;
+    const h = Math.floor(range / 3600);
+    const m = Math.floor( (range-h*3600) / 60);
+    const s = range - h * 3600 - m * 60;
+    return `${ h < 10 ? '0'+h : h }:${ m < 10 ? '0'+m : m }:${ s < 10 ? '0'+s : s }`;
 };
 
 const LogEntry = ({header,data}) => {
@@ -27,9 +30,7 @@ const LogEntry = ({header,data}) => {
                         <h3>{data.subject}</h3>
                         <h3>{constructionTime(range)}</h3>
                     </header>
-                    <body>
-                        <ProgressBar progress={progress} range={range} />
-                    </body>
+                    <ProgressBar progress={progress} range={range} />
                 </section>
             }
         </div>
