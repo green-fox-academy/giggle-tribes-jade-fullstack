@@ -44,7 +44,7 @@ const LogEntry = ({header,data}) => {
     return (
         <div className='logentry'>
             <div className='img'></div>
-            {header? <h2>Construction log:</h2> :
+            {header? <section className="head"><h2>Construction log:</h2></section> :
                 <section>
                     <header>
                         <h3>{buildingMessage(data,isReady)}</h3>
