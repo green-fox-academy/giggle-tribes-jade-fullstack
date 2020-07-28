@@ -3,9 +3,9 @@ export const mockBuildingProgress = [
         "subject": "farm",
         "level": 1,
         "action": "build",
-        "started_at": 12345789,
-        "finished_at": 12346000,
-        "progress_at": 12345800
+        "started_at": 1595962228515,
+        "finished_at": 1595962301594,
+        "progress_at": 1595962301000
     },
     {
         "subject": "academy",

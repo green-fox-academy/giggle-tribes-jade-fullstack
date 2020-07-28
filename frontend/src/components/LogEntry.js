@@ -2,11 +2,11 @@ import React,{ useEffect, useState } from 'react';
 import ProgressBar from './ProgressBar';
 import './LogEntry.css';
 
-const constructionTime = (range) => {
-    const h = Math.floor(range / 3600);
-    const m = Math.floor( (range-h*3600) / 60);
-    const s = range - h * 3600 - m * 60;
-    return `${ h < 10 ? '0'+h : h }:${ m < 10 ? '0'+m : m }:${ s < 10 ? '0'+s : s }`;
+const constructionStart = (timestamp) => {
+    const d = new Date(timestamp);
+    const h = d.getHours();
+    const m = d.getMinutes();
+    return `${ h < 10 ? '0' + h : h }:${ m < 10 ? '0' + m : m }`;
 };
 
 const buildingMessage = (data,ready) => {
@@ -48,7 +48,7 @@ const LogEntry = ({header,data}) => {
                 <section>
                     <header>
                         <h3>{buildingMessage(data,isReady)}</h3>
-                        <h3>{constructionTime(range)}</h3>
+                        <h3>{constructionStart(data.started_at)}</h3>
                     </header>
                     { isReady ? <p>{readyMessage(data)}</p> : 
                         <ProgressBar progress={progress} range={range} setIsReady={setIsReady}/>
