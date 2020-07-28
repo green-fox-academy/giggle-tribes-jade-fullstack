@@ -5,7 +5,7 @@ const progressPercentage = (meter,range) => {
     return Math.round(percentage);
 };
 
-const ProgressBar = ({progress,range}) => {
+const ProgressBar = ({progress,range,setIsReady}) => {
 
     const [meter, setMeter] = useState(progress);
 
@@ -16,12 +16,13 @@ const ProgressBar = ({progress,range}) => {
     useEffect(() => {
         const interval = setInterval(() => {
           if (meter < range) setMeter(meter + 1);
+          if (meter === range) setIsReady(true);
         }, 1000);
         return () => clearInterval(interval);
-    },[meter,range]);
+    },[meter,range,setIsReady]);
     
     return (
-            <h3>{progressPercentage(meter,range)}%</h3>
+        <progress id="subjectProgress" value={progressPercentage(meter,range) || 0} max="100"></progress>
     );
 };
 
