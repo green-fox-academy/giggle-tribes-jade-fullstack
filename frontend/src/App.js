@@ -5,6 +5,7 @@ import { menuItems } from './components/menuItemsStorage';
 import './App.css';
 import Header from './components/header/Header';
 import Resource from './components/resource/Resource';
+import Academy from './components/academy/Academy';
 import Menu from './components/Menu';
 import Login from './components/Login';
 
@@ -32,6 +33,7 @@ function App() {
               />
             ))}
             <Resource kingdomID={kingdomID} />
+            <Academy />
           </Route>
         </Switch>
       </Router>

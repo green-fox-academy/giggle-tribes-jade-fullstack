@@ -1,0 +1,32 @@
+div.academy {
+  grid-area: 3 / 1 / span 1 / span 2;
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  grid-template-rows: 140px 1fr;
+  background-color: rgba(201, 204, 205, 0.8);
+}
+img.academy {
+  margin: 20px;
+  height: 100px;
+  width: 100px;
+  grid-area: 1 / 1 /1 /1;
+}
+div.description {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin: 20px;
+  grid-area: 1 / 2;
+}
+div.academyinfo {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  margin: 5px;
+  grid-area: 2 / 1;
+}
+img.inlineIcon {
+  height: 15px;
+  max-width: 15px;
+}
