@@ -46,7 +46,7 @@ class Registration extends Component {
                   if(data.error){
                     alert(data.error)
                   }else{
-                    // alert("welcome " + data.username)
+                    alert("welcome " + data.username)
                    history.push('/login');
                   }
                 }   

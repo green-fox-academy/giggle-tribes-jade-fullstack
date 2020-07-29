@@ -12,17 +12,17 @@ const filterInput = input => {
 };
 
 const add = input => {
-  return new Promise((resolve, reject) => {
+  return new Promise( async (resolve, reject) => {
     const invalidInput = filterInput(input);
     if (invalidInput) {
       reject(invalidInput);
     } else {
       try {
-        const userid = repo.save('user', {
+        const userid = await repo.save('user', {
           username: input.username,
           password: input.password,
         });
-        const kingdomid = repo.save('kingdom', {
+        const kingdomid = await repo.save('kingdom', {
           kingdomname: input.kingdomname,
         });
         resourceService.createResource({ kingdomID: kingdomid });
