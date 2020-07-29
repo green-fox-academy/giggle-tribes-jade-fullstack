@@ -12,7 +12,7 @@ const Log = () => {
     const [data, setData] = useState([]);
 
     useEffect( () => {
-        setData(readLogEntries);
+        setData(readLogEntries());
     },[]);
 
 
