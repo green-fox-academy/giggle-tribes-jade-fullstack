@@ -1,0 +1,45 @@
+body {
+  margin: 0px;
+}
+/* Navbar container */
+nav.header {
+  display: flex;
+  justify-content: space-between;
+  overflow: hidden;
+  background-color: #009587;
+  font-family: Arial;
+  font-weight: bold;
+}
+
+/* Title inside the navbar */
+nav.header h1.header {
+  margin: 0px;
+  float: left;
+  font-size: 30px;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+/* Container of links inside the header */
+nav.header div.header {
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* Links inside the header */
+nav.header div a {
+  height: 60%;
+  font-size: 16px;
+  color: black;
+  text-align: center;
+  padding: 13% 16px 5px 16px;
+  text-decoration: none;
+}
+
+/* Add a red background color to navbar links on hover */
+nav.header div a.header:hover {
+  color: white;
+  background-color: #005e54;
+}
