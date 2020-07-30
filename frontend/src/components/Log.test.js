@@ -81,6 +81,8 @@ it('matches snapshot', async () => {
   logEntryService.readLogEntries.mockImplementation(() => {
     return mockBuildingProgress.filter( (e,i) => i < 6).map( e => {
       e.started_at = (e.started_at + new Date().getTimezoneOffset()*60*1000);
+      e.finished_at = (e.finished_at + new Date().getTimezoneOffset()*60*1000);
+      e.progress_at = (e.progress_at + new Date().getTimezoneOffset()*60*1000);
       return e;
     });
   });
