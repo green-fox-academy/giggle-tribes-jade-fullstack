@@ -40,15 +40,29 @@ afterEach(() => {
   container = null;
 });
 
-it('renders Resource without crashing', async () => {
-  await act(async () => {
-    render(<Resource kingdomID={1} />, container);
-  });
-});
+let foodAmount;
+let goldAmount;
+
+function setFoodAmount(amount) {
+  foodAmount = amount;
+  console.log(foodAmount);
+}
+function setGoldAmount(amount) {
+  goldAmount = amount;
+}
 
 it('matches snapeshot', async () => {
   await act(async () => {
-    render(<Resource kingdomID={1} />, container);
+    await render(
+      <Resource
+        kingdomID={1}
+        foodAmount={foodAmount}
+        setFoodAmount={setFoodAmount}
+        goldAmount={goldAmount}
+        setGoldAmount={setGoldAmount}
+      />,
+      container
+    );
   });
 
   expect(container.innerHTML).toMatchSnapshot();

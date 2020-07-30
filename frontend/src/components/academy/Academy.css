@@ -21,7 +21,7 @@ div.description {
 div.academyinfo {
   display: flex;
   flex-direction: column;
-  justify-content: start;
+  justify-content: flex-start;
   align-items: center;
   margin: 5px;
   grid-area: 2 / 1;

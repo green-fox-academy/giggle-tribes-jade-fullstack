@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import './Resource.css';
 import Farm from '../../assets/buildings/farm.svg';
@@ -6,10 +6,13 @@ import Mine from '../../assets/buildings/mine.svg';
 import Food from '../../assets/sources/FoodIcon.svg';
 import Gold from '../../assets/sources/GoldIcon.svg';
 
-export default function Resource({ kingdomID }) {
-  const [foodAmount, setFoodAmount] = useState(null);
-  const [goldAmount, setGoldAmount] = useState(null);
-
+export default function Resource({
+  kingdomID,
+  setFoodAmount,
+  setGoldAmount,
+  goldAmount,
+  foodAmount,
+}) {
   const getResources = async kingdomID => {
     await fetch(`http://localhost:5000/api/kingdom/${kingdomID}/resource`, {
       headers: {
@@ -33,7 +36,7 @@ export default function Resource({ kingdomID }) {
 
   useEffect(() => {
     getResources(kingdomID);
-  }, [kingdomID]);
+  });
 
   return (
     <div className="resources">

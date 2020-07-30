@@ -1,4 +1,4 @@
-import React, { useState, useEffect, createRef } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 import './Academy.css';
@@ -8,7 +8,14 @@ import Defence from '../../assets/troops/defence1.png';
 import Food from '../../assets/sources/FoodIcon.svg';
 import Button from './CreateTroopButton';
 
-export default function Academy({ kingdomID }) {
+export default function Academy({
+  kingdomID,
+  academyLevel,
+  goldAmount,
+  troopAmount,
+  setTroopAmount,
+  troopLimit,
+}) {
   return (
     <div className="academy">
       <img className="academy" src={Barrack} alt="academy icon" />
@@ -31,9 +38,15 @@ export default function Academy({ kingdomID }) {
       </div>
       <div className="academyinfo">
         <p>Academy</p>
-        <p>{'Level 1'}</p>
+        <p>{'Level ' + academyLevel}</p>
       </div>
-      <Button />
+      <Button
+        kingdomID={kingdomID}
+        troopLimit={troopLimit}
+        goldAmount={goldAmount}
+        troopAmount={troopAmount}
+        setTroopAmount={setTroopAmount}
+      />
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { menuItems } from './components/menuItemsStorage';
 
@@ -12,6 +12,11 @@ import Login from './components/Login';
 function App() {
   const kingdomName = 'Dummy';
   const kingdomID = 1;
+  const academyLevel = 1;
+  const troopLimit = 100;
+  const [troopAmount, setTroopAmount] = useState(null);
+  const [foodAmount, setFoodAmount] = useState(null);
+  const [goldAmount, setGoldAmount] = useState(null);
   return (
     <div className="App">
       <Header kingdomName={kingdomName} />
@@ -32,8 +37,21 @@ function App() {
                 render={() => <menuItem.component name={menuItem.name} />}
               />
             ))}
-            <Resource kingdomID={kingdomID} />
-            <Academy />
+            <Resource
+              kingdomID={kingdomID}
+              foodAmount={foodAmount}
+              setFoodAmount={setFoodAmount}
+              goldAmount={goldAmount}
+              setGoldAmount={setGoldAmount}
+            />
+            <Academy
+              kingdomID={kingdomID}
+              troopLimit={troopLimit}
+              goldAmount={goldAmount}
+              troopAmount={troopAmount}
+              setTroopAmount={setTroopAmount}
+              academyLevel={academyLevel}
+            />
           </Route>
         </Switch>
       </Router>
