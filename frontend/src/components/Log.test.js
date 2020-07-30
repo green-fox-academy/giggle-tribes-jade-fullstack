@@ -12,7 +12,7 @@ const mockBuildingProgress = [
       "action": "build",
       "started_at": 1595962228515,
       "finished_at": 1595962301594,
-      "progress_at": 1595962301000
+      "progress_at": 1595962228515
   },
   {
       "subject": "mockacademy",
@@ -20,7 +20,7 @@ const mockBuildingProgress = [
       "action": "upgrade",
       "started_at": 1595962228515,
       "finished_at": 1595962301594,
-      "progress_at": 1595962301000
+      "progress_at": 1595962228515
   },
   {
       "subject": "mocktroop",
@@ -28,7 +28,7 @@ const mockBuildingProgress = [
       "action": "build",
       "started_at": 1595962228515,
       "finished_at": 1595962301594,
-      "progress_at": 1595962301000
+      "progress_at": 1595962228515
   },
   {
       "subject": "mocktroop",
@@ -36,7 +36,7 @@ const mockBuildingProgress = [
       "action": "upgrade",
       "started_at": 1595962228515,
       "finished_at": 1595962301594,
-      "progress_at": 1595962301000
+      "progress_at": 1595962228515
   },
   {
       "subject": "mockfarm",
@@ -44,7 +44,7 @@ const mockBuildingProgress = [
       "action": "build",
       "started_at": 1595962228515,
       "finished_at": 1595962301594,
-      "progress_at": 1595962301000
+      "progress_at": 1595962228515
   },
   {
       "subject": "mocktroop",
@@ -52,7 +52,7 @@ const mockBuildingProgress = [
       "action": "upgrade",
       "started_at": 1595962228515,
       "finished_at": 1595962301594,
-      "progress_at": 1595962301000
+      "progress_at": 1595962228515
   },
   {
       "subject": "mockfarm 7",
