@@ -60,7 +60,10 @@ const returnObject = {
 };
 
 test('location set for kingdom', async () => {
-  kingdomRepo.get.mockImplementation( () => {
+  kingdomRepo.getKingdomNullLocation.mockImplementation( () => {
+    return {'kingdomid' : 1, 'locationid' : null}
+  });
+  kingdomRepo.getKingdomBaseData.mockImplementation( () => {
     return {'userid' : 1, 'kingdomname' : 'London'}
   });
   locationRepo.add.mockImplementation( () => 0 );
@@ -69,7 +72,10 @@ test('location set for kingdom', async () => {
 });
 
 test('kingdom id doesnt match', async () => {
-  kingdomRepo.get.mockImplementation( () => [] );
+  kingdomRepo.getKingdomNullLocation.mockImplementation( () => [] );
+  kingdomRepo.getKingdomBaseData.mockImplementation( () => {
+    return {'userid' : 1, 'kingdomname' : 'London'}
+  });
   try {
     await kingdomService.add(input);
   } catch(err) {
@@ -78,7 +84,8 @@ test('kingdom id doesnt match', async () => {
 });
 
 test('existing location error', async () => {
-  kingdomRepo.get.mockImplementation( () => {
+  kingdomRepo.getKingdomNullLocation.mockImplementation( () => [] );
+  kingdomRepo.getKingdomBaseData.mockImplementation( () => {
     return {'userid' : 1, 'kingdomname' : 'London'}
   });
   locationRepo.add.mockImplementation( () => {
@@ -92,7 +99,7 @@ test('existing location error', async () => {
 });
 
 test('getting kingdom data', async () => {
-  kingdomRepo.get.mockImplementation( () => {
+  kingdomRepo.getKingdomsData.mockImplementation( () => {
     return [{
       "kingdom_id": 3,
       "kingdomname": "Dependency Injection",

@@ -8,11 +8,11 @@ const insertQueries = {
 };
 
 const selectQueries = {
-    kingdomNullLocation :
+    KingdomNullLocation :
     'SELECT kingdom.id kingdomid, location.id locationid FROM kingdom LEFT JOIN location ON location.kingdom_id = kingdom.id WHERE kingdom.id = ? AND location.id is null',
-    kingdomBaseData :
+    KingdomBaseData :
     'SELECT user.id userid, kingdom.name kingdomname FROM kingdom RIGHT JOIN user_kingdom ON user_kingdom.kingdom_id = kingdom.id RIGHT JOIN user ON user.id = user_kingdom.user_id WHERE kingdom_id = ?',
-    kingdomsData :
+    KingdomsData :
     'SELECT	kingdom.id kingdom_id, kingdom.name kingdomname, 1 population, location.code location FROM kingdom LEFT JOIN location ON location.kingdom_id = kingdom.id'
 };
 
@@ -24,9 +24,9 @@ const get = async (selection,params) => {
     return (await db.query(selectQueries[selection], paramsValidation(params))).results;
 };
 
-export const kingdomRepo = {
-    add,
-    get
-};
+const repo = { add };
+Object.keys(selectQueries)
+  .forEach(queryName => repo['get'+queryName] = (params) => get(queryName, params));
+export const kingdomRepo = repo;
 
 

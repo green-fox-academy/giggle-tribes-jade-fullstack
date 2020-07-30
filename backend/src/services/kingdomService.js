@@ -45,14 +45,14 @@ const returnObject = (input,data) => ({
 
   
 const isKingdomLocated = async (input) => {
-  const isLocated = await kingdomRepo.get('kingdomNullLocation', {'kingdom_id' : input.kingdomId});
+  const isLocated = await kingdomRepo.getKingdomNullLocation({'kingdom_id' : input.kingdomId});
   if ( isLocated.length === 0 ) throw new Error('located');
 };
 
 const add = async (input) => {
   try {
     await isKingdomLocated(input);
-    const kingdomBase = (await kingdomRepo.get('kingdomBaseData', {'kingdom_id' : input.kingdomId}));
+    const kingdomBase = (await kingdomRepo.getKingdomBaseData({'kingdom_id' : input.kingdomId}));
     await locationRepo.add({'kingdomid' : input.kingdomId, 'code' : input.countryCode});
     return returnObject(input,kingdomBase);
   } catch(error) {
@@ -64,7 +64,7 @@ const add = async (input) => {
 
 const get = async () => {
   try {
-    const kingdomsData = (await kingdomRepo.get('kingdomsData', {}));
+    const kingdomsData = (await kingdomRepo.getKingdomsData({}));
     return { kingdoms : kingdomsData };
   } catch(error) {
     if (error.validationError) return {error: 'No data.'};
