@@ -15,7 +15,6 @@ const Log = () => {
         setData(readLogEntries());
     },[]);
 
-
     return (
         <>
             <LogEntry header={true}/>

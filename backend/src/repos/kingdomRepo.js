@@ -20,15 +20,8 @@ const add = (table,params) => {
     return save(insertQueries[table],params);
 };
 
-const get = (selection,params) => {
-    return new Promise ( async (resolve,reject) => {
-        try {
-            const returnData = (await db.query(selectQueries[selection], paramsValidation(params))).results;
-            resolve ( returnData );
-        } catch(error) {
-            reject(error);
-        }
-    });
+const get = async (selection,params) => {
+    return (await db.query(selectQueries[selection], paramsValidation(params))).results;
 };
 
 export const kingdomRepo = {

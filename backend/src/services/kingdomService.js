@@ -49,33 +49,27 @@ const isKingdomLocated = async (input) => {
   if ( isLocated.length === 0 ) throw new Error('located');
 };
 
-const add = (input) => {
-    return new Promise( async (resolve,reject) => {
-        try {
-            await isKingdomLocated(input);
-            const kingdomBase = (await kingdomRepo.get('kingdomBaseData', {'kingdom_id' : input.kingdomId}));
-            await locationRepo.add({'kingdomid' : input.kingdomId, 'code' : input.countryCode});
-            resolve( returnObject(input,kingdomBase) );
-        } catch(error) {
-            if (error.message === 'located') reject('Invalid kingdom id.');
-            if (error.duplication) reject('Location is already occupied.');
-            reject(error);
-        }
-    });
+const add = async (input) => {
+  try {
+    await isKingdomLocated(input);
+    const kingdomBase = (await kingdomRepo.get('kingdomBaseData', {'kingdom_id' : input.kingdomId}));
+    await locationRepo.add({'kingdomid' : input.kingdomId, 'code' : input.countryCode});
+    return returnObject(input,kingdomBase);
+  } catch(error) {
+      if (error.message === 'located') return {error: 'Invalid kingdom id.'};
+      if (error.duplication) return {error: 'Location is already occupied.'};
+      return error;
+  }
 };
 
-const get = () => {
-    return new Promise( async (resolve,reject) => {
-        try {
-            const kingdomsData = (await kingdomRepo.get('kingdomsData', {}));
-            resolve( {
-                kingdoms : kingdomsData
-            });
-        } catch(error) {
-            if (error.validationError) reject('No data.');
-            reject(error);
-        }
-    });
+const get = async () => {
+  try {
+    const kingdomsData = (await kingdomRepo.get('kingdomsData', {}));
+    return { kingdoms : kingdomsData };
+  } catch(error) {
+    if (error.validationError) return {error: 'No data.'};
+    return error;
+  }
 };
 
 export const kingdomService = {
