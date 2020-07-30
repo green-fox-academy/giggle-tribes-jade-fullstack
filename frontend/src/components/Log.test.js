@@ -18,41 +18,41 @@ const mockBuildingProgress = [
       "subject": "mockacademy",
       "level": 2,
       "action": "upgrade",
-      "started_at": 12345789,
-      "finished_at": 12347000,
-      "progress_at": 12346980
+      "started_at": 1595962228515,
+      "finished_at": 1595962301594,
+      "progress_at": 1595962301000
   },
   {
       "subject": "mocktroop",
       "level": 1,
       "action": "build",
-      "started_at": 12345789,
-      "finished_at": 12399999,
-      "progress_at": 12348200
+      "started_at": 1595962228515,
+      "finished_at": 1595962301594,
+      "progress_at": 1595962301000
   },
   {
       "subject": "mocktroop",
       "level": 2,
       "action": "upgrade",
-      "started_at": 12345789,
-      "finished_at": 12399999,
-      "progress_at": 12399999
+      "started_at": 1595962228515,
+      "finished_at": 1595962301594,
+      "progress_at": 1595962301000
   },
   {
       "subject": "mockfarm",
       "level": 1,
       "action": "build",
-      "started_at": 12345789,
-      "finished_at": 12399999,
-      "progress_at": 12399999
+      "started_at": 1595962228515,
+      "finished_at": 1595962301594,
+      "progress_at": 1595962301000
   },
   {
       "subject": "mocktroop",
       "level": 2,
       "action": "upgrade",
-      "started_at": 12345789,
-      "finished_at": 12399999,
-      "progress_at": 12366400
+      "started_at": 1595962228515,
+      "finished_at": 1595962301594,
+      "progress_at": 1595962301000
   },
   {
       "subject": "mockfarm 7",
