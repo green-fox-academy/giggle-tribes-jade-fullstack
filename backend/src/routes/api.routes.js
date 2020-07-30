@@ -7,6 +7,7 @@ import {
   sessionController,
   resourceController,
   authController,
+  troopsController,
 } from '../controllers';
 import { resourceMiddleware } from '../middlewares/resourceMiddleware';
 import { authUser } from '../middlewares';
@@ -25,5 +26,6 @@ router.post('/auth', authController);
 router.use('/kingdom/:kingdomID', resourceMiddleware);
 
 router.get('/kingdom/:kingdomID/resource', resourceController.get);
+router.post('/kingdom/:kingdomID/troops', troopsController.post);
 
 export default router;

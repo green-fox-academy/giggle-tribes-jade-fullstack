@@ -4,3 +4,4 @@ export * from './userService';
 export * from './sessionService';
 export * from './resourceService';
 export * from './tokenService';
+export * from './troopsService';
