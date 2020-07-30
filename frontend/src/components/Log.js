@@ -1,18 +1,13 @@
 import React,{ useEffect, useState } from 'react';
 import LogEntry from './LogEntry';
-import { mockBuildingProgress } from './mockBuildingProgress';
-
-const readLogEntries = () => {
-    return mockBuildingProgress.filter( (e,i) => i < 6);
-};
-
+import { logEntryService } from '../services/logEntryService';
 
 const Log = () => {
 
     const [data, setData] = useState([]);
 
     useEffect( () => {
-        setData(readLogEntries());
+        setData(logEntryService.readLogEntries());
     },[]);
 
     return (

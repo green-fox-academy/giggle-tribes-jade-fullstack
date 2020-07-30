@@ -1,10 +1,12 @@
 import React,{ useEffect, useState } from 'react';
 import ProgressBar from './ProgressBar';
 import './LogEntry.css';
-import moment from 'moment';
 
 const constructionStart = (timestamp) => {
-    return moment(timestamp).format('hh:mm');
+    const d = new Date(timestamp);
+    const h = d.getHours();
+    const m = d.getMinutes();
+    return `${ h < 10 ? '0' + h : h }:${ m < 10 ? '0' + m : m }`;
 };
 
 const buildingMessage = (data,ready) => {
