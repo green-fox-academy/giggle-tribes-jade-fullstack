@@ -7,7 +7,7 @@ import { logEntryService } from '../services/logEntryService';
 
 const mockBuildingProgress = [
   {
-      "subject": "farm",
+      "subject": "mockfarm",
       "level": 1,
       "action": "build",
       "started_at": 1595962228515,
@@ -15,7 +15,7 @@ const mockBuildingProgress = [
       "progress_at": 1595962301000
   },
   {
-      "subject": "academy",
+      "subject": "mockacademy",
       "level": 2,
       "action": "upgrade",
       "started_at": 12345789,
@@ -23,7 +23,7 @@ const mockBuildingProgress = [
       "progress_at": 12346980
   },
   {
-      "subject": "troop",
+      "subject": "mocktroop",
       "level": 1,
       "action": "build",
       "started_at": 12345789,
@@ -31,7 +31,7 @@ const mockBuildingProgress = [
       "progress_at": 12348200
   },
   {
-      "subject": "troop",
+      "subject": "mocktroop",
       "level": 2,
       "action": "upgrade",
       "started_at": 12345789,
@@ -39,7 +39,7 @@ const mockBuildingProgress = [
       "progress_at": 12399999
   },
   {
-      "subject": "farm",
+      "subject": "mockfarm",
       "level": 1,
       "action": "build",
       "started_at": 12345789,
@@ -47,7 +47,7 @@ const mockBuildingProgress = [
       "progress_at": 12399999
   },
   {
-      "subject": "troop",
+      "subject": "mocktroop",
       "level": 2,
       "action": "upgrade",
       "started_at": 12345789,
@@ -55,7 +55,7 @@ const mockBuildingProgress = [
       "progress_at": 12366400
   },
   {
-      "subject": "farm 7",
+      "subject": "mockfarm 7",
       "level": 1,
       "action": "build",
       "started_at": 12345789,
@@ -80,7 +80,7 @@ afterEach(() => {
 it('matches snapshot', async () => {
   logEntryService.readLogEntries.mockImplementation(() => {
     return mockBuildingProgress.filter( (e,i) => i < 6).map( e => {
-      e.started_at = (new Date(e.started_at)).toUTCString();
+      e.started_at = (e.started_at + new Date().getTimezoneOffset()*60*1000);
       return e;
     });
   });
