@@ -1,7 +1,7 @@
 import request from 'supertest';
 
-jest.mock('../src/repos/repoSave');
-import { repo } from '../src/repos/repoSave';
+jest.mock('../src/repos/userRepo');
+import { userRepo } from '../src/repos/userRepo';
 import app from '../src/app';
 import {
   getResourceForKingdom,
@@ -14,8 +14,8 @@ class validationError extends Error {
     super();
     this.validationError = `This is a mocked error.`;
   }
-}
-repo.save.mockImplementation(() => {
+};
+userRepo.add.mockImplementation( () => {
   throw new validationError();
 });
 getResourceForKingdom.mockImplementation(async () => {

@@ -6,6 +6,7 @@ const Login = () => {
         <>
         <p>Login screen.</p>
         <Link to='/kingdom'>kingdom</Link>
+        <Link to='/kingdom/map'>kingdom's map</Link>
         </>
     );
 };

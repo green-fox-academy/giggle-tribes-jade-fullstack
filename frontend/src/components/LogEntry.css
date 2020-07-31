@@ -1,0 +1,38 @@
+.logentry div.img {
+    background-image: url('/icons/constructionLog.png');
+    width: 4em;
+    height: 4em;
+    background-size: cover;
+}
+
+.logentry {
+    display: flex;
+    width: 30em;
+    background-color: #23232383;
+    margin-bottom: 0.5em;
+}
+
+.logentry h2,
+.logentry h3,
+.logentry p {
+    margin: 0;
+    padding: 0;
+}
+
+.logentry section {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex-grow: 1;
+    padding: 0.5em;
+}
+.logentry section.head {
+    justify-content: center;
+}
+
+.logentry section header {
+    display: flex;
+    justify-content: space-between; 
+}
+
+

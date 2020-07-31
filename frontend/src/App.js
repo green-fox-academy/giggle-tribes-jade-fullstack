@@ -7,6 +7,9 @@ import Header from './components/header/Header';
 import Resource from './components/resource/Resource';
 import Menu from './components/Menu';
 import Login from './components/Login';
+import Map from './components/Map';
+import Log from './components/Log';
+
 
 function App() {
   const kingdomName = 'Dummy';
@@ -22,6 +25,9 @@ function App() {
           <Route path="/login">
             <Login />
           </Route>
+          <Route exact path='/kingdom/map'>
+            <Map kingdomId='5'/>
+          </Route>
           <Route path="/kingdom">
             <Menu menuItems={menuItems} />
             {menuItems.map(menuItem => (
@@ -31,6 +37,7 @@ function App() {
                 render={() => <menuItem.component name={menuItem.name} />}
               />
             ))}
+            <Log />
             <Resource kingdomID={kingdomID} />
           </Route>
         </Switch>
