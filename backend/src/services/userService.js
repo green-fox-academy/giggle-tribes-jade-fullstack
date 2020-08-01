@@ -1,4 +1,5 @@
-import { repo } from '../repos/repoSave';
+import { userRepo } from '../repos/userRepo';
+import { kingdomRepo } from '../repos/kingdomRepo';
 import { getUser, getKingdomIdForUser } from '../repos/user';
 import { resourceService } from './resourceService';
 
@@ -11,37 +12,29 @@ const filterInput = input => {
   return '';
 };
 
-const add = input => {
-  return new Promise( async (resolve, reject) => {
-    const invalidInput = filterInput(input);
-    if (invalidInput) {
-      reject(invalidInput);
-    } else {
-      try {
-        const userid = await repo.save('user', {
-          username: input.username,
-          password: input.password,
-        });
-        const kingdomid = await repo.save('kingdom', {
-          kingdomname: input.kingdomname,
-        });
-        resourceService.createResource({ kingdomID: kingdomid });
-        repo.save('user_kingdom', {
-          userid: userid,
-          kingdomid: kingdomid,
-        });
-        resolve({
-          id: userid,
-          username: input.username,
-          kingdomId: kingdomid,
-        });
-      } catch (error) {
-        if (error.duplication) reject('Username is already taken.');
-        if (error.validationError) reject(error.validationError);
-        reject(error);
-      }
-    }
-  });
+const add = (input) => {
+    return new Promise( async (resolve,reject) => {
+        const invalidInput = filterInput(input);
+        if ( invalidInput ) {
+            reject(invalidInput);
+        } else {
+            try {
+                const userid = await userRepo.add({'username' : input.username, 'password' : input.password});
+                const kingdomid = await kingdomRepo.add('kingdom', {'kingdomname' : input.kingdomname});
+                await kingdomRepo.add('user_kingdom', {'userid' : userid, 'kingdomid' : kingdomid});
+                await resourceService.createResource({ kingdomID: kingdomid });
+                resolve({
+                    'id' : userid,
+                    'username' : input.username,
+                    'kingdomId' : kingdomid
+                });
+            } catch(error) {
+                if (error.duplication) reject('Username is already taken.');
+                if (error.validationError) reject(error.validationError);
+                reject(error);
+            }
+        }
+    });
 };
 
 const get = async ({ username, password }) => {

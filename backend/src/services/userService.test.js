@@ -1,13 +1,14 @@
 import { userService } from './userService';
+jest.mock('../repos/userRepo');
+jest.mock('../repos/kingdomRepo');
+import { userRepo } from '../repos/userRepo';
+import { kingdomRepo } from '../repos/kingdomRepo';
 import { getUser, getKingdomIdForUser } from '../repos/user';
 jest.mock('../repos/user');
-import { repo } from '../repos/repoSave';
-jest.mock('../repos/repoSave');
-import {
-  getResourceForKingdom,
-  insertResourceForKingdom,
-} from '../repos/resource';
+import { getResourceForKingdom, insertResourceForKingdom } from '../repos/resource';
 jest.mock('../repos/resource');
+import { resourceService } from './resourceService';
+jest.mock('./resourceService');
 
 const input = {
   username: 'username',
@@ -22,7 +23,7 @@ class ExistingUserError extends Error {
   }
 }
 test('existing user error', async () => {
-  repo.save.mockImplementation(() => {
+  userRepo.add.mockImplementation( () => {
     throw new ExistingUserError();
   });
   try {
@@ -33,12 +34,14 @@ test('existing user error', async () => {
 });
 
 test('new user and kingdom added', async () => {
-  repo.save.mockImplementation(() => 2);
+  resourceService.createResource.mockImplementation( () => '' );
+  userRepo.add.mockImplementation( () => 2 );
+  kingdomRepo.add.mockImplementation( () => 3 );
   const result = await userService.add(input);
   expect(result).toEqual({
-    id: 2,
-    kingdomId: 2,
-    username: 'username',
+    "id": 2,
+    "kingdomId": 3,
+    "username": "username"
   });
 });
 

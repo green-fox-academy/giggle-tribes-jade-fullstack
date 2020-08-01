@@ -42,6 +42,3 @@ it('password field is less then 8 chars line is red', async() =>{
     fireEvent.change(passwordField, {target: {value: "1234567"}})
     expect(passwordField.className).toBe("red")
 });
-
-
-
