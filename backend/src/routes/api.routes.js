@@ -32,7 +32,7 @@ router.post('/auth', authController);
 
 router.get('/kingdoms/:kingdomID/resource', resourceController.get);
 
-router.post('/kingdoms/:kingdomID/buildings', buildingsController.post);
+router.post('/kingdoms/:kingdomId/buildings', buildingsController.post);
 
 
 export default router;
