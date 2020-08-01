@@ -7,7 +7,8 @@ import {
   sessionController,
   resourceController,
   authController,
-  kingdomController
+  kingdomController,
+  buildingsController
 } from '../controllers';
 import { resourceMiddleware } from '../middlewares/resourceMiddleware';
 import { authUser } from '../middlewares';
@@ -20,15 +21,18 @@ router.use(bodyParser.json());
 
 router.get('/hello', helloController.get);
 router.post('/sessions', sessionController.post);
-router.post('/users', userController.add);
+router.post('/users', userController.post);
 
-router.post('/kingdoms/:kingdomId/map', kingdomController.add);
+router.post('/kingdoms/:kingdomId/map', kingdomController.post);
 router.get('/kingdoms/map', kingdomController.get);
 
 router.use(authUser);
 router.post('/auth', authController);
-router.use('/kingdom/:kingdomID', resourceMiddleware);
+//router.use('/kingdoms/:kingdomID', resourceMiddleware);
 
-router.get('/kingdom/:kingdomID/resource', resourceController.get);
+router.get('/kingdoms/:kingdomID/resource', resourceController.get);
+
+router.post('/kingdoms/:kingdomID/buildings', buildingsController.post);
+
 
 export default router;

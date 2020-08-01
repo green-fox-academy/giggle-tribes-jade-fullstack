@@ -11,7 +11,7 @@ export default function Resource({ kingdomID }) {
   const [goldAmount, setGoldAmount] = useState(null);
 
   const getResources = async kingdomID => {
-    await fetch(`http://localhost:5000/api/kingdom/${kingdomID}/resource`, {
+    await fetch(`http://localhost:5000/api/kingdoms/${kingdomID}/resource`, {
       headers: {
         'Content-Type': 'application/json',
         TRIBES_TOKEN: localStorage.getItem('TRIBES_TOKEN'),
