@@ -1,4 +1,5 @@
 import { kingdomRepo } from '../repos/kingdomRepo';
+import { buildingRepo } from '../repos/buildingRepo';
 import { resourceService } from './resourceService';
 
 const errorMessages = {
@@ -8,16 +9,36 @@ const errorMessages = {
   invalidId: 4
 };
 
-const buildingData = (data) => ({
-  "id" : 2,
-  "type" : data.type,
-  "level": 1,
-  "hp": 1,
-  "started_at": 12345789,
-  "finished_at": 12399999
+const defaultData = {
+  farm : { hp : 1, cost : 100, time : 60000 },
+  mine : { hp : 1, cost : 100, time : 60000 },
+  academy : { hp : 1, cost : 100, time : 60000 }
+}
+
+const buildingData = (data) => {
+  const start = new Date();
+  const finish = new Date( start.getTime() + defaultData[data.type].time );
+  return {
+    id : null,
+    kingdomId : data.kingdomId,
+    type : data.type,
+    level : 1,
+    hp : defaultData[data.type].hp,
+    started_at : start.toLocaleString(),
+    finished_at : finish.toLocaleString()
+    }
+};
+
+const formatData = (id,data) => ({
+  id : id,
+  kingdomId : data.kingdomId,
+  type : data.type,
+  level : data.level,
+  hp : data.hp,
+  started_at : new Date(data.started_at).getTime(),
+  finished_at : new Date(data.finished_at).getTime()
 });
 
-const buildCost = 100;
 
 const validateType = (type) => {
   if( !type ) throw new Error(errorMessages.missingType);
@@ -29,18 +50,20 @@ const validateKingdomId = async (id) => {
   if ( kingdomBase.length === 0 ) throw new Error(errorMessages.invalidId);
 };
 
-const validateGoldAmount = async (id) => {
+const validateGoldAmount = async (id,type) => {
   const resources = await resourceService.getResource(id);
   const gold = resources.resources.filter(e => e.type === 'gold')[0].amount;
-  if ( gold < buildCost ) throw new Error(errorMessages.notEnoughGold);
+  if ( gold < defaultData[type].cost ) throw new Error(errorMessages.notEnoughGold);
 };
 
 
 const add = async (input) => {
     validateType(input.type);
     await validateKingdomId(input.kingdomId);
-    await validateGoldAmount({kingdomID:input.kingdomId});
-    return buildingData(input);
+    await validateGoldAmount({kingdomID:input.kingdomId},input.type);
+    const buildingDataInput = buildingData(input);
+    const buildingId = await buildingRepo.add( buildingDataInput );
+    return formatData(buildingId,buildingDataInput);
 };
 
 export const buildingService = {
