@@ -111,6 +111,10 @@ export const resourceService = {
 
 
 export const updateAmount = async (input) => {
-  const changedRows = (await resourceRepo.updateAmount({'amount' : input.amount, 'kingdom_id' : input.kingdomId, 'type' : input.type}) ).changedRows;
+  const changedRows = (await resourceRepo.updateAmount({amount: input.amount, kingdom_id : input.kingdomId, type : input.type}) ).changedRows;
+  if (changedRows === 0) throw new Error('Data not found.');
+};
+export const updateGeneration = async (input) => {
+  const changedRows = (await resourceRepo.updateGeneration({generation: input.generation, kingdom_id : input.kingdomId, type : input.type}) ).changedRows;
   if (changedRows === 0) throw new Error('Data not found.');
 };

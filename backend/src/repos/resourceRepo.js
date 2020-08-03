@@ -4,6 +4,8 @@ import { paramsValidation } from './repoValidation';
 const updateQueries = {
     Amount :
     'UPDATE kingdom_resource SET amount=?, updatedAt=now() WHERE kingdom_id=? AND type =?',
+    Generation :
+    'UPDATE kingdom_resource SET generation=?, updatedAt=now() WHERE kingdom_id=? AND type =?',
 };
 
 const update = async (table,params) => {

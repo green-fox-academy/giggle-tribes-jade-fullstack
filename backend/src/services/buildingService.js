@@ -1,6 +1,6 @@
 import { kingdomRepo } from '../repos/kingdomRepo';
 import { buildingRepo } from '../repos/buildingRepo';
-import { resourceService, updateAmount } from './resourceService';
+import { resourceService, updateAmount, updateGeneration } from './resourceService';
 
 const errorMessages = {
   missingType: 1,
@@ -10,9 +10,9 @@ const errorMessages = {
 };
 
 const defaultData = {
-  farm : { hp : 1, cost : 100, time : 60000 },
-  mine : { hp : 1, cost : 100, time : 60000 },
-  academy : { hp : 1, cost : 100, time : 60000 }
+  farm : { hp : 1, cost : 100, time : 60000, gen : 5, genType : 'food' },
+  mine : { hp : 1, cost : 100, time : 60000, gen : 5, genType : 'gold' },
+  academy : { hp : 1, cost : 100, time : 60000, gen : 0, genType : '-' }
 }
 
 const buildingData = (data) => {
@@ -50,21 +50,30 @@ const validateKingdomId = async (id) => {
   if ( kingdomBase.length === 0 ) throw new Error(errorMessages.invalidId);
 };
 
-const validateGoldAmount = async (id,type) => {
+const checkResources = async (id,type) => {
   const resources = await resourceService.getResource(id);
   const gold = resources.resources.filter(e => e.type === 'gold')[0].amount;
+  let generation = {};
+  generation.mine = resources.resources.filter(e => e.type === 'gold')[0].generation;
+  generation.farm = resources.resources.filter(e => e.type === 'food')[0].generation;
+  generation.academy = 0;
   if ( gold < defaultData[type].cost ) throw new Error(errorMessages.notEnoughGold);
-  return gold - defaultData[type].cost;
+  return {
+    amount: gold - defaultData[type].cost,
+    generation: generation[type] + defaultData[type].gen,
+    genType: defaultData[type].genType
+  };
 };
 
 
 const add = async (input) => {
     validateType(input.type);
     await validateKingdomId(input.kingdomId);
-    const goldAmount = await validateGoldAmount({kingdomID:input.kingdomId},input.type);
+    const resources = await checkResources({kingdomID:input.kingdomId},input.type);
     const buildingDataInput = buildingData(input);
     const buildingId = await buildingRepo.add( buildingDataInput );
-    await updateAmount({kingdomId:input.kingdomId,type:'gold',amount:goldAmount});
+    await updateAmount({kingdomId:input.kingdomId,type:'gold',amount:resources.amount});
+    if (input.type !== 'academy') await updateGeneration({kingdomId:input.kingdomId,type:resources.genType,generation:resources.generation});
     return formatData(buildingId,buildingDataInput);
 };
 
