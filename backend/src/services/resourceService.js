@@ -1,8 +1,9 @@
 import {
   getResourceForKingdom,
   updateResourceForKingdom,
-  insertResourceForKingdom,
+  insertResourceForKingdom
 } from '../repos/resource';
+import { resourceRepo } from '../repos/resourceRepo';
 
 const calculateTimeDifference = async updatedAt => {
   const currentTime = new Date();
@@ -106,4 +107,10 @@ export const resourceService = {
       throw { error: 'Kingdom ID is required.' };
     }
   },
+};
+
+
+export const updateAmount = async (input) => {
+  const changedRows = (await resourceRepo.updateAmount({'amount' : input.amount, 'kingdom_id' : input.kingdomId, 'type' : input.type}) ).changedRows;
+  if (changedRows === 0) throw new Error('Data not found.');
 };
