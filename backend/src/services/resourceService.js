@@ -110,11 +110,18 @@ export const resourceService = {
 };
 
 
-export const updateAmount = async (input) => {
-  const changedRows = (await resourceRepo.updateAmount({amount: input.amount, kingdom_id : input.kingdomId, type : input.type}) ).changedRows;
-  if (changedRows === 0) throw new Error('Data not found.');
-};
-export const updateGeneration = async (input) => {
-  const changedRows = (await resourceRepo.updateGeneration({generation: input.generation, kingdom_id : input.kingdomId, type : input.type}) ).changedRows;
+export const updateResources = async (kingdomId,{cost,genAdd,genType}) => {
+  const resources = await getResourceForKingdom(kingdomId);
+  const amount = resources.filter(e => e.type === 'gold')[0].amount;
+  const generation = (genType !== '-') ? resources.filter(e => e.type === genType)[0].generation : 0;
+  let changedRows = 0;
+  console.log(genType)
+  if (genType === '-') changedRows = (await resourceRepo.updateAmount({amount: amount-cost, kingdom_id : kingdomId, type : 'gold'}) ).changedRows;
+  if (genType === 'gold') changedRows = (await resourceRepo.updateAmountAndGeneration({amount: amount-cost, generation: generation+genAdd, kingdom_id : kingdomId, type : 'gold'}) ).changedRows;
+  if (genType === 'food') {
+    changedRows = (await resourceRepo.updateAmount({amount: amount-cost, kingdom_id : kingdomId, type : 'gold'}) ).changedRows;
+    if (changedRows === 0) throw new Error('Data not found.');
+    changedRows = (await resourceRepo.updateGeneration({generation: generation+genAdd, kingdom_id : kingdomId, type : 'food'}) ).changedRows;
+  }
   if (changedRows === 0) throw new Error('Data not found.');
 };

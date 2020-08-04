@@ -2,6 +2,8 @@ import {db} from '../data/connection';
 import { paramsValidation } from './repoValidation';
 
 const updateQueries = {
+    AmountAndGeneration :
+    'UPDATE kingdom_resource SET amount=?, generation=?, updatedAt=now() WHERE kingdom_id=? AND type =?',
     Amount :
     'UPDATE kingdom_resource SET amount=?, updatedAt=now() WHERE kingdom_id=? AND type =?',
     Generation :

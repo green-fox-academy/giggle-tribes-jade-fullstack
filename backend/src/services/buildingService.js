@@ -1,6 +1,6 @@
 import { kingdomRepo } from '../repos/kingdomRepo';
 import { buildingRepo } from '../repos/buildingRepo';
-import { resourceService, updateAmount, updateGeneration } from './resourceService';
+import { resourceService, updateResources } from './resourceService';
 
 const errorMessages = {
   missingType: 1,
@@ -50,17 +50,13 @@ const validateKingdomId = async (id) => {
   if ( kingdomBase.length === 0 ) throw new Error(errorMessages.invalidId);
 };
 
-const checkResources = async (id,type) => {
+const validateBuild = async (id,type) => {
   const resources = await resourceService.getResource(id);
   const gold = resources.resources.filter(e => e.type === 'gold')[0].amount;
-  let generation = {};
-  generation.mine = resources.resources.filter(e => e.type === 'gold')[0].generation;
-  generation.farm = resources.resources.filter(e => e.type === 'food')[0].generation;
-  generation.academy = 0;
   if ( gold < defaultData[type].cost ) throw new Error(errorMessages.notEnoughGold);
   return {
-    amount: gold - defaultData[type].cost,
-    generation: generation[type] + defaultData[type].gen,
+    cost: defaultData[type].cost,
+    genAdd: defaultData[type].gen,
     genType: defaultData[type].genType
   };
 };
@@ -69,11 +65,10 @@ const checkResources = async (id,type) => {
 const add = async (input) => {
     validateType(input.type);
     await validateKingdomId(input.kingdomId);
-    const resources = await checkResources({kingdomID:input.kingdomId},input.type);
+    const resourcesData = await validateBuild({kingdomID:input.kingdomId},input.type);
     const buildingDataInput = buildingData(input);
     const buildingId = await buildingRepo.add( buildingDataInput );
-    await updateAmount({kingdomId:input.kingdomId,type:'gold',amount:resources.amount});
-    if (input.type !== 'academy') await updateGeneration({kingdomId:input.kingdomId,type:resources.genType,generation:resources.generation});
+    await updateResources(input.kingdomId,resourcesData);
     return formatData(buildingId,buildingDataInput);
 };
 
