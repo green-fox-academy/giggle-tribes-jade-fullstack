@@ -1,11 +1,11 @@
 import React from 'react';
 import './AddBuildingButton.css';
 
-const AddBuildingButton = ({type}) => {
+const AddBuildingButton = ({buildingData,onClick,goldAmount}) => {
     return (
-        <div className='button'>
-            <div className={'buttonimage ' + type}></div>
-            <h4>Add {type.charAt(0).toUpperCase() + type.slice(1)}</h4>
+        <div className='button' onClick={() => onClick(buildingData,goldAmount)}>
+            <div className={'buttonimage ' + buildingData.type}></div>
+            <h4>Add {buildingData.type.charAt(0).toUpperCase() + buildingData.type.slice(1)}</h4>
         </div>
     );
 };

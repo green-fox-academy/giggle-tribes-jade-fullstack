@@ -1,24 +1,37 @@
-import React from 'react';
+import React,{ useState } from 'react';
 import AddBuildingButton from './AddBuildingButton';
 import './AddBuilding.css';
+import addBuildingService from '../../services/addBuildingService';
 
 const buttons = [
-    { type: 'farm' },
-    { type: 'mine' },
-    { type: 'academy' }
+    { type: 'farm', cost: 1000 },
+    { type: 'mine', cost: 100 },
+    { type: 'academy', cost: 100 }
 ];
 
-const onButtonClick = (type) => {
-    alert(type);
-};
+const AddBuilding = ({goldAmount,kingdomId}) => {
 
-const AddBuilding = ({goldAmount}) => {
+    const [error, setError] = useState(false);
+
+    const onButtonClick = (buildingData,goldAmount) => {
+        if (error) setError(false);
+        if (buildingData.cost > goldAmount) {
+            setError(true);
+        } else {
+            console.log( addBuildingService(kingdomId,buildingData.type) );
+        }
+    };
+
+    const onErrorClick = () => {
+        if (error) setError(false);
+    };
 
     return (
         <section className='add_building'>
-            {buttons.map( (button,i) => (
-                <AddBuildingButton key={i} type={button.type} onClick={ () => onButtonClick(button.type) }/>
+            {buttons.map( (buildingData,i) => (
+                <AddBuildingButton key={i} buildingData={buildingData} goldAmount={goldAmount} onClick={onButtonClick}/>
             ))}
+            <p className={error ? 'error visible' : 'error nonvisible'} onClick={onErrorClick} >Not enough gold.</p>
         </section>
     );
 };

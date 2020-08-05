@@ -41,7 +41,7 @@ function App() {
             ))}
             <Log />
             <Resource kingdomID={kingdomID} />
-            <AddBuilding goldAmount={goldAmount} />
+            <AddBuilding goldAmount={goldAmount} kingdomId={kingdomID}/>
           </Route>
         </Switch>
       </Router>
