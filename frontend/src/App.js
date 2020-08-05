@@ -9,11 +9,13 @@ import Menu from './components/Menu';
 import Login from './components/Login';
 import Map from './components/Map';
 import Log from './components/Log';
-
+import AddBuilding from './components/buildings/AddBuilding';
 
 function App() {
   const kingdomName = 'Dummy';
   const kingdomID = 1;
+  localStorage.setItem('TRIBES_TOKEN', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOjMsImtpbmdkb21JRCI6NCwiaWF0IjoxNTk2MDU0OTE1fQ.-CZDK-BlkE24wWk4lCpEOp6WcGJMMNJTap0vSQKK8NA');
+  const goldAmount = 500;
   return (
     <div className="App">
       <Header kingdomName={kingdomName} />
@@ -39,6 +41,7 @@ function App() {
             ))}
             <Log />
             <Resource kingdomID={kingdomID} />
+            <AddBuilding goldAmount={goldAmount} />
           </Route>
         </Switch>
       </Router>

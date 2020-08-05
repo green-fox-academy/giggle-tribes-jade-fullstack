@@ -1,0 +1,31 @@
+.button {
+    background-color: #eee;
+    width: 7em;
+    height: 6em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+}
+
+.buttonimage {
+    width: 4em;
+    height: 4em;
+    background-size: cover;
+}
+
+.button h4 {
+    margin: 0;
+    padding: 0;
+}
+
+.buttonimage.farm {
+    background-image: url('/icons/addfarm.png');
+}
+.buttonimage.mine {
+    background-image: url('/icons/addmine.png');
+}
+.buttonimage.academy {
+    background-image: url('/icons/addacademy.png');
+}
