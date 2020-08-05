@@ -1,0 +1,45 @@
+body{
+  background-image: url("/bg3-01.png");
+  background-color: black;
+  background-position: center;
+}
+
+
+.buildingList {
+  flex-wrap: wrap;
+}
+
+.building {
+  font-size: large;
+  text-align: center;
+  padding: 5px;
+}
+
+.images {
+  border: 1px solid white;
+  border-radius: 11%;
+  height: 170px;
+}
+
+.buildingTitle {
+  padding-top: 8px;
+}
+
+.button,
+.buildingListButton {
+  margin: 15px;
+  border: none;
+  background-color: transparent;
+}
+
+.button .images {
+  border: 1px solid white;
+  border-radius: 100%;
+  height: 170px;
+  margin: 5px;
+}
+
+.button:focus {
+  outline: none;
+  border: none;
+}
