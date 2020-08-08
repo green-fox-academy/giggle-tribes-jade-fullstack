@@ -28,7 +28,7 @@ router.get('/kingdoms/map', kingdomController.get);
 
 router.use(authUser);
 router.post('/auth', authController);
-//router.use('/kingdoms/:kingdomID', resourceMiddleware);
+router.use('/kingdoms/:kingdomID', resourceMiddleware);
 
 router.get('/kingdoms/:kingdomID/resource', resourceController.get);
 

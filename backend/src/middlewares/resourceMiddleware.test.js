@@ -1,6 +1,8 @@
 import { resourceMiddleware } from './resourceMiddleware';
 import { getResourceForKingdom } from '../repos/resource';
 jest.mock('../repos/resource');
+import { resourceService } from '../services/resourceService';
+jest.mock('../services/resourceService');
 
 const mockResponse = () => {
   const res = {};
@@ -17,21 +19,20 @@ test('Resource Middleware is a function', async () => {
 });
 
 test('Update failed. Kingdom ID is required.', async () => {
+  resourceService.updateResource.mockImplementation(() => { throw new Error ('KingdomId is required.') });
   const req = { params: {} };
   const res = mockResponse();
   const next = jest.fn();
   await resourceMiddleware(req, res, next);
   expect(res.status).toHaveBeenCalledWith(400);
   expect(res.json).toHaveBeenCalledWith({
-    error: 'Kingdom ID is required.',
+    error: 'KingdomId is required.',
   });
   expect(next).not.toHaveBeenCalled();
 });
 
 test('Update failed. Resource for this kingdom not found.', async () => {
-  getResourceForKingdom.mockImplementation(async () => {
-    return Promise.resolve([]);
-  });
+  resourceService.updateResource.mockImplementation(() => { throw new Error ('UpdateResource failed. Resource for this kingdom not found.') });
   const req = { params: { kingdomID: 1 } };
   const res = mockResponse();
   const next = jest.fn();
@@ -60,6 +61,7 @@ test('Resource Middleware is ok and next is called', async () => {
       },
     ]);
   });
+  resourceService.updateResource.mockImplementation(() => { message: 'UpdateResource successful' });
   const req = { params: { kingdomID: 1 } };
   const res = {};
   const next = jest.fn();

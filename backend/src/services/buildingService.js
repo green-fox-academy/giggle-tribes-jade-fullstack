@@ -1,6 +1,6 @@
 import { kingdomRepo } from '../repos/kingdomRepo';
 import { buildingRepo } from '../repos/buildingRepo';
-import { resourceService, updateResources } from './resourceService';
+import { resourceService } from './resourceService';
 
 const errorMessages = {
   missingType: 1,
@@ -68,7 +68,7 @@ const add = async (input) => {
     const resourcesData = await validateBuild({kingdomID:input.kingdomId},input.type);
     const buildingDataInput = buildingData(input);
     const buildingId = await buildingRepo.add( buildingDataInput );
-    await updateResources(input.kingdomId,resourcesData);
+    await resourceService.updateResource(input.kingdomId,resourcesData);
     return formatData(buildingId,buildingDataInput);
 };
 
