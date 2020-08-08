@@ -4,42 +4,16 @@ body{
   background-position: center;
 }
 
+.buildingBox{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
 .buildingList {
   flex-wrap: wrap;
+  background-color: rgba(190, 190, 190, 0.61);
+  margin: 50px;
+  padding: 75px;
 }
 
-.building {
-  font-size: large;
-  text-align: center;
-  padding: 5px;
-}
-
-.images {
-  border: 1px solid white;
-  border-radius: 11%;
-  height: 170px;
-}
-
-.buildingTitle {
-  padding-top: 8px;
-}
-
-.button,
-.buildingListButton {
-  margin: 15px;
-  border: none;
-  background-color: transparent;
-}
-
-.button .images {
-  border: 1px solid white;
-  border-radius: 100%;
-  height: 170px;
-  margin: 5px;
-}
-
-.button:focus {
-  outline: none;
-  border: none;
-}
