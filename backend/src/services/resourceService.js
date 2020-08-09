@@ -76,27 +76,29 @@ const updateResourceByType = async (kingdomId, cost, genAdd, {type, amount, gene
   if (changedRows === 0) throw new Error('Data not found.');
 };
 
+const typeParams = (kingdomId, cost, genAdd, resources) => ({
+  '-': [
+    [ kingdomId, cost, 0, resources.filter(e => e.type === 'gold')[0] ]
+  ],
+  'gold': [
+    [ kingdomId, cost, genAdd, resources.filter(e => e.type === 'gold')[0] ]
+  ],
+  'food': [
+    [ kingdomId, cost, 0, resources.filter(e => e.type === 'gold')[0] ],
+    [ kingdomId, 0, genAdd, resources.filter(e => e.type === 'food')[0] ]
+  ],
+  'default': [
+    [ kingdomId, null, 0, resources.filter(e => e.type === 'gold')[0] ],
+    [ kingdomId, null, 0, resources.filter(e => e.type === 'food')[0]  ]
+  ]
+});
+
 const updateResource = async (kingdomId,{cost,genAdd,genType}) => {
   if(!kingdomId) throw new Error ('KingdomId is required.');
   const resources = await getResourceForKingdom(kingdomId);
   if (resources.length === 0) throw new Error ('UpdateResource failed. Resource for this kingdom not found.');
-  switch (genType) {
-    case '-':
-      await updateResourceByType(kingdomId, cost, 0, resources.filter(e => e.type === 'gold')[0]);
-      break;
-    case 'gold':
-      await updateResourceByType(kingdomId, cost, genAdd, resources.filter(e => e.type === 'gold')[0]);
-      break;
-    case 'food':
-      await updateResourceByType(kingdomId, cost, 0, resources.filter(e => e.type === 'gold')[0]);
-      await updateResourceByType(kingdomId, 0, genAdd, resources.filter(e => e.type === 'food')[0]);
-      break;
-    default:
-      await updateResourceByType(kingdomId, null, 0, resources.filter(e => e.type === 'gold')[0]);
-      await updateResourceByType(kingdomId, null, 0, resources.filter(e => e.type === 'food')[0]);
-      break;
-  }
-  return { message: 'UpdateResource successful' };
+  const type = genType ? genType : 'default';
+  typeParams(kingdomId, cost, genAdd, resources)[type].forEach( async params => await updateResourceByType(...params) );
 };
 
 
