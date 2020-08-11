@@ -1,7 +1,7 @@
 import { save } from './repoSave';
 
 const insertQueries = {
-    user : 'INSERT INTO user (name,password) VALUES(?,?)',
+    user : 'INSERT INTO users (name,password) VALUES(?,?)',
 };
 
 const add = (params) => {

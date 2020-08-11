@@ -3,17 +3,17 @@ import { save } from './repoSave';
 import { paramsValidation } from './repoValidation';
 
 const insertQueries = {
-    kingdom : 'INSERT INTO kingdom (name) VALUES(?)',
-    user_kingdom : 'INSERT INTO user_kingdom (user_id,kingdom_id) VALUES(?,?)'
+    kingdom : 'INSERT INTO kingdoms (name) VALUES(?)',
+    user_kingdom : 'INSERT INTO users_kingdoms (user_id,kingdom_id) VALUES(?,?)'
 };
 
 const selectQueries = {
     KingdomNullLocation :
-    'SELECT kingdom.id kingdomid, location.id locationid FROM kingdom LEFT JOIN location ON location.kingdom_id = kingdom.id WHERE kingdom.id = ? AND location.id is null',
+    'SELECT kingdoms.id kingdomid, locations.id locationid FROM kingdoms LEFT JOIN locations ON locations.kingdom_id = kingdoms.id WHERE kingdoms.id = ? AND locations.id is null',
     KingdomBaseData :
-    'SELECT user.id userid, kingdom.name kingdomname FROM kingdom RIGHT JOIN user_kingdom ON user_kingdom.kingdom_id = kingdom.id RIGHT JOIN user ON user.id = user_kingdom.user_id WHERE kingdom_id = ?',
+    'SELECT users.id userid, kingdoms.name kingdomname FROM kingdoms RIGHT JOIN users_kingdoms ON users_kingdoms.kingdom_id = kingdoms.id RIGHT JOIN users ON users.id = users_kingdoms.user_id WHERE kingdom_id = ?',
     KingdomsData :
-    'SELECT	kingdom.id kingdom_id, kingdom.name kingdomname, 1 population, location.code location FROM kingdom LEFT JOIN location ON location.kingdom_id = kingdom.id'
+    'SELECT	kingdoms.id kingdom_id, kingdoms.name kingdomname, 1 population, locations.code location FROM kingdoms LEFT JOIN locations ON locations.kingdom_id = kingdoms.id'
 };
 
 const add = (table,params) => {
