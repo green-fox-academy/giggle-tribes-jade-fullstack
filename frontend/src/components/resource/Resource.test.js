@@ -2,6 +2,7 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { render, unmountComponentAtNode } from 'react-dom';
 import { act } from 'react-dom/test-utils';
+import configureStore from 'redux-mock-store';
 
 import Resource from './Resource';
 import { store } from '../../store';
@@ -43,16 +44,34 @@ afterEach(() => {
 });
 
 it('should dispatch an action when rendered', async () => {
-  const dispatch = jest.fn();
+  const mockStore = configureStore([]);
+  const mockedStore = mockStore({
+    kingdom: 1,
+    resources: [
+      {
+        type: 'food',
+        amount: 57024,
+        generation: 1,
+        updatedAt: '2020-08-12T17:47:32.000Z',
+      },
+      {
+        type: 'gold',
+        amount: 57024,
+        generation: 1,
+        updatedAt: '2020-08-12T17:47:32.000Z',
+      },
+    ],
+  });
+  mockedStore.dispatch = jest.fn();
   await act(async () => {
     render(
-      <Provider store={store}>
+      <Provider store={mockedStore}>
         <Resource />
       </Provider>,
       container
     );
   });
-  expect(dispatch).toHaveBeenCalled();
+  expect(mockedStore.dispatch).toHaveBeenCalledTimes(1);
 });
 
 it('matches snapeshot', async () => {
