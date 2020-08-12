@@ -40,6 +40,7 @@ h2{
     letter-spacing: 1px;
     margin-top: 3.25rem;
     box-shadow: 0px 3px 5px #9b9b9b;
+    justify-content: flex-end;
 }
 
 .submitLine {
@@ -47,8 +48,14 @@ h2{
     justify-content: flex-end;
 }
 
-.button{
-    justify-content: flex-end;
+.errorMessage{
+    color: red;
+    font-size: 1.25rem;
+    border: 0px;
+    border-radius: 4px;
+    font-size: 1.25rem;
+    letter-spacing: 1px;
+    margin-top: 4.25rem;
 }
 
 .button:hover {
