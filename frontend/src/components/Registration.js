@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import './registration.css';
-// import render from 'react-dom';
 import { withRouter } from 'react-router-dom';
 
 
@@ -8,7 +7,6 @@ class Registration extends Component {
 
     constructor(props) {
         super(props);
-        // console.log(props)
         this.state = {
               username: '',
               password: '',
@@ -40,36 +38,33 @@ class Registration extends Component {
                 ).then(data => {
                   
                   if(data.error){
-                    alert(data.error)
+                    // console.log(data.error)
+                    history.push('/registration');
                   }else{
-                    // alert("welcome " + data)
-                   history.push('/login');
+                    history.push('/login');
                   }
-                }   
+                }
               )
         }
 
         handleUsername(e){
           let value = e.target.value;
           this.setState( prevState => (
-            {...prevState.username, username: value
-            
+            {...prevState, username: value
           }))
         }
 
         handlePassword(e){
           let value = e.target.value;
           this.setState( prevState => (
-            {...prevState.password, password: value
-            
+            {...prevState, password: value
           }))
         }
 
         handleKingdomname(e){
           let value = e.target.value;
           this.setState( prevState => (
-            {...prevState.kingdomname, kingdomname: value
-            
+            {...prevState, kingdomname: value
           }))
         }
         
@@ -88,8 +83,8 @@ class Registration extends Component {
         
 
         render() {
-
-            return (<div className="container">
+          
+          return (<div className="container">
         
             <div className="title">
             <h2>Tribes of Vulpes</h2>
