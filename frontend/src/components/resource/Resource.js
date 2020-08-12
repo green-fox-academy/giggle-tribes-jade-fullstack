@@ -57,7 +57,6 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     set: kingdomID => {
-      console.log('set was called');
       dispatch(setResources(kingdomID));
     },
   };
