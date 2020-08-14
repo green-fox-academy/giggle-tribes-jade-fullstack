@@ -10,10 +10,9 @@ import Login from './components/Login';
 import Map from './components/Map';
 import Log from './components/Log';
 
-
 function App() {
   const kingdomName = 'Dummy';
-  const kingdomID = 1;
+
   return (
     <div className="App">
       <Header kingdomName={kingdomName} />
@@ -25,20 +24,20 @@ function App() {
           <Route path="/login">
             <Login />
           </Route>
-          <Route exact path='/kingdom/map'>
-            <Map kingdomId='5'/>
+          <Route exact path="/kingdom/map">
+            <Map />
           </Route>
           <Route path="/kingdom">
             <Menu menuItems={menuItems} />
             {menuItems.map(menuItem => (
               <Route
                 key={menuItem.link}
-                path={'/kingdom' + menuItem.link}
+                path={'/fandom' + menuItem.link}
                 render={() => <menuItem.component name={menuItem.name} />}
               />
             ))}
             <Log />
-            <Resource kingdomID={kingdomID} />
+            <Resource />
           </Route>
         </Switch>
       </Router>
