@@ -8,15 +8,15 @@ import Resource from './components/resource/Resource';
 import Academy from './components/academy/Academy';
 import Menu from './components/Menu';
 import Login from './components/Login';
+import Map from './components/Map';
+import Log from './components/Log';
 
 function App() {
   const kingdomName = 'Dummy';
-  const kingdomID = 1;
+
   const academyLevel = 1;
   const troopLimit = 100;
-  const [troopAmount, setTroopAmount] = useState(null);
-  const [foodAmount, setFoodAmount] = useState(null);
-  const [goldAmount, setGoldAmount] = useState(null);
+
   return (
     <div className="App">
       <Header kingdomName={kingdomName} />
@@ -28,30 +28,21 @@ function App() {
           <Route path="/login">
             <Login />
           </Route>
+          <Route exact path="/kingdom/map">
+            <Map />
+          </Route>
           <Route path="/kingdom">
             <Menu menuItems={menuItems} />
             {menuItems.map(menuItem => (
               <Route
                 key={menuItem.link}
-                path={'/kingdom' + menuItem.link}
+                path={'/fandom' + menuItem.link}
                 render={() => <menuItem.component name={menuItem.name} />}
               />
             ))}
-            <Resource
-              kingdomID={kingdomID}
-              foodAmount={foodAmount}
-              setFoodAmount={setFoodAmount}
-              goldAmount={goldAmount}
-              setGoldAmount={setGoldAmount}
-            />
-            <Academy
-              kingdomID={kingdomID}
-              troopLimit={troopLimit}
-              goldAmount={goldAmount}
-              troopAmount={troopAmount}
-              setTroopAmount={setTroopAmount}
-              academyLevel={academyLevel}
-            />
+            <Resource />
+            <Academy troopLimit={troopLimit} academyLevel={academyLevel} />
+            <Log />
           </Route>
         </Switch>
       </Router>

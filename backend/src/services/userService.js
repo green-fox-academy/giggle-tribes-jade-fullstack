@@ -1,4 +1,5 @@
-import { repo } from '../repos/repoSave';
+import { userRepo } from '../repos/userRepo';
+import { kingdomRepo } from '../repos/kingdomRepo';
 import { getUser, getKingdomIdForUser } from '../repos/user';
 import { resourceService } from './resourceService';
 
@@ -18,18 +19,18 @@ const add = input => {
       reject(invalidInput);
     } else {
       try {
-        const userid = await repo.save('user', {
+        const userid = await userRepo.add({
           username: input.username,
           password: input.password,
         });
-        const kingdomid = await repo.save('kingdom', {
+        const kingdomid = await kingdomRepo.add('kingdom', {
           kingdomname: input.kingdomname,
         });
-        resourceService.createResource({ kingdomID: kingdomid });
-        repo.save('user_kingdom', {
+        await kingdomRepo.add('user_kingdom', {
           userid: userid,
           kingdomid: kingdomid,
         });
+        await resourceService.createResource({ kingdomID: kingdomid });
         resolve({
           id: userid,
           username: input.username,
