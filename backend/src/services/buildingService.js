@@ -15,7 +15,7 @@ const defaultData = {
   academy : { hp : 1, cost : 100, time : 60000, gen : 0, genType : '-' }
 }
 
-const buildingData = (data) => {
+const createBuildingData = (data) => {
   const start = new Date();
   const finish = new Date( start.getTime() + defaultData[data.type].time );
   return {
@@ -66,7 +66,7 @@ const add = async (input) => {
     validateType(input.type);
     await validateKingdomId(input.kingdomId);
     const resourcesData = await validateBuild({kingdomID:input.kingdomId},input.type);
-    const buildingDataInput = buildingData(input);
+    const buildingDataInput = createBuildingData(input);
     const buildingId = await buildingRepo.add( buildingDataInput );
     await resourceService.updateResource(input.kingdomId,resourcesData);
     return formatData(buildingId,buildingDataInput);

@@ -78,18 +78,18 @@ const updateResourceByType = async (kingdomId, cost, genAdd, {type, amount, gene
 
 const typeParams = (kingdomId, cost, genAdd, resources) => ({
   '-': [
-    [ kingdomId, cost, 0, resources.filter(e => e.type === 'gold')[0] ]
+    [ kingdomId, cost, 0, resources.find(e => e.type === 'gold') ]
   ],
   'gold': [
-    [ kingdomId, cost, genAdd, resources.filter(e => e.type === 'gold')[0] ]
+    [ kingdomId, cost, genAdd, resources.find(e => e.type === 'gold') ]
   ],
   'food': [
-    [ kingdomId, cost, 0, resources.filter(e => e.type === 'gold')[0] ],
-    [ kingdomId, 0, genAdd, resources.filter(e => e.type === 'food')[0] ]
+    [ kingdomId, cost, 0, resources.find(e => e.type === 'gold') ],
+    [ kingdomId, 0, genAdd, resources.find(e => e.type === 'food') ]
   ],
   'default': [
-    [ kingdomId, null, 0, resources.filter(e => e.type === 'gold')[0] ],
-    [ kingdomId, null, 0, resources.filter(e => e.type === 'food')[0]  ]
+    [ kingdomId, null, 0, resources.find(e => e.type === 'gold') ],
+    [ kingdomId, null, 0, resources.find(e => e.type === 'food') ]
   ]
 });
 

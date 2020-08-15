@@ -31,7 +31,7 @@ const AddBuilding = ({goldAmount,kingdomId}) => {
             {buttons.map( (buildingData,i) => (
                 <AddBuildingButton key={i} buildingData={buildingData} goldAmount={goldAmount} onClick={onButtonClick}/>
             ))}
-            <p className={error ? 'error visible' : 'error nonvisible'} onClick={onErrorClick} >Not enough gold.</p>
+            { error && <p className='error visible' onClick={onErrorClick} >Not enough gold.</p> }
         </section>
     );
 };
