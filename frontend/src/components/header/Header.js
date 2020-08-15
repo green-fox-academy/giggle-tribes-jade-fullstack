@@ -9,7 +9,7 @@ const loggedinHeaderItems = [
 ];
 const loggedoutHeaderItems = [
   { link: 'Login', route: '/login' },
-  { link: 'Register', route: '/register' },
+  { link: 'Register', route: '/registration' },
 ];
 
 export default function ({ kingdomName }) {
