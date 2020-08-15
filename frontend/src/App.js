@@ -13,7 +13,7 @@ import Log from './components/Log';
 
 function App() {
   const kingdomName = 'Dummy';
-  const kingdomID = 1;
+
   return (
     <div className="App">
       <Header kingdomName={kingdomName} />
@@ -40,12 +40,12 @@ function App() {
             {menuItems.map(menuItem => (
               <Route
                 key={menuItem.link}
-                path={'/kingdom' + menuItem.link}
+                path={'/fandom' + menuItem.link}
                 render={() => <menuItem.component name={menuItem.name} />}
               />
             ))}
             <Log />
-            <Resource kingdomID={kingdomID} />
+            <Resource />
           </Route>
         
         </Switch>
