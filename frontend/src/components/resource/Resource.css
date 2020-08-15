@@ -1,63 +1,3 @@
-<<<<<<< HEAD
-.resources {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
-  background-color: rgba(201, 204, 205, 0.8);
-  height: 175px;
-  width: 300px;
-}
-img {
-  height: 40px;
-  width: 40px;
-}
-
-img.resource {
-  height: 70px;
-  width: 70px;
-}
-
-.resource.farm {
-  grid-area: 1 / 1 /2 /1;
-  justify-self: center;
-  align-self: center;
-}
-.resource.food {
-  grid-area: 1 / 2 /1 /4;
-  justify-content: center;
-  align-items: flex-start;
-  display: flex;
-  flex-direction: column;
-}
-.resource.mine {
-  grid-area: 2 / 1 /2 /1;
-  justify-self: center;
-  align-self: center;
-}
-.resource.gold {
-  grid-area: 2 / 2 /2 /4;
-  align-self: center;
-  align-items: flex-start;
-  display: flex;
-  flex-direction: column;
-}
-.resource div {
-  display: flex;
-}
-img.food,
-img.gold {
-  align-self: center;
-  margin-left: 10px;
-}
-h1 {
-  margin: 0px 0px 0px 0px;
-  font-size: 40px;
-  color: #5c5e5e;
-}
-p {
-  margin: 0px 0px 0px 0px;
-}
-=======
 .resources {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
@@ -123,4 +63,3 @@ p.red {
 p.green {
   color: #66a835;
 }
->>>>>>> 0e29a74ac91b26588602107059eaa740036b78a7
