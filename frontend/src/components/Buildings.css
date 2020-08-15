@@ -17,3 +17,15 @@ body{
   padding: 75px;
 }
 
+.image{
+  height: 150%;
+}
+
+.buildings{
+  align-items: center;
+}
+
+.addBuildings{
+  align-items: center;
+}
+

@@ -19,11 +19,11 @@ function Buildings(props){
             
             <div className="buildingList">
 
-              <div>
-                <img src="../buildings/townhall.jpg" alt="townhall"></img>
-                <img src="../buildings/farm.png" alt="farm"></img>
-                <img src="../buildings/barracks.png" alt="academy"></img>
-                <img src="../buildings/mine.png" alt="mine"></img>
+              <div className="buildings">
+                <img src="../buildings/townhall.jpg" alt="townhall" className="image"></img>
+                <img src="../buildings/farm.png" alt="farm" className="image"></img>
+                <img src="../buildings/barracks.png" alt="academy" className="image"></img>
+                <img src="../buildings/mine.png" alt="mine" className="image"></img>
               </div>
 
               <div>
@@ -33,10 +33,10 @@ function Buildings(props){
                 <p>mine Level 1</p>
               </div>
             
-              <div>
-                <img src="../buildings/addfarm.png" alt="add farm"></img>
-                <img src="../buildings/addacademy.png" alt="add academy"></img>
-                <img src="../buildings/addmine.png" alt="add mine"></img>
+              <div className="addBuildings">
+                <button><img src="../buildings/addfarm.png" alt="add farm" className="image"></img></button>
+                <button><img src="../buildings/addacademy.png" alt="add academy" className="image"></img></button>
+                <button><img src="../buildings/addmine.png" alt="add mine" className="image"></img></button>
               </div>
 
               <div>
