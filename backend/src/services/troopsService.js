@@ -2,7 +2,6 @@ import { getTroopsForKingdom, insertTroopForKingdom } from '../repos/troops';
 import { resourceService } from './resourceService';
 
 const setMinutes = async (startTime, minutes) => {
-  console.log(startTime);
   return startTime.setUTCMinutes(startTime.getUTCMinutes() + minutes);
 };
 
@@ -10,19 +9,13 @@ export const troopsService = {
   async getTroops({ kingdomID }) {
     if (kingdomID) {
       const troops = await getTroopsForKingdom(kingdomID);
-      return troops;
+      return { troops: troops };
     } else {
       throw { error: 'Kingdom ID is required.' };
     }
   },
 
   async addTroop({ kingdomID }) {
-    const currentTime = new Date();
-    const startTime = new Date();
-    await setMinutes(currentTime, 1);
-    const endTime = currentTime;
-
-    const level = 1;
     let goldAmount;
     const resources = await (await resourceService.getResource({ kingdomID }))
       .resources;
@@ -33,24 +26,29 @@ export const troopsService = {
     });
     const troopLimit = 100; //need logic for building repo
     const troops = await getTroopsForKingdom(kingdomID);
-    console.log(troops);
-    if (goldAmount >= 10 && troopLimit > troops.length) {
+
+    if (goldAmount >= 10 && troopLimit > troops.troops.length) {
+      const currentTime = new Date();
+      const startTime = new Date();
+      await setMinutes(currentTime, 1);
+      const endTime = currentTime;
+
       const troop = await insertTroopForKingdom(
+        kingdomID,
         1,
-        level,
-        level,
-        level,
-        level,
+        1,
+        1,
+        1,
         startTime,
         endTime
       );
       console.log(troop);
       return {
         id: troop.insertId,
-        level: level,
-        hp: level,
-        attack: level,
-        defence: level,
+        level: 1,
+        hp: 1,
+        attack: 1,
+        defence: 1,
         started_at: startTime,
         finished_at: endTime,
       };
