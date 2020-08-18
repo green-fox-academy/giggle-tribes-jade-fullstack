@@ -32,7 +32,7 @@ const Header = ({ kingdom }) => {
   return (
     <Router>
       <nav className="header">
-        <HeaderTitle name={isToken && kingdomName} route="/buildings" />
+        <HeaderTitle name={isToken ? kingdomName : ''} route={isToken ? '/buildings' : ''}/>
         <div className="header">
           {headerItems.map((item, index) => (
             <Link className="header" key={index.toString()} to={item.route}>
