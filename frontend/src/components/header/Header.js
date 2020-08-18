@@ -21,9 +21,11 @@ const Header = ({ kingdom }) => {
   const [kingdomName, setKingdomName] = useState('');
 
   useEffect(() => {
-    fetchKingdom.get('map','')
+    if (kingdom) {
+      fetchKingdom.get('map','')
       .then( response => response.kingdoms.find( k => k.kingdom_id === kingdom ).kingdomname )
       .then( kingdomname => setKingdomName(kingdomname) );
+    }
   }, [kingdom]);
 
   if (isToken && kingdom) {

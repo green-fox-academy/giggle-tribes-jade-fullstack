@@ -3,6 +3,8 @@ import { Provider } from 'react-redux';
 import { render, unmountComponentAtNode } from 'react-dom';
 import { act } from 'react-dom/test-utils';
 import configureStore from 'redux-mock-store';
+jest.mock('../.././services/fetchKindom');
+import {fetchKingdom} from '../.././services/fetchKindom';
 
 import Header from './Header';
 import { store } from '../../store';
@@ -23,10 +25,19 @@ afterEach(() => {
 it('renders Header without crashing without token', async () => {
   const mockStore = configureStore([]);
   const mockedStore = mockStore({
+    kingdom: 1
   });
   mockedStore.dispatch = jest.fn();
   Storage.prototype.getItem = jest.fn(key => {
   });
+  fetchKingdom.get.mockImplementation( () => Promise.resolve({
+    kingdoms : [
+      {
+        kingdom_id : 1,
+        kingdomname : 'Mocked Kingdom'
+      }
+    ]
+  }) );
   await act(async () => {
     render(
     <Provider store={mockedStore}>
@@ -45,6 +56,14 @@ it('renders Header without crashing with token but without kingdomName', async (
   Storage.prototype.getItem = jest.fn(key => {
     return 'dummy_token';
   });
+  fetchKingdom.get.mockImplementation( () => Promise.resolve({
+    kingdoms : [
+      {
+        kingdom_id : 1,
+        kingdomname : 'Mocked Kingdom'
+      }
+    ]
+  }) );
   await act(async () => {
     render(
     <Provider store={mockedStore}>
@@ -64,6 +83,14 @@ it('renders Header without crashing with token and kingdomId', async () => {
     kingdom: 1
   });
   mockedStore.dispatch = jest.fn();
+  fetchKingdom.get.mockImplementation( () => Promise.resolve({
+    kingdoms : [
+      {
+        kingdom_id : 1,
+        kingdomname : 'Mocked Kingdom'
+      }
+    ]
+  }) );
   await act(async () => {
     render(
     <Provider store={mockedStore}>
@@ -83,6 +110,14 @@ it('matches snapshot without token', async () => {
     kingdom: 1
   });
   mockedStore.dispatch = jest.fn();
+  fetchKingdom.get.mockImplementation( () => Promise.resolve({
+    kingdoms : [
+      {
+        kingdom_id : 1,
+        kingdomname : 'Mocked Kingdom'
+      }
+    ]
+  }) );
   await act(async () => {
     render(
     <Provider store={mockedStore}>
@@ -102,6 +137,14 @@ it('matches snapshot with token without kingdomID', async () => {
   const mockedStore = mockStore({
   });
   mockedStore.dispatch = jest.fn();
+  fetchKingdom.get.mockImplementation( () => Promise.resolve({
+    kingdoms : [
+      {
+        kingdom_id : 1,
+        kingdomname : 'Mocked Kingdom'
+      }
+    ]
+  }) );
   await act(async () => {
     render(
     <Provider store={mockedStore}>
@@ -122,6 +165,14 @@ it('matches snapshot with token and kingdomId', async () => {
     kingdom: 1,
   });
   mockedStore.dispatch = jest.fn();
+  fetchKingdom.get.mockImplementation( () => Promise.resolve({
+    kingdoms : [
+      {
+        kingdom_id : 1,
+        kingdomname : 'Mocked Kingdom'
+      }
+    ]
+  }) );
   await act(async () => {
     render(
     <Provider store={mockedStore}>
