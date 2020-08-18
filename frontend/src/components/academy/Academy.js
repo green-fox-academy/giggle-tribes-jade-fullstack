@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import './Academy.css';
@@ -8,14 +9,10 @@ import Defence from '../../assets/troops/defence1.png';
 import Food from '../../assets/sources/FoodIcon.svg';
 import Button from './CreateTroopButton';
 
-export default function Academy({
-  kingdomID,
-  academyLevel,
-  goldAmount,
-  troopAmount,
-  setTroopAmount,
-  troopLimit,
-}) {
+function Academy({ academyLevel, error, troops }) {
+  console.log(error);
+  console.log(troops);
+
   return (
     <div className="academy">
       <img className="academy" src={Barrack} alt="academy icon" />
@@ -40,17 +37,18 @@ export default function Academy({
         <p>Academy</p>
         <p>{'Level ' + academyLevel}</p>
       </div>
-      <Button
-        kingdomID={kingdomID}
-        troopLimit={troopLimit}
-        goldAmount={goldAmount}
-        troopAmount={troopAmount}
-        setTroopAmount={setTroopAmount}
-      />
+      <Button />
+      <p>{error}</p>
     </div>
   );
 }
 
 Academy.propTypes = {
-  kingdomID: PropTypes.any.isRequired,
+  kingdom: PropTypes.any.isRequired,
 };
+
+const mapStateToProps = state => {
+  return state;
+};
+
+export default connect(mapStateToProps)(Academy);
