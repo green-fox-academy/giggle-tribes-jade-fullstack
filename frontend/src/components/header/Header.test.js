@@ -76,11 +76,16 @@ it('renders Header without crashing with token and kingdomId', async () => {
 
 it('matches snapshot without token', async () => {
   Storage.prototype.getItem = jest.fn(key => {
-    return;
+    return null;
   });
+  const mockStore = configureStore([]);
+  const mockedStore = mockStore({
+    kingdom: 1
+  });
+  mockedStore.dispatch = jest.fn();
   await act(async () => {
     render(
-    <Provider store={store}>
+    <Provider store={mockedStore}>
         <Header />
     </Provider>,
     container
