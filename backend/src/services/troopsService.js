@@ -17,9 +17,9 @@ export const troopsService = {
 
   async addTroop({ kingdomID }) {
     let goldAmount;
-    const resources = await (await resourceService.getResource({ kingdomID }))
-      .resources;
-    resources.map(resource => {
+    const resources = await resourceService.getResource({ kingdomID });
+
+    await resources.resources.map(resource => {
       if (resource.type === 'gold') {
         goldAmount = resource.amount;
       }
@@ -27,7 +27,7 @@ export const troopsService = {
     const troopLimit = 100; //need logic for building repo
     const troops = await getTroopsForKingdom(kingdomID);
 
-    if (goldAmount >= 10 && troopLimit > troops.troops.length) {
+    if (goldAmount >= 10 && troopLimit > troops.length) {
       const currentTime = new Date();
       const startTime = new Date();
       await setMinutes(currentTime, 1);
@@ -42,7 +42,7 @@ export const troopsService = {
         startTime,
         endTime
       );
-      console.log(troop);
+
       return {
         id: troop.insertId,
         level: 1,

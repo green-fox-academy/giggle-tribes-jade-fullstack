@@ -1,35 +1,31 @@
 import React from 'react';
-import Button from '@material-ui/core/Button';
+import { Button } from '@material-ui/core';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import './CreateTroopButton.css';
+import { addTroopAction } from '../../actions/TroopsActions';
+import { setErrorAction } from '../../actions/ErrorActions';
 import Troop from '../../assets/troops/addTroop-removebg-preview.png';
 import Gold from '../../assets/sources/GoldIcon.svg';
 
-export default function createTroopButton({
-  kingdomID,
-  goldAmount,
-  troopLimit,
-  troopAmount,
-  setTroopAmount,
+function createTroopButton({
+  kingdom,
+  resources,
+  buildings,
+  troops,
+  addTroop,
+  setError,
 }) {
-  const addTroop = async kingdomID => {
-    if (troopLimit > troopAmount && goldAmount > 10) {
-      await fetch(`http://localhost:5000/api/kingdom/${kingdomID}/troops`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          TRIBES_TOKEN: localStorage.getItem('TRIBES_TOKEN'),
-        },
-      })
-        .then(res => res.json())
-        .then(response => response.resources)
-        .then(resources => resources)
-        .catch(console.log);
+  const onClickAddTroop = () => {
+    const goldAmount = resources[1].amount;
+    const troopsLimit = buildings.length > 0 ? buildings[0].level * 100 : 100;
+    if (goldAmount >= 10 && troops.length < troopsLimit) {
+      addTroop(kingdom);
     } else if (goldAmount < 10) {
-      console.log("You don't have enough money.");
-    } else if (troopLimit <= troopAmount && goldAmount > 10) {
-      console.log('You reached the storage limit, upgrade Townhall first.');
+      setError("You don't have enough money.");
+    } else {
+      setError('You reached the storage limit, upgrade Townhall first.');
     }
   };
 
@@ -37,7 +33,7 @@ export default function createTroopButton({
     <Button
       className="addtroopBTN"
       onClick={() => {
-        addTroop(kingdomID);
+        onClickAddTroop();
       }}
     >
       <img className="addtroop" src={Troop} alt="troop icon" />
@@ -52,5 +48,21 @@ export default function createTroopButton({
 }
 
 createTroopButton.propTypes = {
-  kingdomID: PropTypes.any.isRequired,
+  kingdom: PropTypes.any.isRequired,
 };
+
+const mapStateToProps = state => {
+  return state;
+};
+const mapDispatchToProps = dispatch => {
+  return {
+    addTroop: kingdomID => {
+      dispatch(addTroopAction(kingdomID));
+    },
+    setError: error => {
+      dispatch(setErrorAction(error));
+    },
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(createTroopButton);

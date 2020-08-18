@@ -10,9 +10,6 @@ import Food from '../../assets/sources/FoodIcon.svg';
 import Button from './CreateTroopButton';
 
 function Academy({ academyLevel, error, troops }) {
-  console.log(error);
-  console.log(troops);
-
   return (
     <div className="academy">
       <img className="academy" src={Barrack} alt="academy icon" />
