@@ -70,3 +70,4 @@ test('Resource Middleware is ok and next is called', async () => {
   expect(next).toHaveBeenCalledTimes(1);
   expect(next).toBeCalledWith();
 });
+

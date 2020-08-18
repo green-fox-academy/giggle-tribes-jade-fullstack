@@ -33,3 +33,4 @@ export const updateResourceForKingdom = async (
   );
   return resource.results;
 };
+

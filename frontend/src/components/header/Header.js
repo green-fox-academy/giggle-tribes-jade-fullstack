@@ -1,7 +1,9 @@
-import React from 'react';
+import React,{useState, useEffect } from 'react';
+import { connect } from 'react-redux';
 import { BrowserRouter as Router, Link } from 'react-router-dom';
 import './Header.css';
 import HeaderTitle from './HeaderTitle';
+import {fetchKingdom} from '../.././services/fetchKindom';
 
 const loggedinHeaderItems = [
   { link: 'Settings', route: '/settings' },
@@ -9,14 +11,22 @@ const loggedinHeaderItems = [
 ];
 const loggedoutHeaderItems = [
   { link: 'Login', route: '/login' },
-  { link: 'Register', route: '/register' },
+  { link: 'Register', route: '/registration' },
 ];
 
-export default function ({ kingdomName }) {
+const Header = ({ kingdom }) => {
   let headerItems = loggedoutHeaderItems;
   const isToken = localStorage.getItem('TRIBES_TOKEN') ? true : false;
 
-  if (isToken && kingdomName) {
+  const [kingdomName, setKingdomName] = useState('');
+
+  useEffect(() => {
+    fetchKingdom.get('map','')
+      .then( response => response.kingdoms.find( k => k.kingdom_id === kingdom ).kingdomname )
+      .then( kingdomname => setKingdomName(kingdomname) );
+  }, [kingdom]);
+
+  if (isToken && kingdom) {
     headerItems = loggedinHeaderItems;
   }
   return (
@@ -34,3 +44,8 @@ export default function ({ kingdomName }) {
     </Router>
   );
 }
+
+const mapStateToProps = state => {
+  return state;
+};
+export default connect(mapStateToProps)(Header);
