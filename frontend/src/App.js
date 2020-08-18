@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { menuItems } from './components/menuItemsStorage';
 
@@ -12,10 +12,8 @@ import Map from './components/Map';
 import Log from './components/Log';
 
 function App() {
-  const kingdomName = 'Dummy';
-
-  const academyLevel = 1;
-  const troopLimit = 100;
+  const kingdomName = 'Dummy'; //Dummy until Login component is missing
+  const academyLevel = 1; //Dummy until Building component is missing
 
   return (
     <div className="App">
@@ -41,7 +39,7 @@ function App() {
               />
             ))}
             <Resource />
-            <Academy troopLimit={troopLimit} academyLevel={academyLevel} />
+            <Academy academyLevel={academyLevel} />
             <Log />
           </Route>
         </Switch>
