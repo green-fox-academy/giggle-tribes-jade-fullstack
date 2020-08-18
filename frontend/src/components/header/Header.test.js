@@ -76,6 +76,7 @@ it('renders Header without crashing with token and kingdomId', async () => {
 
 it('matches snapshot without token', async () => {
   Storage.prototype.getItem = jest.fn(key => {
+    return;
   });
   await act(async () => {
     render(
