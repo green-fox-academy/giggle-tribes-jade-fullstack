@@ -27,9 +27,9 @@ router.get('/kingdoms/map', kingdomController.get);
 
 router.use(authUser);
 router.post('/auth', authController);
-router.use('/kingdom/:kingdomID', resourceMiddleware);
+router.use('/kingdoms/:kingdomID', resourceMiddleware);
 
-router.get('/kingdom/:kingdomID/resource', resourceController.get);
-router.post('/kingdom/:kingdomID/troops', troopsController.post);
+router.get('/kingdoms/:kingdomID/resource', resourceController.get);
+router.post('/kingdoms/:kingdomID/troops', troopsController.post);
 
 export default router;
