@@ -21,30 +21,44 @@ function Buildings(props){
 
               <div className="buildings">
                 <img src="../buildings/townhall.jpg" alt="townhall" className="image"></img>
-                <img src="../buildings/farm.png" alt="farm" className="image"></img>
-                <img src="../buildings/barracks.png" alt="academy" className="image"></img>
-                <img src="../buildings/mine.png" alt="mine" className="image"></img>
+                <div className="buildingName">townhall Level 1</div>
+              
               </div>
-
-              <div>
-                <p>townhall Level 1</p>
-                <p>farm Level 1</p>
-                <p>academy Level 1</p>
-                <p>mine Level 1</p>
+              
+              <div className="buildings">
+                <img src="../buildings/farm.png" alt="farm" className="image"></img>
+                <div className="buildingName">farm Level 1</div>
+              </div>
+              
+              <div className="buildings">
+                <img src="../buildings/barracks.png" alt="academy" className="image"></img>
+                <div className="buildingName">academy Level 1</div>
+              </div>
+              
+              <div className="buildings">
+                <img src="../buildings/mine.png" alt="mine" className="image"></img>
+                <div className="buildingName">mine Level 1</div>
               </div>
             
-              <div className="addBuildings">
-                <button><img src="../buildings/addfarm.png" alt="add farm" className="image"></img></button>
-                <button><img src="../buildings/addacademy.png" alt="add academy" className="image"></img></button>
-                <button><img src="../buildings/addmine.png" alt="add mine" className="image"></img></button>
+            </div>
+
+            <div className="addBuildings">
+
+              <div className="buildings">
+                <button type="submit"><img src="../buildings/addfarm.png" alt="add farm" className="image"></img></button>
+                <div className="buildingName">add farm</div>
               </div>
 
-              <div>
-                <p>add farm</p>
-                <p>add academy</p>
-                <p>add mine</p>
+              <div className="buildings">
+                <button type="submit"><img src="../buildings/addacademy.png" alt="add academy" className="image"></img></button>
+                <div className="buildingName">add academy</div>  
               </div>
 
+              <div className="buildings">
+                <button type="submit"><img src="../buildings/addmine.png" alt="add mine" className="image"></img></button>
+                <div className="buildingName">add mine</div>
+              </div>
+              
             </div>
 
           </div>

@@ -13,19 +13,41 @@ body{
 .buildingList {
   flex-wrap: wrap;
   background-color: rgba(190, 190, 190, 0.61);
-  margin: 50px;
-  padding: 75px;
+  /* margin: 50px; */
+  padding: 25px;
+  /* flex-direction: row; */
 }
 
 .image{
-  height: 150%;
+  height: 100px;
+  width: auto;
 }
 
 .buildings{
-  align-items: center;
+  margin: 5px;
+  float: left;
+  width: 100px;
+}
+
+.buildingName{
+  padding: 15px;
+  text-align: center;
 }
 
 .addBuildings{
-  align-items: center;
+  /* display: block; */
+  background-color: rgba(190, 190, 190, 0.61);
+  margin-left: auto;
+  margin-right: auto;
+
 }
 
+button{
+  background-color: transparent;
+  border: none;
+}
+
+button:focus{
+  outline: none;
+  border: none;
+}
