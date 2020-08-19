@@ -111,7 +111,9 @@ test('valid inputs -> successful call', async () => {
       ]
     }
   });
-  resourceService.updateResource.mockImplementation( () => {} );
+  resourceService.spendGold.mockImplementation( () => {} );
+  resourceService.updateGoldGeneration.mockImplementation( () => {} );
+  resourceService.updateFoodGeneration.mockImplementation( () => {} );
   buildingRepo.add.mockImplementation( () => 72 );
   const result = await buildingService.add(input);
   formalData.started_at = result.started_at;

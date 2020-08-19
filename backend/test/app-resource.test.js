@@ -15,7 +15,7 @@ authService.mockImplementation(() => ({
 }));
 
 test('should respond with 400 - Resource for this kingdom not found.', done => {
-  resourceService.updateResource.mockImplementation(() => { throw new Error ('UpdateResource failed. Resource for this kingdom not found.') });
+  resourceService.generateResources.mockImplementation(() => { throw new Error ('UpdateResource failed. Resource for this kingdom not found.') });
 
   request(app)
     .get('/api/kingdoms/1/resource')
@@ -33,7 +33,7 @@ test('should respond with 400 - Resource for this kingdom not found.', done => {
 });
 
 test('should respond with 200 - Resource for this kingdom found.', done => {
-  resourceService.updateResource.mockImplementation( async () => Promise.resolve({ message: 'UpdateResource successful' }));
+  resourceService.generateResources.mockImplementation( async () => Promise.resolve({ message: 'UpdateResource successful' }));
   resourceService.getResource.mockImplementation( async () => {
     return Promise.resolve({
       resources: [

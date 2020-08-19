@@ -65,8 +65,8 @@ describe('GetResource function tests', () => {
 });
 
 describe('UpdateResource function tests', () => {
-  test('UpdateResource - Update failed. Kingdom ID is required.', async () => {
-    await expect(resourceService.updateResource(null,{})).rejects.toStrictEqual(Error('KingdomId is required.'));
+  test('spendGold - Update failed. Kingdom ID is required.', async () => {
+    await expect(resourceService.spendGold(null)).rejects.toStrictEqual(Error('KingdomId is required.'));
   });
 
   test('UpdateResource - Update failed. Resource for this kingdom not found.', async () => {
@@ -74,7 +74,7 @@ describe('UpdateResource function tests', () => {
       return Promise.resolve([]);
     });
     await expect(
-      resourceService.updateResource({ kingdomID: 1 },{})
+      resourceService.spendGold(1,100)
     ).rejects.toStrictEqual(Error('UpdateResource failed. Resource for this kingdom not found.'));
   });
 
@@ -99,7 +99,7 @@ describe('UpdateResource function tests', () => {
       return Promise.resolve();
     });
     await expect(
-      resourceService.updateResource({ kingdomID: 1 })
+      resourceService.spendGold(1,100)
     ).toStrictEqual(Promise.resolve({}));
   });
 });

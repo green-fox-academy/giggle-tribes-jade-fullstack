@@ -19,7 +19,7 @@ test('Resource Middleware is a function', async () => {
 });
 
 test('Update failed. Kingdom ID is required.', async () => {
-  resourceService.updateResource.mockImplementation(() => { throw new Error ('KingdomId is required.') });
+  resourceService.generateResources.mockImplementation(() => { throw new Error ('KingdomId is required.') });
   const req = { params: {} };
   const res = mockResponse();
   const next = jest.fn();
@@ -32,7 +32,7 @@ test('Update failed. Kingdom ID is required.', async () => {
 });
 
 test('Update failed. Resource for this kingdom not found.', async () => {
-  resourceService.updateResource.mockImplementation(() => { throw new Error ('UpdateResource failed. Resource for this kingdom not found.') });
+  resourceService.generateResources.mockImplementation(() => { throw new Error ('UpdateResource failed. Resource for this kingdom not found.') });
   const req = { params: { kingdomID: 1 } };
   const res = mockResponse();
   const next = jest.fn();
@@ -61,7 +61,7 @@ test('Resource Middleware is ok and next is called', async () => {
       },
     ]);
   });
-  resourceService.updateResource.mockImplementation(() => { message: 'UpdateResource successful' });
+  resourceService.generateResources.mockImplementation(() => { message: 'UpdateResource successful' });
   const req = { params: { kingdomID: 1 } };
   const res = {};
   const next = jest.fn();

@@ -68,7 +68,21 @@ const add = async (input) => {
     const resourcesData = await validateBuild({kingdomID:input.kingdomId},input.type);
     const buildingDataInput = createBuildingData(input);
     const buildingId = await buildingRepo.add( buildingDataInput );
-    await resourceService.updateResource(input.kingdomId,resourcesData);
+    switch (input.type) {
+      case 'academy':
+        await resourceService.spendGold(input.kingdomId,resourcesData.cost);
+        break;
+      case 'farm':
+        await resourceService.spendGold(input.kingdomId,resourcesData.cost);
+        await resourceService.updateFoodGeneration(input.kingdomId,resourcesData.genAdd);
+        break;
+      case 'mine':
+        await resourceService.spendGold(input.kingdomId,resourcesData.cost);
+        await resourceService.updateGoldGeneration(input.kingdomId,resourcesData.genAdd);
+        break;
+      default:
+        break;
+    }
     return formatData(buildingId,buildingDataInput);
 };
 
