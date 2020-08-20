@@ -21,7 +21,7 @@ function Buildings(props){
             <div>
 
               <div className="buildings">
-                <img src="../buildings/townhall.jpg" alt="townhall" className="image"></img>
+                <img src="../buildings/townhall.png" alt="townhall" className="image"></img>
                 <div className="buildingName">townhall Level 1</div>
               
               </div>
