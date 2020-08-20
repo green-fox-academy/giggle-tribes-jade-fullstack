@@ -5,6 +5,8 @@ import {
   insertResourceForKingdom,
 } from '../repos/resource';
 jest.mock('../repos/resource');
+import { resourceRepo } from '../repos/resourceRepo';
+jest.mock('../repos/resourceRepo');
 
 describe('GetResource function tests', () => {
   test('GetResource - Kingdom ID is required.', async () => {
