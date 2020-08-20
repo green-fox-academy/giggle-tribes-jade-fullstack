@@ -20,20 +20,20 @@ export const getBuildingsAction = kingdomID => {
           ? dispatch({ type: SET_ERROR_SUCCESS, payload: response.error })
           : dispatch({
               type: UPDATE_BUILDINGS_SUCCESS,
-              payload: response.troops,
+              payload: response.buildings,
             }),
       error => dispatch({ type: SET_ERROR_SUCCESS, payload: error })
     );
   };
 };
 
-export const addTroopAction = kingdomID => {
+export const addBuildingAction = (kingdomID, buildingType) => {
   return dispatch => {
     dispatch({
       type: ADD_BUILDING,
     });
 
-    return fetchKingdom.post(kingdomID, 'buildings', type).then(
+    return fetchKingdom.post(kingdomID, 'buildings', buildingType).then(
       response => {
         response.error
           ? dispatch({ type: SET_ERROR_SUCCESS, payload: response.error })
