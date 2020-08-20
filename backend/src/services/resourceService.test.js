@@ -5,6 +5,8 @@ import {
   insertResourceForKingdom,
 } from '../repos/resource';
 jest.mock('../repos/resource');
+import { resourceRepo } from '../repos/resourceRepo';
+jest.mock('../repos/resourceRepo');
 
 describe('GetResource function tests', () => {
   test('GetResource - Kingdom ID is required.', async () => {
@@ -65,10 +67,8 @@ describe('GetResource function tests', () => {
 });
 
 describe('UpdateResource function tests', () => {
-  test('UpdateResource - Update failed. Kingdom ID is required.', async () => {
-    await expect(resourceService.updateResource({})).rejects.toStrictEqual({
-      error: 'Kingdom ID is required.',
-    });
+  test('spendGold - Update failed. Kingdom ID is required.', async () => {
+    await expect(resourceService.spendGold(null)).rejects.toStrictEqual(Error('KingdomId is required.'));
   });
 
   test('UpdateResource - Update failed. Resource for this kingdom not found.', async () => {
@@ -76,10 +76,8 @@ describe('UpdateResource function tests', () => {
       return Promise.resolve([]);
     });
     await expect(
-      resourceService.updateResource({ kingdomID: 1 })
-    ).rejects.toStrictEqual({
-      error: 'UpdateResource failed. Resource for this kingdom not found.',
-    });
+      resourceService.spendGold(1,100)
+    ).rejects.toStrictEqual(Error('UpdateResource failed. Resource for this kingdom not found.'));
   });
 
   test('UpdateResource - Resource update is ok', async () => {
@@ -103,7 +101,7 @@ describe('UpdateResource function tests', () => {
       return Promise.resolve();
     });
     await expect(
-      resourceService.updateResource({ kingdomID: 1 })
+      resourceService.spendGold(1,100)
     ).toStrictEqual(Promise.resolve({}));
   });
 });

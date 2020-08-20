@@ -1,19 +1,24 @@
 import React from 'react';
 import './Buildings.css';
-import farm from '../assets/buildings/farm.svg';
-import mine from '../assets/buildings/mine.svg';
-import townhall from '../assets/buildings/townhall.svg';
-import academy from '../assets/buildings/barracks.svg';
+// import farm from '../assets/buildings/farm.svg';
+// import mine from '../assets/buildings/mine.svg';
+// import townhall from '../assets/buildings/townhall.svg';
+// import academy from '../assets/buildings/barracks.svg';
+
 
 function Buildings(props){
       
-        const buildingIcons = {
-          farm: farm,
-          mine: mine,
-          townhall: townhall,
-          academy: academy,
-        };
+        // const buildingIcons = {
+        //   farm: farm,
+        //   mine: mine,
+        //   townhall: townhall,
+        //   academy: academy,
+        // };
       
+// async function townhall(kingdomID) {
+  
+// }
+        
         return (
           <div className="buildingBox">
             <div className="buildingList">

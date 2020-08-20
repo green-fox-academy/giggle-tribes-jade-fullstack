@@ -1,0 +1,15 @@
+.add_building {
+    display: flex;
+    background-color: rgba(238, 238, 238, 0.548);
+    width: min-content;
+}
+
+.error.visible {
+    display: block;
+    background-color: rgba(255, 0, 0, 0.493);
+    cursor: pointer;
+    min-width: 12em;
+}
+.error.nonvisible {
+    display: none;
+}

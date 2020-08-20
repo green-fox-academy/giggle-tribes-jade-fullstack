@@ -4,4 +4,4 @@ export * from './userController';
 export * from './sessionController';
 export * from './kingdomController';
 export * from './resourceController';
-
+export * from './buildingsController';

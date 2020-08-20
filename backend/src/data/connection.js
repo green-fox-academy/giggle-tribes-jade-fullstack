@@ -14,7 +14,6 @@ export const db = {
   query(query, values) {
     return new Promise((resolve, reject) => {
       pool.query(query, values, (err, results, fields) => {
-        console.log(config);
         if (err) {
           reject(err);
 

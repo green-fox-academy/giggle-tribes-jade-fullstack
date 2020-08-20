@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`matches snapshot with token and kingdomName 1`] = `" <nav class=\\"header\\"><a class=\\"header\\" href=\\"/buildings\\"><h1 class=\\"header\\">Test</h1></a><div class=\\"header\\">SettingsLogout</div></nav> "`;
+exports[`matches snapshot with token and kingdomId 1`] = `"<nav class=\\"header\\"><a class=\\"header\\" href=\\"/buildings\\"><h1 class=\\"header\\">Mocked Kingdom</h1></a><div class=\\"header\\"><a class=\\"header\\" href=\\"/settings\\">Settings</a><a class=\\"header\\" href=\\"/logout\\">Logout</a></div></nav>"`;
 
-exports[`matches snapshot with token without kingdomID 1`] = `" <nav class=\\"header\\"><h1 class=\\"header\\">Tribes of Vulpes</h1><div class=\\"header\\">LoginRegister</div></nav> "`;
+exports[`matches snapshot with token without kingdomID 1`] = `"<nav class=\\"header\\"><h1 class=\\"header\\">Tribes of Vulpes</h1><div class=\\"header\\"><a class=\\"header\\" href=\\"/login\\">Login</a><a class=\\"header\\" href=\\"/registration\\">Register</a></div></nav>"`;
 
-exports[`matches snapshot without token 1`] = `" <nav class=\\"header\\"><h1 class=\\"header\\">Tribes of Vulpes</h1><div class=\\"header\\">LoginRegister</div></nav> "`;
+exports[`matches snapshot without token 1`] = `"<nav class=\\"header\\"><h1 class=\\"header\\">Tribes of Vulpes</h1><div class=\\"header\\"><a class=\\"header\\" href=\\"/login\\">Login</a><a class=\\"header\\" href=\\"/registration\\">Register</a></div></nav>"`;
