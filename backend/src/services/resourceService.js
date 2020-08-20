@@ -86,15 +86,8 @@ const generateResources = async (kingdomId) => {
 };
 
 const resourceUpdateFactory = async (kingdomId,resourceType) => {
-  const resources = await getResourcesByKingdomId(kingdomId);
-  const resourceByType = {};
-  resources.forEach( resource => {
-    resourceByType[resource.type] = {
-      amount: resource.amount,
-      generation: resource.generation
-    }
-  });
-  const {amount,generation} = resourceByType[resourceType];
+  const resources = (await getResourcesByKingdomId(kingdomId)).find(e => e.type === resourceType);
+  const {amount,generation} = resources;
   return async function (changeAmount,changeGeneration) {
     const changedRows = (await resourceRepo.updateResource({amount: amount + changeAmount, generation: generation + changeGeneration, kingdom_id : kingdomId, type : resourceType}) ).changedRows;
     if (changedRows === 0) throw new Error('Data not found.');
