@@ -24,9 +24,9 @@ const occupiedFields = () => {
   });
 };
 
-const addLocation = (code, kingdomId) => {
+const addLocation = (code, kingdom) => {
   return new Promise((resolve, reject) => {
-    fetch(`${env.BACKEND_URL}/api/kingdoms/${kingdomId}/map`, {
+    fetch(`${env.BACKEND_URL}/api/kingdoms/${kingdom}/map`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -55,9 +55,9 @@ const Map = ({ kingdom }) => {
     }
   };
 
-  const submitClick = (selected, kingdomId) => {
+  const submitClick = (selected, kingdom) => {
     if (selected) {
-      addLocation(selected, kingdomId).then(result => {
+      addLocation(selected, kingdom).then(result => {
         console.log(result);
         if (!result.error) setDone(true);
       });
@@ -66,12 +66,12 @@ const Map = ({ kingdom }) => {
 
   if (done) return <Redirect push to={redirectLocation} />;
   return (
-    <div>
+    <div className='mapWrapper'>
       <ComposableMap>
         <Geographies geography={geoUrl}>
           {({ geographies }) =>
             geographies.map(geo => {
-              let fillColor = '#808080';
+              let fillColor = '#999999';
               fillColor =
                 occupied.indexOf(geo.properties.ISO_A3) !== -1
                   ? '#996060'
@@ -86,7 +86,7 @@ const Map = ({ kingdom }) => {
                   className={
                     occupied.indexOf(geo.properties.ISO_A3) !== -1
                       ? ''
-                      : 'selectable'
+                      : 'location selectable'
                   }
                   onClick={() => fieldClick(geo.properties.ISO_A3)}
                 />

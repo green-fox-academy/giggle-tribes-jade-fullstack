@@ -1,10 +1,12 @@
 import request from 'supertest';
 
 import app from '../src/app';
-import { getUser, getKingdomIdForUser } from '../src/repos/user';
-jest.mock('../src/repos/user');
 import { getToken } from '../src/services/tokenService';
 jest.mock('../src/services/tokenService');
+import { userService } from '../src/services/userService';
+jest.mock('../src/services/userService');
+import { resourceService } from '../src/services/resourceService';
+jest.mock('../src/services/resourceService');
 
 test('should respond with 401 - Password is required.', done => {
   request(app)
@@ -48,8 +50,8 @@ test('should respond with 401 - All fields are required.', done => {
 });
 
 test('should respond with 401 - Username or password is incorrect.', done => {
-  getUser.mockImplementation(async () => {
-    return Promise.resolve([]);
+  userService.get.mockImplementation(async () => {
+    throw { error: 'Username or password is incorrect.' };
   });
   request(app)
     .post('/api/sessions')
@@ -65,13 +67,10 @@ test('should respond with 401 - Username or password is incorrect.', done => {
 });
 
 test('should respond with 401 - Username and password are correct.', done => {
-  getUser.mockImplementation(async () => {
+  userService.get.mockImplementation(async () => {
     return Promise.resolve([
-      { id: 1, name: 'dummy_username', password: 'dummy_password' },
+      { userID: 1, kindomID: 1 }
     ]);
-  });
-  getKingdomIdForUser.mockImplementation(async () => {
-    return Promise.resolve([{ user_ID: 1, kingdom_ID: 1 }]);
   });
 
   getToken.mockImplementation(async () => {

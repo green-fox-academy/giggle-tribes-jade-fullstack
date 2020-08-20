@@ -1,6 +1,6 @@
 import { kingdomService } from '../services';
 
-const add = (req,res) => {
+const post = (req,res) => {
     const data = {
         kingdomId : req.params.kingdomId,
         countryCode : req.body.country_code
@@ -17,6 +17,6 @@ const get = (req,res) => {
 }
 
 export const kingdomController = {
-    add,
+    post,
     get
 };

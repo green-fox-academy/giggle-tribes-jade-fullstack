@@ -1,24 +1,24 @@
 import {
   getResourceForKingdom,
   updateResourceForKingdom,
-  insertResourceForKingdom,
+  insertResourceForKingdom
 } from '../repos/resource';
+import { resourceRepo } from '../repos/resourceRepo';
 
-const calculateTimeDifference = async updatedAt => {
+const calculateTimeDifference = updatedAt => {
   const currentTime = new Date();
   const timeDifferenceInMinutes = Math.floor((currentTime - updatedAt) / 60000);
 
   return timeDifferenceInMinutes;
 };
 
-const calculateNewAmount = async (currentAmount, generation, updatedAt) => {
+const calculateNewAmount = (currentAmount, generation, updatedAt) => {
   const newAmount =
-    currentAmount + (await calculateTimeDifference(updatedAt)) * generation;
+    currentAmount + (calculateTimeDifference(updatedAt)) * generation;
   return newAmount;
 };
 
-export const resourceService = {
-  async getResource({ kingdomID }) {
+const getResource = async ({ kingdomID }) => {
     if (kingdomID) {
       const resource = await getResourceForKingdom(kingdomID);
       if (resource.length > 0) {
@@ -44,47 +44,9 @@ export const resourceService = {
     } else {
       throw { error: 'Kingdom ID is required.' };
     }
-  },
+};
 
-  async updateResource({ kingdomID, currentGeneration, buildingCost }) {
-    if (kingdomID) {
-      const resources = await getResourceForKingdom(kingdomID);
-      if (resources.length > 0) {
-        await Promise.all(
-          resources.map(async resource => {
-            const amount = buildingCost
-              ? resource.type === 'gold'
-                ? resource.amount - buildingCost
-                : resource.amount
-              : resource.amount;
-            const generation = currentGeneration
-              ? currentGeneration
-              : resource.generation;
-            const newAmount = await calculateNewAmount(
-              amount,
-              generation,
-              resource.updatedAt
-            );
-
-            await updateResourceForKingdom(
-              kingdomID,
-              resource.type,
-              newAmount,
-              generation
-            );
-          })
-        );
-      } else {
-        throw {
-          error: 'UpdateResource failed. Resource for this kingdom not found.',
-        };
-      }
-    } else {
-      throw { error: 'Kingdom ID is required.' };
-    }
-  },
-
-  async createResource({ kingdomID }) {
+const createResource = async ({ kingdomID }) => {
     if (kingdomID) {
       const resourceForKingdomID = await getResourceForKingdom(kingdomID);
 
@@ -105,5 +67,56 @@ export const resourceService = {
     } else {
       throw { error: 'Kingdom ID is required.' };
     }
-  },
 };
+
+const getResourcesByKingdomId = async (kingdomId) => {
+  if(!kingdomId) throw new Error ('KingdomId is required.');
+  const resources = await getResourceForKingdom(kingdomId);
+  if (resources.length === 0) throw new Error ('UpdateResource failed. Resource for this kingdom not found.');
+  return resources;
+};
+
+const generateResources = async (kingdomId) => {
+  const resources = await getResourcesByKingdomId(kingdomId);
+  resources.forEach( async resource => {
+    const updateAmount = calculateNewAmount(resource.amount, resource.generation, resource.updatedAt);
+    const changedRows = (await resourceRepo.updateResource({amount: updateAmount, generation: resource.generation, kingdom_id : kingdomId, type : resource.type}) ).changedRows;
+    if (changedRows === 0) throw new Error('Data not found.');
+  });
+};
+
+const resourceUpdateFactory = async (kingdomId,resourceType) => {
+  const resources = (await getResourcesByKingdomId(kingdomId)).find(e => e.type === resourceType);
+  const {amount,generation} = resources;
+  return async function (changeAmount,changeGeneration) {
+    const changedRows = (await resourceRepo.updateResource({amount: amount + changeAmount, generation: generation + changeGeneration, kingdom_id : kingdomId, type : resourceType}) ).changedRows;
+    if (changedRows === 0) throw new Error('Data not found.');
+  };
+};
+
+const spendGold = async (kingdomId,amount) => {
+  await (await resourceUpdateFactory(kingdomId,'gold'))(-amount,0);
+};
+
+const spendFood= async (kingdomId,amount) => {
+  await (await resourceUpdateFactory(kingdomId,'food'))(-amount,0);
+};
+
+const updateGoldGeneration = async (kingdomId,generation) => {
+  await (await resourceUpdateFactory(kingdomId,'gold'))(0,generation);
+};
+
+const updateFoodGeneration = async (kingdomId,generation) => {
+  await (await resourceUpdateFactory(kingdomId,'food'))(0,generation);
+};
+
+export const resourceService = {
+  getResource,
+  createResource,
+  generateResources,
+  spendGold,
+  spendFood,
+  updateGoldGeneration,
+  updateFoodGeneration
+};
+
