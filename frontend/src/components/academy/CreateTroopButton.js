@@ -9,7 +9,7 @@ import { setErrorAction } from '../../actions/ErrorActions';
 import Troop from '../../assets/troops/addTroop-removebg-preview.png';
 import Gold from '../../assets/sources/GoldIcon.svg';
 
-function createTroopButton({
+function CreateTroopButton({
   kingdom,
   resources,
   buildings,
@@ -47,7 +47,7 @@ function createTroopButton({
   );
 }
 
-createTroopButton.propTypes = {
+CreateTroopButton.propTypes = {
   kingdom: PropTypes.any.isRequired,
 };
 
@@ -65,4 +65,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(createTroopButton);
+export default connect(mapStateToProps, mapDispatchToProps)(CreateTroopButton);

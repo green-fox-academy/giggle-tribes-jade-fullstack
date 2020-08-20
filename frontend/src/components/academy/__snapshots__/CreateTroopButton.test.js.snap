@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CreateTroopButton tests matches snapeshot 1`] = `"<button class=\\"MuiButtonBase-root MuiButton-root MuiButton-text addtroopBTN\\" tabindex=\\"0\\" type=\\"button\\"><span class=\\"MuiButton-label\\"><img class=\\"addtroop\\" src=\\"addTroop-removebg-preview.png\\" alt=\\"troop icon\\"><div><p>create troop level 1</p><p>10 <img class=\\"inlineIcon\\" src=\\"GoldIcon.svg\\" alt=\\"gold icon\\"> 1:00</p></div></span><span class=\\"MuiTouchRipple-root\\"></span></button>"`;
