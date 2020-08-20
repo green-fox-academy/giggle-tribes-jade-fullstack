@@ -1,4 +1,7 @@
-import { SET_ERROR_SUCCESS } from '../constants/ActionTypes';
+import {
+  SET_ERROR_SUCCESS,
+  RESET_ERROR_SUCCESS,
+} from '../constants/ActionTypes';
 
 export const setErrorAction = error => {
   return dispatch => {
@@ -6,6 +9,12 @@ export const setErrorAction = error => {
       type: 'SET_ERROR',
     });
 
-    dispatch({ type: SET_ERROR_SUCCESS, payload: error });
+    return dispatch({ type: SET_ERROR_SUCCESS, payload: error });
+  };
+};
+
+export const resetErrorAction = () => {
+  return dispatch => {
+    return dispatch({ type: RESET_ERROR_SUCCESS });
   };
 };
