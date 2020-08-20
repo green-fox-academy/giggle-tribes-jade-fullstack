@@ -5,4 +5,4 @@ export * from './sessionService';
 export * from './kingdomService';
 export * from './resourceService';
 export * from './tokenService';
-export * from './troopsService';
+export * from './TroopsService';

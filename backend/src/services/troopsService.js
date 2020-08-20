@@ -1,31 +1,32 @@
-import { getTroopsForKingdom, insertTroopForKingdom } from '../repos/troops';
-import { resourceService } from './resourceService';
-
 const setMinutes = async (startTime, minutes) => {
   return startTime.setUTCMinutes(startTime.getUTCMinutes() + minutes);
 };
 
-export const troopsService = {
+export class TroopsService {
+  constructor({ resourceService, getTroopsForKingdom, insertTroopForKingdom }) {
+    this.getTroopsForKingdom = getTroopsForKingdom;
+    this.resourceService = resourceService;
+    this.insertTroopForKingdom = insertTroopForKingdom;
+  }
   async getTroops({ kingdomID }) {
     if (kingdomID) {
-      const troops = await getTroopsForKingdom(kingdomID);
+      const troops = await this.getTroopsForKingdom(kingdomID);
       return { troops: troops };
     } else {
       throw { error: 'Kingdom ID is required.' };
     }
-  },
+  }
 
   async addTroop({ kingdomID }) {
     let goldAmount;
-    const resources = await resourceService.getResource({ kingdomID });
-
+    const resources = await this.resourceService.getResource({ kingdomID });
     await resources.resources.map(resource => {
       if (resource.type === 'gold') {
         goldAmount = resource.amount;
       }
     });
     const troopLimit = 100; //need logic for building repo
-    const troops = await getTroopsForKingdom(kingdomID);
+    const troops = await this.getTroopsForKingdom(kingdomID);
 
     if (goldAmount >= 10 && troopLimit > troops.length) {
       const currentTime = new Date();
@@ -33,7 +34,7 @@ export const troopsService = {
       await setMinutes(currentTime, 1);
       const endTime = currentTime;
 
-      const troop = await insertTroopForKingdom(
+      const troop = await this.insertTroopForKingdom(
         kingdomID,
         1,
         1,
@@ -57,5 +58,5 @@ export const troopsService = {
     } else {
       throw { error: 'You reached the storage limit, upgrade Townhall first.' };
     }
-  },
-};
+  }
+}

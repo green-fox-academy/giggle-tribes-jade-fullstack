@@ -17,9 +17,7 @@ test('should respond with 400 - Resource for this kingdom not found.', done => {
   });
 
   request(app)
-    .get('/api/kingdom/1/resource')
-    .set('Accept', 'application/json')
-    .expect('Content-Type', /json/)
+    .get('/api/kingdoms/1/resource')
     .expect(400)
     .end((err, data) => {
       if (err) return done(err);
@@ -49,9 +47,7 @@ test('should respond with 200 - Resource for this kingdom found.', done => {
   });
 
   request(app)
-    .get('/api/kingdom/1/resource')
-    .set('Accept', 'application/json')
-    .expect('Content-Type', /json/)
+    .get('/api/kingdoms/1/resource')
     .expect(200)
     .end((err, data) => {
       if (err) return done(err);
