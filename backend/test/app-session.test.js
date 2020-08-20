@@ -5,6 +5,8 @@ import { getToken } from '../src/services/tokenService';
 jest.mock('../src/services/tokenService');
 import { userService } from '../src/services/userService';
 jest.mock('../src/services/userService');
+import { resourceService } from '../src/services/resourceService';
+jest.mock('../src/services/resourceService');
 
 test('should respond with 401 - Password is required.', done => {
   request(app)
