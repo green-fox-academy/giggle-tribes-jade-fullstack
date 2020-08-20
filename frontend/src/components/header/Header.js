@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Link } from 'react-router-dom';
+import { BrowserRouter as Link } from 'react-router-dom';
 import './Header.css';
 import HeaderTitle from './HeaderTitle';
 
@@ -20,7 +20,6 @@ export default function ({ kingdomName }) {
     headerItems = loggedinHeaderItems;
   }
   return (
-    <Router>
       <nav className="header">
         <HeaderTitle name={isToken && kingdomName} route="/buildings" />
         <div className="header">
@@ -31,6 +30,5 @@ export default function ({ kingdomName }) {
           ))}
         </div>
       </nav>
-    </Router>
   );
 }

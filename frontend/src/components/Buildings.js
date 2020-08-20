@@ -16,8 +16,9 @@ function Buildings(props){
       
         return (
           <div className="buildingBox">
-            
             <div className="buildingList">
+
+            <div>
 
               <div className="buildings">
                 <img src="../buildings/townhall.jpg" alt="townhall" className="image"></img>
@@ -59,6 +60,8 @@ function Buildings(props){
                 <div className="buildingName">add mine</div>
               </div>
               
+            </div>
+
             </div>
 
           </div>

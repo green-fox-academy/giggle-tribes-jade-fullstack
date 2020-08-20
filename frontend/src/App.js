@@ -17,8 +17,10 @@ function App() {
 
   return (
     <div className="App">
-      <Header kingdomName={kingdomName} />
       <Router>
+
+      <Header kingdomName={kingdomName} />
+        
         <Switch>
           <Route exact path="/">
             <Login />
@@ -51,9 +53,11 @@ function App() {
             ))}
             <Log />
             <Resource />
+        
           </Route>
         
         </Switch>
+
       </Router>
     </div>
   );
