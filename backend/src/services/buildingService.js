@@ -61,7 +61,6 @@ const getResourceChanges = async (id,type) => {
   };
 };
 
-
 const add = async (input) => {
     validateType(input.type);
     await validateKingdomId(input.kingdomId);
