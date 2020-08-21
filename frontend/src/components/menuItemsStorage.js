@@ -1,24 +1,27 @@
+import React from 'react';
 import MenuComponent from './MenuComponent';
+import Buildings from './buildings/Buildings';
+import Academy from './academy/Academy';
 
 export const menuItems = [
-    {
-        name: 'Buildings',
-        link: '/buildings',
-        component: MenuComponent
-    },
-    {
-        name: 'Troops',
-        link: '/troops',
-        component: MenuComponent
-    },
-    {
-        name: 'Battle',
-        link: '/battle',
-        component: MenuComponent
-    },
-    {
-        name: 'Leaderboard',
-        link: '/lederboard',
-        component: MenuComponent
-    }
-  ];
+  {
+    name: 'Buildings',
+    link: '/buildings',
+    component: Buildings,
+  },
+  {
+    name: 'Troops',
+    link: '/troops',
+    component: Academy,
+  },
+  {
+    name: 'Battle',
+    link: '/battle',
+    component: MenuComponent,
+  },
+  {
+    name: 'Leaderboard',
+    link: '/leaderboard',
+    component: MenuComponent,
+  },
+];
