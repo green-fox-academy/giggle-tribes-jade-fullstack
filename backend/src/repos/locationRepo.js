@@ -1,7 +1,7 @@
 import { save } from './repoSave';
 
 const insertQueries = {
-    location : 'INSERT INTO location (kingdom_id,code) VALUES(?,?)'
+    location : 'INSERT INTO locations (kingdom_id,code) VALUES(?,?)'
 };
 
 const add = (params) => {

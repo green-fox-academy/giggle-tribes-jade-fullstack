@@ -6,3 +6,4 @@ export * from './kingdomService';
 export * from './resourceService';
 export * from './tokenService';
 export * from './TroopsService';
+export * from './buildingService';

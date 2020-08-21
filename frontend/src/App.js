@@ -11,32 +11,36 @@ import Registration from './components/Registration';
 import { menuItems } from './components/menuItemsStorage';
 import Map from './components/Map';
 import Log from './components/Log';
+import AddBuilding from './components/buildings/AddBuilding';
 
 function App() {
-  const kingdomName = 'Dummy'; //Dummy until Login component is missing
-  const academyLevel = 1; //Dummy until Building component is missing
+  localStorage.setItem(
+    'TRIBES_TOKEN',
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOjMsImtpbmdkb21JRCI6NCwiaWF0IjoxNTk2MDU0OTE1fQ.-CZDK-BlkE24wWk4lCpEOp6WcGJMMNJTap0vSQKK8NA'
+  );
+  const academyLevel = 1;
 
   return (
     <div className="App">
-      <Header kingdomName={kingdomName} />
+      <Header />
       <Router>
         <Switch>
           <Route exact path="/">
             <Login />
           </Route>
-          
+
           <Route path="/login">
             <Login />
           </Route>
-          
-          <Route path='/registration'>
-              <Registration />
+
+          <Route path="/registration">
+            <Registration />
           </Route>
 
-          <Route exact path='/kingdom/map'>
-            <Map kingdomId='5'/>
+          <Route exact path="/kingdom/map">
+            <Map />
           </Route>
-          
+
           <Route path="/kingdom">
             <Menu menuItems={menuItems} />
             {menuItems.map(menuItem => (
@@ -49,8 +53,8 @@ function App() {
             <Resource />
             <Academy academyLevel={academyLevel} />
             <Log />
+            <AddBuilding />
           </Route>
-        
         </Switch>
       </Router>
     </div>
