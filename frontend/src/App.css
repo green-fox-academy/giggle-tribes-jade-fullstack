@@ -8,6 +8,7 @@ body {
 }
 p {
   margin: 0px;
+  color: #676969;
 }
 div#root {
   height: 100%;
@@ -15,7 +16,7 @@ div#root {
 div.App {
   height: 100%;
   display: grid;
-  grid-template-columns: 4fr 1.5fr 3fr;
+  grid-template-columns: 450px 200px 1fr;
   grid-template-rows: 62px 120px 1fr;
   grid-gap: 40px;
   background-image: url('./assets/bg3-01.png');

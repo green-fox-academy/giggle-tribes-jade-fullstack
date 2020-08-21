@@ -51,13 +51,13 @@ img.gold {
   font-size: 35x;
   color: #5c5e5e;
 }
-p {
-  margin: 0px 0px 0px 0px;
+.resource p {
   font-weight: bold;
 }
-p.red {
+.resource p.red {
   color: #fa7730;
 }
-p.green {
+.resource p.green {
   color: #66a835;
+  border-bottom: none;
 }

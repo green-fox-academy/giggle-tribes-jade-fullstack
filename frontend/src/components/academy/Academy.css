@@ -5,18 +5,22 @@ div.academy {
   grid-template-rows: 140px 1fr;
   background-color: rgba(201, 204, 205, 0.8);
 }
-img.academy {
+.academy img.academy {
   margin: 20px;
   height: 100px;
   width: 100px;
   grid-area: 1 / 1 /1 /1;
 }
-div.description {
+.academy div.description {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   margin: 20px;
   grid-area: 1 / 2;
+}
+.academy .description p {
+  color: black;
+  padding: 2px;
 }
 div.academyinfo {
   display: flex;
