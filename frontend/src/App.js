@@ -4,26 +4,24 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import './App.css';
 import Header from './components/header/Header';
 import Resource from './components/resource/Resource';
-import Academy from './components/academy/Academy';
 import Menu from './components/Menu';
 import Login from './components/Login';
 import Registration from './components/Registration';
 import { menuItems } from './components/menuItemsStorage';
 import Map from './components/Map';
 import Log from './components/Log';
-import AddBuilding from './components/buildings/AddBuilding';
 
 function App() {
   localStorage.setItem(
     'TRIBES_TOKEN',
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOjMsImtpbmdkb21JRCI6NCwiaWF0IjoxNTk2MDU0OTE1fQ.-CZDK-BlkE24wWk4lCpEOp6WcGJMMNJTap0vSQKK8NA'
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOjMsImlhdCI6MTU5ODA0MTk3Mn0.cVAcR4UiobKN05oicJYQYPIkibMws4yIATb8GVuVD_g'
   );
   const academyLevel = 1;
 
   return (
     <div className="App">
-      <Header />
       <Router>
+        <Header />
         <Switch>
           <Route exact path="/">
             <Login />
@@ -46,14 +44,12 @@ function App() {
             {menuItems.map(menuItem => (
               <Route
                 key={menuItem.link}
-                path={'/fandom' + menuItem.link}
+                path={'/kingdom' + menuItem.link}
                 render={() => <menuItem.component name={menuItem.name} />}
               />
             ))}
             <Resource />
-            <Academy academyLevel={academyLevel} />
             <Log />
-            <AddBuilding />
           </Route>
         </Switch>
       </Router>
