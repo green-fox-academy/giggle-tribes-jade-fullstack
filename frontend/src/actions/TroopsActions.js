@@ -33,7 +33,7 @@ export const addTroopAction = kingdomID => {
       type: ADD_TROOP,
     });
 
-    return fetchKingdom.post(kingdomID, 'troops', '').then(
+    return fetchKingdom.post(kingdomID, 'troops', {}).then(
       response => {
         response.error
           ? dispatch({ type: SET_ERROR_SUCCESS, payload: response.error })
