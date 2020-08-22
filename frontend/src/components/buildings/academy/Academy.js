@@ -8,7 +8,7 @@ import Attack from '../../assets/troops/attack1.png';
 import Defence from '../../assets/troops/defence1.png';
 import Food from '../../assets/sources/FoodIcon.svg';
 import Button from './CreateTroopButton';
-import Error from '../Error';
+import Error from '../../Error';
 
 function Academy() {
   const academyLevel = 1;

@@ -2,10 +2,9 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { render, unmountComponentAtNode } from 'react-dom';
 import { act } from 'react-dom/test-utils';
-import configureMockStore from 'redux-mock-store';
 
 import Academy from './Academy';
-import { store } from '../../store';
+import { store } from '../../../store';
 
 let container;
 

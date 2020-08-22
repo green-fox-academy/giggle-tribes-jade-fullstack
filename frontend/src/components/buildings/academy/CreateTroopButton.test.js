@@ -72,7 +72,7 @@ describe('CreateTroopButton tests', () => {
     expect(mockedStore.dispatch).toHaveBeenCalledTimes(1);
   });
 
-  it('should not dispatch an action when clicked, not enough money', async () => {
+  it('should dispatch an action when clicked, not enough money', async () => {
     const mockStore = configureStore([]);
     const mockedStore = mockStore({
       kingdom: 1,
@@ -108,7 +108,7 @@ describe('CreateTroopButton tests', () => {
     expect(mockedStore.dispatch).toHaveBeenCalledTimes(1);
   });
 
-  it('should not dispatch an action when clicked, no townhall capacity', async () => {
+  it('should dispatch an action when clicked, no townhall capacity', async () => {
     const mockStore = configureStore([]);
     const mockedStore = mockStore({
       kingdom: 1,

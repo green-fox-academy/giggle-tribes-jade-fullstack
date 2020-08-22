@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import './CreateTroopButton.css';
-import { addTroopAction } from '../../actions/TroopsActions';
-import { setErrorAction } from '../../actions/ErrorActions';
+import { addTroopAction } from '../../../actions/TroopsActions';
+import { setErrorAction } from '../../../actions/ErrorActions';
 import Troop from '../../assets/troops/addTroop-removebg-preview.png';
 import Gold from '../../assets/sources/GoldIcon.svg';
 
