@@ -1,6 +1,6 @@
 import MenuComponent from './MenuComponent';
 import Buildings from './buildings/Buildings';
-import Academy from './academy/Academy';
+import Academy from './buildings/academy/Academy';
 
 export const menuItems = [
   {

@@ -3,10 +3,10 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import './Academy.css';
-import Barrack from '../../assets/buildings/barracks.svg';
-import Attack from '../../assets/troops/attack1.png';
-import Defence from '../../assets/troops/defence1.png';
-import Food from '../../assets/sources/FoodIcon.svg';
+import Barrack from '../../../assets/buildings/barracks.svg';
+import Attack from '../../../assets/troops/attack1.png';
+import Defence from '../../../assets/troops/defence1.png';
+import Food from '../../../assets/sources/FoodIcon.svg';
 import Button from './CreateTroopButton';
 import Error from '../../Error';
 

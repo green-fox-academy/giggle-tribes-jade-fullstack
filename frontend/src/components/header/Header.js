@@ -39,7 +39,7 @@ const Header = ({ kingdom }) => {
     <nav className="header">
       <HeaderTitle
         name={isToken ? kingdomName : ''}
-        route={isToken ? '/kingdom' : ''}
+        route={isToken ? '/kingdom/buildings' : ''}
       />
       <div className="header">
         {headerItems.map((item, index) => (

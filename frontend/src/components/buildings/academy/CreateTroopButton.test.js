@@ -5,7 +5,7 @@ import { act, Simulate } from 'react-dom/test-utils';
 import configureStore from 'redux-mock-store';
 
 import CreateTroopButton from './CreateTroopButton';
-import { store } from '../../store';
+import { store } from '../../../store';
 
 global.fetch = jest.fn(async () => {
   return await Promise.resolve({

@@ -10,6 +10,10 @@ import { fetchKingdom } from '../.././services/fetchKindom';
 
 import Header from './Header';
 
+const history = createMemoryHistory({
+  initialEntries: ['/'],
+});
+
 let container;
 
 beforeEach(() => {
