@@ -1,4 +1,3 @@
-import React from 'react';
 import MenuComponent from './MenuComponent';
 import Buildings from './buildings/Buildings';
 import Academy from './academy/Academy';
