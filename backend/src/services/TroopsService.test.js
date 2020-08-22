@@ -1,53 +1,5 @@
 import { TroopsService } from './TroopsService';
 
-/* const resourceService = {
-  async getResource() {
-    return await Promise.resolve({
-      resources: [
-        {
-          type: 'food',
-          amount: 500,
-          generation: 1,
-          updatedAt: '2020-07-04T08:45:00.000Z',
-        },
-        {
-          type: 'gold',
-          amount: 500,
-          generation: 1,
-          updatedAt: '2020-07-04T08:45:00.000Z',
-        },
-      ],
-    });
-  },
-}; */
-/* const getTroopsForKingdom = async () => {
-  return Promise.resolve([
-    {
-      id: 1,
-      level: 1,
-      hp: 1,
-      attack: 1,
-      defence: 1,
-      started_at: '2020-07-04T08:45:00.000Z',
-      finished_at: '2020-07-04T08:46:00.000Z',
-    },
-    {
-      id: 2,
-      level: 1,
-      hp: 1,
-      attack: 1,
-      defence: 1,
-      started_at: '2020-07-04T09:45:00.000Z',
-      finished_at: '2020-07-04T09:46:00.000Z',
-    },
-  ]);
-};
-const insertTroopForKingdom = async () => {
-  return Promise.resolve([{ insertId: 1 }]);
-}; */
-
-//const troopsService = new TroopsService({resourceService,getTroopsForKingdom,insertTroopForKingdom});
-
 describe('getTroops', () => {
   test('getTroops is ok, kingdomID not found', async () => {
     const troops = [];
@@ -157,6 +109,12 @@ describe('addTroop', () => {
             },
           ],
         });
+      },
+      async spendGold() {
+        return await Promise.resolve();
+      },
+      async updateFoodGeneration() {
+        return await Promise.resolve();
       },
     };
 

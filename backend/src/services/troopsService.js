@@ -25,13 +25,19 @@ export class TroopsService {
         goldAmount = resource.amount;
       }
     });
-    const troopLimit = 100; //need logic for building repo
+    const rules = {
+      troopLimit: 100, //need logic for building repo
+      troopCost: 10,
+      creatingTime: 1,
+      foodConsumption: -1,
+    };
+
     const troops = await this.getTroopsForKingdom(kingdomID);
 
-    if (goldAmount >= 10 && troopLimit > troops.length) {
+    if (goldAmount >= rules.troopCost && rules.troopLimit > troops.length) {
       const currentTime = new Date();
       const startTime = new Date();
-      await setMinutes(currentTime, 1);
+      await setMinutes(currentTime, rules.creatingTime);
       const endTime = currentTime;
 
       const troop = await this.insertTroopForKingdom(
@@ -43,6 +49,12 @@ export class TroopsService {
         startTime,
         endTime
       );
+      if (troops.changedRows === 0) throw new Error('Data not found.');
+      this.resourceService.spendGold(kingdomID, rules.troopCost);
+      this.resourceService.updateFoodGeneration(
+        kingdomID,
+        rules.foodConsumption
+      );
 
       return {
         id: troop.insertId,
@@ -53,7 +65,7 @@ export class TroopsService {
         started_at: startTime,
         finished_at: endTime,
       };
-    } else if (goldAmount < 10) {
+    } else if (goldAmount < rules.troopCost) {
       throw { error: "You don't have enough money." };
     } else {
       throw { error: 'You reached the storage limit, upgrade Townhall first.' };
