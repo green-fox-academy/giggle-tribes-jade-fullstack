@@ -26,7 +26,6 @@ test('should respond with 400 - Resource for this kingdom not found.', done => {
     .expect('Content-Type', /json/)
     .expect(400)
     .end((err, data) => {
-      console.log(data.body);
       if (err) return done(err);
       expect(data.body.error).toBe(
         'UpdateResource failed. Resource for this kingdom not found.'
