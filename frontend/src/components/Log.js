@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import LogEntry from './LogEntry';
 import { logEntryService } from '../services/logEntryService';
+import './Log.css';
 
 const Log = () => {
   const [data, setData] = useState([]);

@@ -19,8 +19,8 @@ export const fetchKingdom = {
         headers: {
           'Content-Type': 'application/json',
           TRIBES_TOKEN: localStorage.getItem('TRIBES_TOKEN'),
-          body: body,
         },
+        body: JSON.stringify(body),
       }
     );
     return fetchedData.json();

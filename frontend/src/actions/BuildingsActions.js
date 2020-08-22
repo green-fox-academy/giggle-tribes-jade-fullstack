@@ -33,16 +33,18 @@ export const addBuildingAction = (kingdomID, buildingType) => {
       type: ADD_BUILDING,
     });
 
-    return fetchKingdom.post(kingdomID, 'buildings', buildingType).then(
-      response => {
-        response.error
-          ? dispatch({ type: SET_ERROR_SUCCESS, payload: response.error })
-          : dispatch({
-              type: ADD_BUILDING_SUCCESS,
-              payload: response,
-            });
-      },
-      error => dispatch({ type: SET_ERROR_SUCCESS, payload: error.error })
-    );
+    return fetchKingdom
+      .post(kingdomID, 'buildings', { type: buildingType })
+      .then(
+        response => {
+          response.error
+            ? dispatch({ type: SET_ERROR_SUCCESS, payload: response.error })
+            : dispatch({
+                type: ADD_BUILDING_SUCCESS,
+                payload: response,
+              });
+        },
+        error => dispatch({ type: SET_ERROR_SUCCESS, payload: error.error })
+      );
   };
 };
