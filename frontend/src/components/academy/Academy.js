@@ -8,8 +8,10 @@ import Attack from '../../assets/troops/attack1.png';
 import Defence from '../../assets/troops/defence1.png';
 import Food from '../../assets/sources/FoodIcon.svg';
 import Button from './CreateTroopButton';
+import Error from '../Error';
 
-function Academy({ academyLevel, error, troops }) {
+function Academy() {
+  const academyLevel = 1;
   return (
     <div className="academy">
       <img className="academy" src={Barrack} alt="academy icon" />
@@ -35,7 +37,7 @@ function Academy({ academyLevel, error, troops }) {
         <p>{'Level ' + academyLevel}</p>
       </div>
       <Button />
-      <p>{error}</p>
+      <Error />
     </div>
   );
 }
