@@ -4,9 +4,11 @@ button.MuiButton-root {
   display: flex;
   justify-content: space-around;
   background-color: #009587;
-  color: white;
   width: 20em;
   height: max-content;
+}
+button.MuiButton-root p {
+  color: white;
 }
 img.addtroop {
   height: 3em;
