@@ -2,9 +2,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 import AddBuildingButton from './AddBuildingButton';
 import './AddBuilding.css';
-import addBuildingService from '../../services/addBuildingService';
 import { addBuildingAction } from '../../actions/BuildingsActions';
-import { setErrorAction, resetErrorAction } from '../../actions/ErrorActions';
+import { setErrorAction } from '../../actions/ErrorActions';
+import Error from '../Error';
 
 const buttons = [
   { type: 'farm', cost: 1000 },
@@ -12,28 +12,14 @@ const buttons = [
   { type: 'academy', cost: 100 },
 ];
 
-const AddBuilding = ({
-  resources,
-  kingdom,
-  addBuilding,
-  error,
-  setErrorState,
-  resetErrorState,
-}) => {
-  //const [error, setError] = useState(false);
-
+const AddBuilding = ({ resources, kingdom, addBuilding, setErrorState }) => {
   const onButtonClick = buildingData => {
     const goldAmount = resources[1].amount;
-    if (error) resetErrorState();
     if (buildingData.cost > goldAmount) {
       setErrorState('Not enough gold');
     } else {
       console.log(addBuilding(kingdom, buildingData.type));
     }
-  };
-
-  const onErrorClick = () => {
-    if (error) resetErrorState();
   };
 
   return (
@@ -45,11 +31,7 @@ const AddBuilding = ({
           onClick={onButtonClick}
         />
       ))}
-      {error && (
-        <p className="error visible" onClick={onErrorClick}>
-          {error}
-        </p>
-      )}
+      <Error />
     </section>
   );
 };
@@ -64,9 +46,6 @@ const mapDispatchToProps = dispatch => {
     },
     setErrorState: error => {
       dispatch(setErrorAction(error));
-    },
-    resetErrorState: () => {
-      dispatch(resetErrorAction());
     },
   };
 };
