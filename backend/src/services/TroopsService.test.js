@@ -1,4 +1,4 @@
-import { TroopsService } from './TroopsService';
+import { TroopsService } from './TroopsService.js';
 
 describe('getTroops', () => {
   test('getTroops is ok, kingdomID not found', async () => {
