@@ -18,11 +18,12 @@ function CreateTroopButton({
   setError,
 }) {
   const onClickAddTroop = () => {
+    const troopCost = 10;
     const goldAmount = resources[1].amount;
     const troopsLimit = buildings.length > 0 ? buildings[0].level * 100 : 100;
-    if (goldAmount >= 10 && troops.length < troopsLimit) {
+    if (goldAmount >= troopCost && troops.length < troopsLimit) {
       addTroop(kingdom);
-    } else if (goldAmount < 10) {
+    } else if (goldAmount < troopCost) {
       setError("You don't have enough money.");
     } else {
       setError('You reached the storage limit, upgrade Townhall first.');
