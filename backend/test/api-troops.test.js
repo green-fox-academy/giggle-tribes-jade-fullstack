@@ -1,15 +1,15 @@
 import request from 'supertest';
 
 import app from '../src/app';
-import { getResourceForKingdom } from '../src/repos/resource';
+import { resourceService } from '../src/services/resourceService';
+jest.mock('../src/services/resourceService');
+import { authService } from '../src/services/authService';
+jest.mock('../src/services/authService');
 import {
   getTroopsForKingdom,
   insertTroopForKingdom,
 } from '../src/repos/troops';
-jest.mock('../src/repos/resource');
 jest.mock('../src/repos/troops');
-jest.mock('../src/services/authService');
-import { authService } from '../src/services/authService';
 
 authService.mockImplementation(() => ({
   userId: '44',
@@ -17,21 +17,27 @@ authService.mockImplementation(() => ({
 }));
 
 test('not enough money should response with 400', done => {
-  getResourceForKingdom.mockImplementation(async () => {
-    return Promise.resolve([
-      {
-        type: 'food',
-        amount: 500,
-        generation: 1,
-        updatedAt: '2020-07-04T08:45:00.000Z',
-      },
-      {
-        type: 'gold',
-        amount: 9,
-        generation: 1,
-        updatedAt: '2020-07-04T08:45:00.000Z',
-      },
-    ]);
+  resourceService.getResource.mockImplementation(async () => {
+    return await Promise.resolve({
+      resources: [
+        {
+          type: 'food',
+          amount: 500,
+          generation: 1,
+          updatedAt: '2020-07-04T08:45:00.000Z',
+        },
+        {
+          type: 'gold',
+          amount: 9,
+          generation: 1,
+          updatedAt: '2020-07-04T08:45:00.000Z',
+        },
+      ],
+    });
+  });
+
+  getTroopsForKingdom.mockImplementation(async () => {
+    return Promise.resolve([]);
   });
 
   request(app)
@@ -45,22 +51,25 @@ test('not enough money should response with 400', done => {
 });
 
 test('not enough capacity should response with 400', done => {
-  getResourceForKingdom.mockImplementation(async () => {
-    return Promise.resolve([
-      {
-        type: 'food',
-        amount: 500,
-        generation: 1,
-        updatedAt: '2020-07-04T08:45:00.000Z',
-      },
-      {
-        type: 'gold',
-        amount: 500,
-        generation: 1,
-        updatedAt: '2020-07-04T08:45:00.000Z',
-      },
-    ]);
+  resourceService.getResource.mockImplementation(async () => {
+    return Promise.resolve({
+      resources: [
+        {
+          type: 'food',
+          amount: 500,
+          generation: 1,
+          updatedAt: '2020-07-04T08:45:00.000Z',
+        },
+        {
+          type: 'gold',
+          amount: 500,
+          generation: 1,
+          updatedAt: '2020-07-04T08:45:00.000Z',
+        },
+      ],
+    });
   });
+
   getTroopsForKingdom.mockImplementation(async () => {
     return Promise.resolve(new Array(100));
   });
@@ -78,22 +87,25 @@ test('not enough capacity should response with 400', done => {
 });
 
 test('enough capacity and money should response with 200', done => {
-  getResourceForKingdom.mockImplementation(async () => {
-    return Promise.resolve([
-      {
-        type: 'food',
-        amount: 500,
-        generation: 1,
-        updatedAt: '2020-07-04T08:45:00.000Z',
-      },
-      {
-        type: 'gold',
-        amount: 500,
-        generation: 1,
-        updatedAt: '2020-07-04T08:45:00.000Z',
-      },
-    ]);
+  resourceService.getResource.mockImplementation(async () => {
+    return Promise.resolve({
+      resources: [
+        {
+          type: 'food',
+          amount: 500,
+          generation: 1,
+          updatedAt: '2020-07-04T08:45:00.000Z',
+        },
+        {
+          type: 'gold',
+          amount: 500,
+          generation: 1,
+          updatedAt: '2020-07-04T08:45:00.000Z',
+        },
+      ],
+    });
   });
+
   getTroopsForKingdom.mockImplementation(async () => {
     return Promise.resolve(new Array(1));
   });
