@@ -13,7 +13,7 @@ const db = {
 
 const user = new UserRepo(db);
 
-test('missing username returns error 1', async () => {
+test('add: missing username returns error 1', async () => {
     try {
       const result = await user.add({password:'secret'});
     } catch(err) {
@@ -21,7 +21,7 @@ test('missing username returns error 1', async () => {
     }
 });
 
-test('missing password returns error 3', async () => {
+test('add: missing password returns error 3', async () => {
     try {
       const result = await user.add({name:'username'});
     } catch(err) {
@@ -29,7 +29,7 @@ test('missing password returns error 3', async () => {
     }
 });
 
-test('too short password returns error 4', async () => {
+test('add: too short password returns error 4', async () => {
     try {
       const result = await user.add({name:'username',password:'pass'});
     } catch(err) {
@@ -37,7 +37,7 @@ test('too short password returns error 4', async () => {
     }
 });
 
-test('valid userdata returns db query with params', async () => {
+test('add: valid userdata returns db query with params', async () => {
     const result = await user.add({name:'username',password:'secretpassword'});
     expect(result).toStrictEqual({
         query: 'INSERT INTO users (name,password) VALUES(?,?)',
@@ -45,7 +45,7 @@ test('valid userdata returns db query with params', async () => {
     });
 });
 
-test('username already in use returns error 2', async () => {
+test('add: username already in use returns error 2', async () => {
     class duplicateError extends Error {
         constructor() {
             super();
@@ -78,5 +78,37 @@ test('get: missing username returns error 1', async () => {
         const result = await user.getByName({});
     } catch(err) {
       expect(err).toStrictEqual( Error(1) );
+    }
+});
+
+test('get: valid userId returns db query with params', async () => {
+    const result = await user.getById({id: 1});
+    expect(result).toStrictEqual({
+        query: 'SELECT * FROM users WHERE id=?',
+        params: [ 1 ]
+    });
+});
+
+test('get: missing userId returns error 5', async () => {
+    try {
+        const result = await user.getById({});
+    } catch(err) {
+      expect(err).toStrictEqual( Error(5) );
+    }
+});
+
+test('get: invalid userId (zero result) returns error 6', async () => {
+    const db = {
+        query: (...query) => {
+            return {
+                results: []
+            }
+        }
+      };
+    const user = new UserRepo(db);
+    try {
+        const result = await user.getById({id: 1});
+    } catch(err) {
+      expect(err).toStrictEqual( Error(6) );
     }
 });

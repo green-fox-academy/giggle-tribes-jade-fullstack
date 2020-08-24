@@ -6,7 +6,9 @@ export class UserRepo extends QueryHandler {
         missingName: 1,
         invalidName: 2,
         missingPassword: 3,
-        invalidPassword: 4
+        invalidPassword: 4,
+        missingId: 5,
+        invalidId: 6
     };
 
     constructor(db) {
@@ -35,6 +37,14 @@ export class UserRepo extends QueryHandler {
         if (!name) throw new Error(UserRepo.errorMessages.missingName);
         const query = this.validateQuery`SELECT * FROM users WHERE name=${name}`;
         return await (this.sendQuery(query));
+    };
+
+    async getById({id}) {
+        if (!id) throw new Error(UserRepo.errorMessages.missingId);
+        const query = this.validateQuery`SELECT * FROM users WHERE id=${id}`;
+        const dbData = await (this.sendQuery(query));
+        if (dbData.length === 0) throw new Error(UserRepo.errorMessages.invalidId);
+        return dbData;
     };
 
 };
