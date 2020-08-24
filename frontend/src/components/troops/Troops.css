@@ -1,0 +1,44 @@
+.component {
+  grid-area: 3 / 1 / span 1 / span 2;
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  grid-template-rows: 140px 1fr;
+  background-color: rgba(201, 204, 205, 0.8);
+}
+.component.image {
+  margin: 20px;
+  height: 100px;
+  width: 100px;
+  grid-area: 1 / 1 /1 /1;
+  background-color: transparent;
+}
+
+.component.info {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  margin: 5px;
+  grid-area: 2 / 1;
+  background-color: transparent;
+}
+
+.component.info p {
+  color: #676969;
+}
+
+.component.main {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin: 20px;
+  grid-area: 1 / 2;
+  background-color: transparent;
+}
+
+.component .button.image {
+  width: 3em;
+  height: 3em;
+  background-color: transparent;
+  box-shadow: none;
+}
