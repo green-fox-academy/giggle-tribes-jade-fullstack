@@ -18,7 +18,7 @@ export default class QueryHandler {
 
     validateQuery(query,...params) {
         params.forEach( param => {
-            if (!param) throw new Error(QueryHandler.errorMessages.missingParam);
+            if (param === undefined) throw new Error(QueryHandler.errorMessages.missingParam);
         });
         return [
             query.join('?'),
