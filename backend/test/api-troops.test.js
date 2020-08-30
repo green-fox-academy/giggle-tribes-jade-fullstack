@@ -5,11 +5,8 @@ import { resourceService } from '../src/services/resourceService';
 jest.mock('../src/services/resourceService');
 import { authService } from '../src/services/authService';
 jest.mock('../src/services/authService');
-import {
-  getTroopsForKingdom,
-  insertTroopForKingdom,
-} from '../src/repos/troops';
-jest.mock('../src/repos/troops');
+import { troopsRepo } from '../src/repos/TroopsRepo';
+jest.mock('../src/repos/TroopsRepo');
 
 authService.mockImplementation(() => ({
   userId: '44',
@@ -21,22 +18,14 @@ test('not enough money should response with 400', done => {
     return await Promise.resolve({
       resources: [
         {
-          type: 'food',
-          amount: 500,
-          generation: 1,
-          updatedAt: '2020-07-04T08:45:00.000Z',
-        },
-        {
           type: 'gold',
           amount: 9,
-          generation: 1,
-          updatedAt: '2020-07-04T08:45:00.000Z',
         },
       ],
     });
   });
 
-  getTroopsForKingdom.mockImplementation(async () => {
+  troopsRepo.get.mockImplementation(async () => {
     return Promise.resolve([]);
   });
 
@@ -55,22 +44,14 @@ test('not enough capacity should response with 400', done => {
     return Promise.resolve({
       resources: [
         {
-          type: 'food',
-          amount: 500,
-          generation: 1,
-          updatedAt: '2020-07-04T08:45:00.000Z',
-        },
-        {
           type: 'gold',
           amount: 500,
-          generation: 1,
-          updatedAt: '2020-07-04T08:45:00.000Z',
         },
       ],
     });
   });
 
-  getTroopsForKingdom.mockImplementation(async () => {
+  troopsRepo.get.mockImplementation(async () => {
     return Promise.resolve(new Array(100));
   });
 
@@ -91,26 +72,18 @@ test('enough capacity and money should response with 200', done => {
     return Promise.resolve({
       resources: [
         {
-          type: 'food',
-          amount: 500,
-          generation: 1,
-          updatedAt: '2020-07-04T08:45:00.000Z',
-        },
-        {
           type: 'gold',
           amount: 500,
-          generation: 1,
-          updatedAt: '2020-07-04T08:45:00.000Z',
         },
       ],
     });
   });
 
-  getTroopsForKingdom.mockImplementation(async () => {
+  troopsRepo.get.mockImplementation(async () => {
     return Promise.resolve(new Array(1));
   });
 
-  insertTroopForKingdom.mockImplementation(async () => {
+  troopsRepo.insert.mockImplementation(async () => {
     return Promise.resolve({ insertId: 3 });
   });
 

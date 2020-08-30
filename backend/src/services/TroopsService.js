@@ -1,16 +1,19 @@
-const setMinutes = async (startTime, minutes) => {
-  return startTime.setUTCMinutes(startTime.getUTCMinutes() + minutes);
-};
+import { troopsRepo } from '../repos/TroopsRepo';
+import { resourceService } from '../services/resourceService';
 
 export class TroopsService {
-  constructor({ resourceService, getTroopsForKingdom, insertTroopForKingdom }) {
-    this.getTroopsForKingdom = getTroopsForKingdom;
+  constructor({ resourceService, troopsRepo }) {
+    this.getTroopsByKingdom = troopsRepo.get;
     this.resourceService = resourceService;
-    this.insertTroopForKingdom = insertTroopForKingdom;
+    this.insertTroopByKingdom = troopsRepo.insert;
+    this.setMinutes = async (startTime, minutes) => {
+      return startTime.setUTCMinutes(startTime.getUTCMinutes() + minutes);
+    };
   }
   async getTroops({ kingdomID }) {
     if (kingdomID) {
-      const troops = await this.getTroopsForKingdom(kingdomID);
+      const troops = await this.getTroopsByKingdom(kingdomID);
+      console.log(troops);
       return { troops: troops };
     } else {
       throw { error: 'Kingdom ID is required.' };
@@ -32,15 +35,15 @@ export class TroopsService {
       foodConsumption: -1,
     };
 
-    const troops = await this.getTroopsForKingdom(kingdomID);
+    const troops = await this.getTroopsByKingdom(kingdomID);
 
     if (goldAmount >= rules.troopCost && rules.troopLimit > troops.length) {
       const currentTime = new Date();
       const startTime = new Date();
-      await setMinutes(currentTime, rules.creatingTime);
+      await this.setMinutes(currentTime, rules.creatingTime);
       const endTime = currentTime;
 
-      const troop = await this.insertTroopForKingdom(
+      const troop = await this.insertTroopByKingdom(
         kingdomID,
         1,
         1,
@@ -72,3 +75,8 @@ export class TroopsService {
     }
   }
 }
+
+export const troopsService = new TroopsService({
+  troopsRepo,
+  resourceService,
+});

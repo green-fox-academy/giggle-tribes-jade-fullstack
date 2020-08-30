@@ -1,57 +1,63 @@
 import { TroopsService } from './TroopsService.js';
 
+const troopsFactory = {
+  async get(troops) {
+    return Promise.resolve(troops);
+  },
+  async insert(result) {
+    return Promise.resolve(result);
+  },
+};
+
+const resourceFactory = {
+  async getResource(amount) {
+    return await Promise.resolve({
+      resources: [
+        {
+          type: 'gold',
+          amount: amount,
+        },
+      ],
+    });
+  },
+  async spendGold() {
+    return await Promise.resolve();
+  },
+  async updateFoodGeneration() {
+    return await Promise.resolve();
+  },
+};
+
 describe('getTroops', () => {
-  test('getTroops is ok, kingdomID not found', async () => {
-    const troops = [];
-    const getTroopsForKingdom = async () => {
-      return Promise.resolve(troops);
-    };
-
-    const troopsService = new TroopsService({
-      getTroopsForKingdom,
-    });
-
-    const result = await troopsService.getTroops({ kingdomID: '1' });
-
-    expect(result).toStrictEqual({
-      troops: troops,
-    });
-  });
-
-  test('getTroops is ok, kingdomID found', async () => {
-    const troops = [
-      {
-        id: 1,
-        level: 1,
-        hp: 1,
-        attack: 1,
-        defence: 1,
-        started_at: '2020-07-04T08:45:00.000Z',
-        finished_at: '2020-07-04T08:46:00.000Z',
+  test('getTroops is ok, troops belonging to kingdomID found', async () => {
+    const troopsRepo = {
+      get: async () => {
+        return troopsFactory.get([
+          {
+            id: 1,
+          },
+        ]);
       },
-      {
-        id: 2,
-        level: 1,
-        hp: 1,
-        attack: 1,
-        defence: 1,
-        started_at: '2020-07-04T09:45:00.000Z',
-        finished_at: '2020-07-04T09:46:00.000Z',
-      },
-    ];
-
-    const getTroopsForKingdom = async () => {
-      return Promise.resolve(troops);
     };
-    const troopsService = new TroopsService({ getTroopsForKingdom });
+    const troopsService = new TroopsService({ troopsRepo });
     const result = await troopsService.getTroops({ kingdomID: '1' });
     expect(result).toStrictEqual({
-      troops: troops,
+      troops: [
+        {
+          id: 1,
+        },
+      ],
     });
   });
 
   it('getTroops failed, missing kingdomID', async () => {
-    const troopsService = new TroopsService({});
+    const troopsRepo = {
+      get: async () => {
+        return { error: 'Kingdom ID is required.' };
+      },
+    };
+
+    const troopsService = new TroopsService({ troopsRepo });
     expect(async () => {
       await troopsService.getTroops({});
     }).rejects.toEqual({
@@ -65,62 +71,29 @@ describe('addTroop', () => {
     const mockDate = new Date(0);
     jest.spyOn(global, 'Date').mockImplementation(() => mockDate);
 
-    const troops = [
-      {
-        id: 1,
-        level: 1,
-        hp: 1,
-        attack: 1,
-        defence: 1,
-        started_at: '2020-07-04T08:45:00.000Z',
-        finished_at: '2020-07-04T08:46:00.000Z',
+    const troopsRepo = {
+      get: async () => {
+        return troopsFactory.get([]);
       },
-      {
-        id: 2,
-        level: 1,
-        hp: 1,
-        attack: 1,
-        defence: 1,
-        started_at: '2020-07-04T09:45:00.000Z',
-        finished_at: '2020-07-04T09:46:00.000Z',
+      insert: async () => {
+        return troopsFactory.insert({ insertId: 3 });
       },
-    ];
-    const getTroopsForKingdom = async () => {
-      return Promise.resolve(troops);
     };
-    const insertTroopForKingdom = async () => {
-      return Promise.resolve({ insertId: 3 });
-    };
+
     const resourceService = {
       async getResource() {
-        return await Promise.resolve({
-          resources: [
-            {
-              type: 'food',
-              amount: 500,
-              generation: 1,
-              updatedAt: '2020-07-04T08:45:00.000Z',
-            },
-            {
-              type: 'gold',
-              amount: 500,
-              generation: 1,
-              updatedAt: '2020-07-04T08:45:00.000Z',
-            },
-          ],
-        });
+        return resourceFactory.getResource(10);
       },
       async spendGold() {
-        return await Promise.resolve();
+        return resourceFactory.spendGold();
       },
       async updateFoodGeneration() {
-        return await Promise.resolve();
+        return resourceFactory.updateFoodGeneration();
       },
     };
 
     const troopsService = new TroopsService({
-      getTroopsForKingdom,
-      insertTroopForKingdom,
+      troopsRepo,
       resourceService,
     });
 
@@ -137,32 +110,19 @@ describe('addTroop', () => {
   test('addTroop fails, not enough money', async () => {
     const resourceService = {
       async getResource() {
-        return await Promise.resolve({
-          resources: [
-            {
-              type: 'food',
-              amount: 500,
-              generation: 1,
-              updatedAt: '2020-07-04T08:45:00.000Z',
-            },
-            {
-              type: 'gold',
-              amount: 9,
-              generation: 1,
-              updatedAt: '2020-07-04T08:45:00.000Z',
-            },
-          ],
-        });
+        return resourceFactory.getResource(9);
       },
     };
 
-    const getTroopsForKingdom = async () => {
-      return Promise.resolve([]);
+    const troopsRepo = {
+      get: async () => {
+        return troopsFactory.get([]);
+      },
     };
 
     const troopsService = new TroopsService({
       resourceService,
-      getTroopsForKingdom,
+      troopsRepo,
     });
 
     expect(async () => {
@@ -174,32 +134,18 @@ describe('addTroop', () => {
   test('addTroop fails, not enough capacity', async () => {
     const resourceService = {
       async getResource() {
-        return await Promise.resolve({
-          resources: [
-            {
-              type: 'food',
-              amount: 500,
-              generation: 1,
-              updatedAt: '2020-07-04T08:45:00.000Z',
-            },
-            {
-              type: 'gold',
-              amount: 500,
-              generation: 1,
-              updatedAt: '2020-07-04T08:45:00.000Z',
-            },
-          ],
-        });
+        return resourceFactory.getResource(10);
       },
     };
-
-    const getTroopsForKingdom = async () => {
-      return Promise.resolve(new Array(100));
+    const troopsRepo = {
+      get: async () => {
+        return troopsFactory.get(new Array(100));
+      },
     };
 
     const troopsService = new TroopsService({
       resourceService,
-      getTroopsForKingdom,
+      troopsRepo,
     });
 
     expect(async () => {
