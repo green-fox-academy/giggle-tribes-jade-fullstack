@@ -3,6 +3,7 @@ import { resourceService } from '../services/resourceService';
 
 export class TroopsService {
   constructor({ resourceService, troopsRepo }) {
+    this.getColumnNames = troopsRepo.getColumnNames;
     this.getTroopsByKingdom = troopsRepo.get;
     this.resourceService = resourceService;
     this.insertTroopByKingdom = troopsRepo.insert;
