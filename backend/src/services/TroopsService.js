@@ -13,7 +13,6 @@ export class TroopsService {
   async getTroops({ kingdomID }) {
     if (kingdomID) {
       const troops = await this.getTroopsByKingdom(kingdomID);
-      console.log(troops);
       return { troops: troops };
     } else {
       throw { error: 'Kingdom ID is required.' };

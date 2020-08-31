@@ -2,8 +2,6 @@ import { db } from '../data/connection';
 
 class TroopsRepo {
   async get(kingdomID) {
-    console.log('repo');
-    console.log(kingdomID);
     const troops = await db.query(
       `select * from kingdom_troops where kingdom_id = ?;`,
       kingdomID

@@ -11,8 +11,6 @@ export const troopsController = {
     }
   },
   async get(req, res) {
-    console.log('controller');
-    console.log(req.params);
     try {
       const data = await troopsService.getTroops(req.params);
 
