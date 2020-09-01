@@ -2,48 +2,39 @@ import QueryHandler from './QueryHandler';
 
 export class UserRepo extends QueryHandler {
 
-    static errorMessages = {
-        missingName: 1,
-        invalidName: 2,
-        missingPassword: 3,
-        invalidPassword: 4,
-        missingId: 5,
-        invalidId: 6
+    constructor(db,errorCodes) {
+        super(db,errorCodes);
     };
 
-    constructor(db) {
-        super(db);
+    validateParams = ({userName,password}) => {
+        if (!userName) throw new Error(this.errorCodes.missingUserName);
+        if (userName == '') throw new Error(this.errorCodes.invalidUserName);
+        if (!password) throw new Error(this.errorCodes.missingPassword);
+        if (password.length < 8) throw new Error(this.errorCodes.invalidPassword);
     };
 
-    validateParams = ({name,password}) => {
-        if (!name) throw new Error(UserRepo.errorMessages.missingName);
-        if (name == '') throw new Error(UserRepo.errorMessages.invalidName);
-        if (!password) throw new Error(UserRepo.errorMessages.missingPassword);
-        if (password.length < 8) throw new Error(UserRepo.errorMessages.invalidPassword);
-    };
-
-    async add({name,password}) {
-        this.validateParams({name,password});
-        const query = this.validateQuery`INSERT INTO users (name,password) VALUES(${name},${password})`;
+    async add({userName,password}) {
+        this.validateParams({userName,password});
+        const query = this.validateQuery`INSERT INTO users (name,password) VALUES(${userName},${password})`;
         try {
             return await (this.sendQuery(query));
         } catch(error) {
-            if (error.code === 'ER_DUP_ENTRY') throw new Error(UserRepo.errorMessages.invalidName);
+            if (error.code === 'ER_DUP_ENTRY') throw new Error(this.errorCodes.invalidUserName);
             throw error;
         }
     };
 
-    async getByName({name}) {
-        if (!name) throw new Error(UserRepo.errorMessages.missingName);
-        const query = this.validateQuery`SELECT * FROM users WHERE name=${name}`;
+    async getByName({userName}) {
+        if (!userName) throw new Error(this.errorCodes.missingUserName);
+        const query = this.validateQuery`SELECT * FROM users WHERE name=${userName}`;
         return await (this.sendQuery(query));
     };
 
-    async getById({id}) {
-        if (!id) throw new Error(UserRepo.errorMessages.missingId);
-        const query = this.validateQuery`SELECT * FROM users WHERE id=${id}`;
+    async getById({userId}) {
+        if (!userId) throw new Error(this.errorCodes.missingUserId);
+        const query = this.validateQuery`SELECT * FROM users WHERE id=${userId}`;
         const dbData = await (this.sendQuery(query));
-        if (dbData.length === 0) throw new Error(UserRepo.errorMessages.invalidId);
+        if (dbData.length === 0) throw new Error(this.errorCodes.invalidUserId);
         return dbData;
     };
 

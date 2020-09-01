@@ -1,4 +1,5 @@
 import { LocationRepo } from '../../repos';
+import { errorCodes } from '../../repos';
 
 const db = {
     query: (...query) => {
@@ -11,29 +12,29 @@ const db = {
     }
   };
 
-const location = new LocationRepo(db);
+const location = new LocationRepo(db,errorCodes);
 
-test('add: missing kingdomId returns error 1', async () => {
+test('add: missing kingdomId returns error 104', async () => {
     try {
       const result = await location.add({code:'GBR'});
     } catch(err) {
-      expect(err).toStrictEqual( Error(1) );
+      expect(err).toStrictEqual( Error(104) );
     }
 });
 
-test('add: missing code returns error 2', async () => {
+test('add: missing code returns error 109', async () => {
   try {
     const result = await location.add({kingdomId: 1});
   } catch(err) {
-    expect(err).toStrictEqual( Error(2) );
+    expect(err).toStrictEqual( Error(109) );
   }
 });
 
-test('add: invalid code (too short) returns error 3', async () => {
+test('add: invalid code (too short) returns error 209', async () => {
   try {
     const result = await location.add({kingdomId: 1, code:'GB'});
   } catch(err) {
-    expect(err).toStrictEqual( Error(3) );
+    expect(err).toStrictEqual( Error(209) );
   }
 });
 

@@ -2,16 +2,12 @@ import QueryHandler from './QueryHandler';
 
 export class BuildingRepo extends QueryHandler {
 
-    static errorMessages = {
-        missingKingdomId: 2
-    };
-
-    constructor(db) {
-        super(db);
+    constructor(db,errorCodes) {
+        super(db,errorCodes);
     };
 
     async add({kingdomId,type,level,hp,started_at,finished_at}) {
-        if (!kingdomId) throw new Error(BuildingRepo.errorMessages.missingKingdomId);
+        if (!kingdomId) throw new Error(this.errorCodes.missingKingdomId);
         const query = this.validateQuery`
             INSERT INTO buildings 
             (kingdom_id,type,level,hp,started_at,finished_at) 

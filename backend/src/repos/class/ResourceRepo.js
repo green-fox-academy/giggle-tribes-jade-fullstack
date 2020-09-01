@@ -2,22 +2,15 @@ import QueryHandler from './QueryHandler';
 
 export class ResourceRepo extends QueryHandler {
 
-    static errorMessages = {
-        missingKingdomId: 1,
-        missingType: 2,
-        missingAmount: 3,
-        missingGeneration: 4
-    };
-
-    constructor(db) {
-        super(db);
+    constructor(db,errorCodes) {
+        super(db,errorCodes);
     };
 
     validateParams = ({kingdomId,type,amount,generation}) => {
-        if (!kingdomId) throw new Error(ResourceRepo.errorMessages.missingKingdomId);
-        if (!type) throw new Error(ResourceRepo.errorMessages.missingType);
-        if (amount === undefined) throw new Error(ResourceRepo.errorMessages.missingAmount);
-        if (generation === undefined) throw new Error(ResourceRepo.errorMessages.missingGeneration);
+        if (!kingdomId) throw new Error(this.errorCodes.missingKingdomId);
+        if (!type) throw new Error(this.errorCodes.missingResourceType);
+        if (amount === undefined) throw new Error(this.errorCodes.missingResourceAmount);
+        if (generation === undefined) throw new Error(this.errorCodes.missingResourceGeneration);
     };
 
     async add({kingdomId,type,amount,generation}) {
@@ -41,7 +34,7 @@ export class ResourceRepo extends QueryHandler {
     };
 
     async get({kingdomId}) {
-        if (!kingdomId) throw new Error(ResourceRepo.errorMessages.missingKingdomId);
+        if (!kingdomId) throw new Error(this.errorCodes.missingKingdomId);
         const query = this.validateQuery`SELECT * FROM kingdoms_resources WHERE kingdom_id = ${kingdomId}`;
         return await (this.sendQuery(query));
     };

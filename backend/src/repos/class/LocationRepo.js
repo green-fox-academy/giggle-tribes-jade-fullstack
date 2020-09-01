@@ -2,20 +2,14 @@ import QueryHandler from './QueryHandler';
 
 export class LocationRepo extends QueryHandler {
 
-    static errorMessages = {
-        missingKingdomId: 1,
-        missingCode: 2,
-        invalidCode: 3
-    };
-
-    constructor(db) {
-        super(db);
+    constructor(db,errorCodes) {
+        super(db,errorCodes);
     };
 
     validateParams = ({kingdomId,code}) => {
-        if (!kingdomId) throw new Error(LocationRepo.errorMessages.missingKingdomId);
-        if (!code) throw new Error(LocationRepo.errorMessages.missingCode);
-        if (code.length < 3) throw new Error(LocationRepo.errorMessages.invalidCode);
+        if (!kingdomId) throw new Error(this.errorCodes.missingKingdomId);
+        if (!code) throw new Error(this.errorCodes.missingLocationCode);
+        if (code.length < 3) throw new Error(this.errorCodes.invalidLocationCode);
     };
 
     async add({kingdomId,code}) {

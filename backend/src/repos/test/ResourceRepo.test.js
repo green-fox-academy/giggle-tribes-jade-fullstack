@@ -1,4 +1,5 @@
 import { ResourceRepo } from '../../repos';
+import { errorCodes } from '../../repos';
 
 const db = {
     query: (...query) => {
@@ -11,37 +12,37 @@ const db = {
     }
   };
 
-const resource = new ResourceRepo(db);
+const resource = new ResourceRepo(db,errorCodes);
 
-test('add: missing kingdomId returns error 1', async () => {
+test('add: missing kingdomId returns error 104', async () => {
     try {
       const result = await resource.add({type: 'gold', amount: 0, generation: 0});
     } catch(err) {
-      expect(err).toStrictEqual( Error(1) );
+      expect(err).toStrictEqual( Error(104) );
     }
 });
 
-test('add: missing type returns error 2', async () => {
+test('add: missing type returns error 106', async () => {
   try {
     const result = await resource.add({kingdomId: 1, amount: 0, generation: 0});
   } catch(err) {
-    expect(err).toStrictEqual( Error(2) );
+    expect(err).toStrictEqual( Error(106) );
   }
 });
 
-test('add: missing amount returns error 3', async () => {
+test('add: missing amount returns error 107', async () => {
   try {
     const result = await resource.add({kingdomId: 1, type: 'gold', generation: 0});
   } catch(err) {
-    expect(err).toStrictEqual( Error(3) );
+    expect(err).toStrictEqual( Error(107) );
   }
 });
 
-test('add: missing generation returns error 4', async () => {
+test('add: missing generation returns error 108', async () => {
   try {
     const result = await resource.add({kingdomId: 1, type: 'gold', amount: 0});
   } catch(err) {
-    expect(err).toStrictEqual( Error(4) );
+    expect(err).toStrictEqual( Error(108) );
   }
 });
 
@@ -57,35 +58,35 @@ test('add: valid params return db query with params', async () => {
   });
 });
 
-test('update: missing kingdomId returns error 1', async () => {
+test('update: missing kingdomId returns error 104', async () => {
   try {
     const result = await resource.update({type: 'gold', amount: 0, generation: 0});
   } catch(err) {
-    expect(err).toStrictEqual( Error(1) );
+    expect(err).toStrictEqual( Error(104) );
   }
 });
 
-test('update: missing type returns error 2', async () => {
+test('update: missing type returns error 106', async () => {
   try {
     const result = await resource.update({kingdomId: 1, amount: 0, generation: 0});
   } catch(err) {
-    expect(err).toStrictEqual( Error(2) );
+    expect(err).toStrictEqual( Error(106) );
   }
 });
 
-test('update: missing amount returns error 3', async () => {
+test('update: missing amount returns error 107', async () => {
   try {
     const result = await resource.update({kingdomId: 1, type: 'gold', generation: 0});
   } catch(err) {
-    expect(err).toStrictEqual( Error(3) );
+    expect(err).toStrictEqual( Error(107) );
   }
 });
 
-test('update: missing generation returns error 4', async () => {
+test('update: missing generation returns error 108', async () => {
   try {
     const result = await resource.update({kingdomId: 1, type: 'gold', amount: 0});
   } catch(err) {
-    expect(err).toStrictEqual( Error(4) );
+    expect(err).toStrictEqual( Error(108) );
   }
 });
 
@@ -101,11 +102,11 @@ test('update: valid params return db query with params', async () => {
   });
 });
 
-test('get: missing kingdomId returns error 1', async () => {
+test('get: missing kingdomId returns error 104', async () => {
   try {
-    const result = await resource.get({kingdomId: 1});
+    const result = await resource.get({});
   } catch(err) {
-    expect(err).toStrictEqual( Error(1) );
+    expect(err).toStrictEqual( Error(104) );
   }
 });
 

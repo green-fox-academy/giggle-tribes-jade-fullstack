@@ -1,4 +1,5 @@
-import { BuildingRepo } from '..';
+import { BuildingRepo } from '../../repos';
+import { errorCodes } from '../../repos';
 
 const db = {
     query: (...query) => {
@@ -11,29 +12,29 @@ const db = {
     }
   };
 
-const building = new BuildingRepo(db);
+const building = new BuildingRepo(db,errorCodes);
 
-test('add: missing kingdomId returns error 2', async () => {
+test('add: missing kingdomId returns error 104', async () => {
     try {
       const result = await building.add({type: 'academy', level: 0, hp: 0, started_at: '2020-08-19 19:06:22', finished_at: '2020-08-19 19:07:22'});
     } catch(err) {
-      expect(err).toStrictEqual( Error(2) );
+      expect(err).toStrictEqual( Error(104) );
     }
 });
 
-test('add: invalid (missing) data returns error 1', async () => {
+test('add: invalid (missing) data returns error 100', async () => {
   try {
     const result = await building.add({kingdomId: 1, level: 0, hp: 0, started_at: '2020-08-19 19:06:22', finished_at: '2020-08-19 19:07:22'});
   } catch(err) {
-    expect(err).toStrictEqual( Error(1) );
+    expect(err).toStrictEqual( Error(100) );
   }
 });
 
-test('add: more invalid (missing) data returns error 1', async () => {
+test('add: more invalid (missing) data returns error 100', async () => {
   try {
     const result = await building.add({kingdomId: 1, level: 0, hp: 0});
   } catch(err) {
-    expect(err).toStrictEqual( Error(1) );
+    expect(err).toStrictEqual( Error(100) );
   }
 });
 
