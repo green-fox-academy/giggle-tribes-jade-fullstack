@@ -9,6 +9,7 @@ export const errorCodes = {
         missingResourceAmount: 107,
         missingResourceGeneration: 108,
         missingLocationCode: 109,
+        missingUserNameAndPassword: 110,
         invalidParam: 200,
         invalidUserName: 201,
         invalidPassword: 202,

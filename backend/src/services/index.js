@@ -6,3 +6,4 @@ export * from './kingdomService';
 export * from './resourceService';
 export * from './tokenService';
 export * from './buildingService';
+export * from './class/UserService';
