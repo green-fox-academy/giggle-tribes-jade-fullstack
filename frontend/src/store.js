@@ -6,6 +6,7 @@ import { kingdomReducer } from './reducers/kingdomReducer';
 import { buildingsReducer } from './reducers/buildingsReducer';
 import { resourcesReducer } from './reducers/resourcesReducer';
 import { troopsReducer } from './reducers/troopsReducer';
+import { errorReducer } from './reducers/errorReducer';
 
 function root(state = {}, action) {
   return {
@@ -14,6 +15,7 @@ function root(state = {}, action) {
     buildings: buildingsReducer(state.buildings, action),
     resources: resourcesReducer(state.resources, action),
     troops: troopsReducer(state.troops, action),
+    error: errorReducer(state.error, action),
   };
 }
 

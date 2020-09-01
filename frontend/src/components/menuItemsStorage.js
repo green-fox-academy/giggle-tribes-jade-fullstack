@@ -1,11 +1,12 @@
 import MenuComponent from './MenuComponent';
 import Troops from './troops/Troops';
+import Buildings from './buildings/Buildings';
 
 export const menuItems = [
   {
     name: 'Buildings',
     link: '/buildings',
-    component: MenuComponent,
+    component: Buildings,
   },
   {
     name: 'Troops',
@@ -19,7 +20,7 @@ export const menuItems = [
   },
   {
     name: 'Leaderboard',
-    link: '/lederboard',
+    link: '/leaderboard',
     component: MenuComponent,
   },
 ];

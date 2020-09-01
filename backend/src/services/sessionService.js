@@ -10,7 +10,7 @@ export const sessionService = {
     };
     if (username && password) {
       try {
-        const result = await userService.get(username, password);
+        const result = await userService.get({ username, password });
         return {
           status: 'ok',
           token: await getToken(result.userID, result.kingdomID),
