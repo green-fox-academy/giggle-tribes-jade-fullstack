@@ -1,13 +1,22 @@
 import { db } from '../data/connection';
-import { getColumnNames } from './getColumnNames';
 
 class TroopsRepo {
   constructor() {
-    this.getColumnNames = getColumnNames;
+    this.tableName = 'kingdom_troops';
+    this.columns = {
+      id: 'id',
+      kingdom_id: 'kingdom_id',
+      level: 'level',
+      hp: 'hp',
+      attack: 'attack',
+      defence: 'defence',
+      started_at: 'started_at',
+      finished_at: 'finished_at',
+    };
   }
   async get(kingdomID) {
     const troops = await db.query(
-      `select * from kingdom_troops where kingdom_id = ?;`,
+      `select * from ${this.tableName} where ${this.columns.kingdom_id} = ?;`,
       kingdomID
     );
 
@@ -15,20 +24,24 @@ class TroopsRepo {
   }
 
   async insert(kingdomID, level, hp, attack, defence, started_at, finished_at) {
-    const columns = await (await this.getColumnNames('kingdom_troops')).slice(
-      1
-    );
     const troop = await db.query(
-      `insert into kingdom_troops (${columns}) values(?,?,?,?,?,?,?);`,
+      `insert into ${this.tableName} (${[
+        this.columns.kingdom_id,
+        this.columns.level,
+        this.columns.hp,
+        this.columns.attack,
+        this.columns.defence,
+        this.columns.started_at,
+        this.columns.finished_at,
+      ]}) values(?,?,?,?,?,?,?);`,
       [kingdomID, level, hp, attack, defence, started_at, finished_at]
     );
     return troop.results;
   }
 
   async update(kingdomID, level, started_at, finished_at) {
-    const columns = await this.getColumnNames('kingdom_troops');
     const troop = await db.query(
-      `update kingdom_troops set ${columns[2]} = ${columns[2]} + 1, ${columns[3]} = ${columns[3]} + 1, ${columns[4]} = ${columns[4]} + 1, ${columns[5]} = ?, ${columns[6]}=?, ${columns[7]}=? where ${columns[1]} = ? and ${columns[2]} = ? LIMIT 1;`,
+      `update ${this.tableName}  set ${this.columns.level} = ${this.columns.level} + 1, ${this.columns.hp} = ${this.columns.hp} + 1, ${this.columns.attack} = ${this.columns.attack} + 1, ${this.columns.defence} = ${this.columns.defence} + 1, ${this.columns.started_at}=?, ${this.columns.finished_at}=? where ${this.columns.kingdom_id} = ? and ${this.columns.level} = ? LIMIT 1;`,
       [started_at, finished_at, kingdomID, level]
     );
     return troop.results;
