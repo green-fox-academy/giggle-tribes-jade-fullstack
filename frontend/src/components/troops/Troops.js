@@ -1,41 +1,18 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import './Troops.css';
-import Troop from '../../assets/icons/troopbg.svg';
-import Troop2 from '../../assets/icons/troops.svg';
+import { getTroopsAction } from '../../actions/TroopsActions';
+import Button from './TroopButton';
 
-function Troops() {
-  const troops = [
-    {
-      id: 1,
-      level: 1,
-      hp: 1,
-      attack: 1,
-      defence: 1,
-      started_at: 12345789,
-      finished_at: 12399999,
-    },
-    {
-      id: 2,
-      level: 1,
-      hp: 1,
-      attack: 1,
-      defence: 1,
-      started_at: 12345789,
-      finished_at: 12399999,
-    },
-    {
-      id: 3,
-      level: 2,
-      hp: 2,
-      attack: 2,
-      defence: 2,
-      started_at: 12345789,
-      finished_at: 12399999,
-    },
-  ];
+import Troop from '../../assets/icons/troopbg.svg';
+
+function Troops({ kingdom, troops, get }) {
+  useEffect(() => {
+    get(kingdom);
+  }, [kingdom, get]);
+
   const analyseTroops = troops => {
     const result = {
       attack: 0,
@@ -74,26 +51,27 @@ function Troops() {
       </div>
       <div className="troops component main">
         {troopsSummary.amountPerLevel.map((troopSummary, i) => {
-          return (
-            <button key={i}>
-              <img
-                className="troops button image"
-                src={Troop2}
-                alt="troop icon"
-              />
-              <p>
-                {troopSummary.amount + ' Troop level ' + troopSummary.level}
-              </p>
-            </button>
-          );
+          return <Button key={i} troopSummary={troopSummary}></Button>;
         })}
       </div>
     </div>
   );
 }
 
+Troops.propTypes = {
+  kingdom: PropTypes.any.isRequired,
+};
+
 const mapStateToProps = state => {
   return state;
 };
 
-export default connect(mapStateToProps)(Troops);
+const mapDispatchToProps = dispatch => {
+  return {
+    get: kingdomId => {
+      dispatch(getTroopsAction(kingdomId));
+    },
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Troops);
