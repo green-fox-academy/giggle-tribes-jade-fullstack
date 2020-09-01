@@ -12,29 +12,37 @@ const filterInput = input => {
   return '';
 };
 
-const add = (input) => {
-    return new Promise( async (resolve,reject) => {
-        const invalidInput = filterInput(input);
-        if ( invalidInput ) {
-            reject(invalidInput);
-        } else {
-            try {
-                const userid = await userRepo.add({'username' : input.username, 'password' : input.password});
-                const kingdomid = await kingdomRepo.add('kingdom', {'kingdomname' : input.kingdomname});
-                await kingdomRepo.add('user_kingdom', {'userid' : userid, 'kingdomid' : kingdomid});
-                await resourceService.createResource({ kingdomID: kingdomid });
-                resolve({
-                    'id' : userid,
-                    'username' : input.username,
-                    'kingdomId' : kingdomid
-                });
-            } catch(error) {
-                if (error.duplication) reject('Username is already taken.');
-                if (error.validationError) reject(error.validationError);
-                reject(error);
-            }
-        }
-    });
+const add = input => {
+  return new Promise(async (resolve, reject) => {
+    const invalidInput = filterInput(input);
+    if (invalidInput) {
+      reject(invalidInput);
+    } else {
+      try {
+        const userid = await userRepo.add({
+          username: input.username,
+          password: input.password,
+        });
+        const kingdomid = await kingdomRepo.add('kingdom', {
+          kingdomname: input.kingdomname,
+        });
+        await kingdomRepo.add('user_kingdom', {
+          userid: userid,
+          kingdomid: kingdomid,
+        });
+        await resourceService.createResource({ kingdomID: kingdomid });
+        resolve({
+          id: userid,
+          username: input.username,
+          kingdomId: kingdomid,
+        });
+      } catch (error) {
+        if (error.duplication) reject('Username is already taken.');
+        if (error.validationError) reject(error.validationError);
+        reject(error);
+      }
+    }
+  });
 };
 
 const get = async ({ username, password }) => {

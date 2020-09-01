@@ -1,23 +1,23 @@
-import React,{ useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import LogEntry from './LogEntry';
 import { logEntryService } from '../services/logEntryService';
+import './Log.css';
 
 const Log = () => {
+  const [data, setData] = useState([]);
 
-    const [data, setData] = useState([]);
+  useEffect(() => {
+    setData(logEntryService.readLogEntries());
+  }, []);
 
-    useEffect( () => {
-        setData(logEntryService.readLogEntries());
-    },[]);
-
-    return (
-        <>
-            <LogEntry header={true}/>
-            {data.map( (entry,i) => (
-                <LogEntry key={i} header={false} data={entry}/>
-            ))}
-        </>
-    );
+  return (
+    <div className="log">
+      <LogEntry header={true} />
+      {data.map((entry, i) => (
+        <LogEntry key={i} header={false} data={entry} />
+      ))}
+    </div>
+  );
 };
 
 export default Log;

@@ -1,5 +1,7 @@
 .Menu {
-    display: flex;
-    background-color: rgba(238, 238, 238, 0.548);
-    width: min-content;
+  grid-area: 2 / 1;
+  display: flex;
+  background-color: rgba(201, 204, 205, 0.8);
+  justify-content: space-evenly;
+  align-items: center;
 }

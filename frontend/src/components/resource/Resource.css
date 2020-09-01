@@ -1,44 +1,40 @@
-.resources {
+div.resources {
+  grid-area: 2 / 2;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr;
   background-color: rgba(201, 204, 205, 0.8);
-  height: 175px;
-  width: 300px;
-}
-img {
-  height: 40px;
-  width: 40px;
 }
 
 img.resource {
-  height: 70px;
-  width: 70px;
+  height: 3em;
+  width: 3em;
 }
 
-.resource.farm {
-  grid-area: 1 / 1 /2 /1;
+.resource.farm,
+.resource.mine {
   justify-self: center;
   align-self: center;
 }
-.resource.food {
-  grid-area: 1 / 2 /1 /4;
+.resource.food,
+.resource.gold {
   justify-content: center;
   align-items: flex-start;
   display: flex;
   flex-direction: column;
 }
+
+.resource.farm {
+  grid-area: 1 / 1 /2 /1;
+}
+.resource.food {
+  grid-area: 1 / 2 /1 /4;
+}
 .resource.mine {
   grid-area: 2 / 1 /2 /1;
-  justify-self: center;
-  align-self: center;
 }
 .resource.gold {
   grid-area: 2 / 2 /2 /4;
-  align-self: center;
-  align-items: flex-start;
-  display: flex;
-  flex-direction: column;
 }
 .resource div {
   display: flex;
@@ -47,19 +43,21 @@ img.food,
 img.gold {
   align-self: center;
   margin-left: 10px;
+  height: 1.5em;
+  width: 1.5em;
 }
-h1 {
+.resource h1 {
   margin: 0px 0px 0px 0px;
-  font-size: 40px;
+  font-size: 35x;
   color: #5c5e5e;
 }
-p {
-  margin: 0px 0px 0px 0px;
+.resource p {
   font-weight: bold;
 }
-p.red {
+.resource p.red {
   color: #fa7730;
 }
-p.green {
+.resource p.green {
   color: #66a835;
+  border-bottom: none;
 }

@@ -10,48 +10,46 @@ import Registration from './components/Registration';
 import { menuItems } from './components/menuItemsStorage';
 import Map from './components/Map';
 import Log from './components/Log';
-import AddBuilding from './components/buildings/AddBuilding';
 
 function App() {
-  const kingdomID = 3;
-  localStorage.setItem('TRIBES_TOKEN', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOjMsImtpbmdkb21JRCI6NCwiaWF0IjoxNTk2MDU0OTE1fQ.-CZDK-BlkE24wWk4lCpEOp6WcGJMMNJTap0vSQKK8NA');
-  const goldAmount = 500;
+  localStorage.setItem(
+    'TRIBES_TOKEN',
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOjMsImlhdCI6MTU5ODA0MTk3Mn0.cVAcR4UiobKN05oicJYQYPIkibMws4yIATb8GVuVD_g'
+  );
 
   return (
     <div className="App">
-      <Header />
       <Router>
+        <Header />
         <Switch>
           <Route exact path="/">
             <Login />
           </Route>
-          
+
           <Route path="/login">
             <Login />
           </Route>
-          
-          <Route path='/registration'>
-              <Registration />
+
+          <Route path="/registration">
+            <Registration />
           </Route>
 
-          <Route exact path='/kingdom/map'>
+          <Route exact path="/kingdom/map">
             <Map />
           </Route>
-          
+
           <Route path="/kingdom">
             <Menu menuItems={menuItems} />
             {menuItems.map(menuItem => (
               <Route
                 key={menuItem.link}
-                path={'/fandom' + menuItem.link}
+                path={'/kingdom' + menuItem.link}
                 render={() => <menuItem.component name={menuItem.name} />}
               />
             ))}
+            <Resource />
             <Log />
-            <Resource kingdomID={kingdomID} />
-            <AddBuilding goldAmount={goldAmount} kingdomId={kingdomID}/>
           </Route>
-        
         </Switch>
       </Router>
     </div>

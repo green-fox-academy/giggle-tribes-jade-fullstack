@@ -1,38 +1,37 @@
 .menuitem {
-    background-color: #eee;
-    width: 7em;
-    height: 6em;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-decoration: none;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
 }
 
 .menuimage {
-    width: 4em;
-    height: 4em;
-    background-size: cover;
+  width: 4em;
+  height: 4em;
+  background-size: cover;
 }
 
 .menuitem h4 {
-    margin: 0;
-    padding: 0;
+  margin: 0;
+  padding: 0;
 }
 
 .menuitem.active {
-    background-color: #2323236c;
+  background-color: #2323236c;
 }
 
 .menuimage.Buildings {
-    background-image: url('/icons/menu_buildings.png');
+  background-image: url('/icons/menu_buildings.png');
 }
 .menuimage.Troops {
-    background-image: url('/icons/menu_troops.png');
+  background-image: url('/icons/menu_troops.png');
 }
 .menuimage.Battle {
-    background-image: url('/icons/menu_battle.png');
+  background-image: url('/icons/menu_battle.png');
 }
 .menuimage.Leaderboard {
-    background-image: url('/icons/menu_leaderboard.png');
+  background-image: url('/icons/menu_leaderboard.png');
 }
