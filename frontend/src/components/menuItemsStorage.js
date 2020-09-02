@@ -1,6 +1,6 @@
 import MenuComponent from './MenuComponent';
+import Troops from './troops/Troops';
 import Buildings from './buildings/Buildings';
-import Academy from './buildings/academy/Academy';
 
 export const menuItems = [
   {
@@ -11,7 +11,7 @@ export const menuItems = [
   {
     name: 'Troops',
     link: '/troops',
-    component: Academy,
+    component: Troops,
   },
   {
     name: 'Battle',

@@ -1,0 +1,16 @@
+button.MuiButtonBase-root {
+  justify-self: center;
+  display: flex;
+  justify-content: space-around;
+  background-color: #009587;
+  color: white;
+  width: 20em;
+  height: max-content;
+}
+button.MuiButtonBase-root:hover {
+  background-color: #009587;
+}
+
+button.MuiButtonBase-root p {
+  color: white;
+}
