@@ -62,8 +62,8 @@ Troops.propTypes = {
   kingdom: PropTypes.any.isRequired,
 };
 
-const mapStateToProps = state => {
-  return state;
+const mapStateToProps = ({ kingdom, troops }) => {
+  return { kingdom, troops };
 };
 
 const mapDispatchToProps = dispatch => {
