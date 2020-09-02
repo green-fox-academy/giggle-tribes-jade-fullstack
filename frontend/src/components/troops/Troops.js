@@ -59,7 +59,8 @@ function Troops({ kingdom, troops, get }) {
 }
 
 Troops.propTypes = {
-  kingdom: PropTypes.any.isRequired,
+  kingdom: PropTypes.number.isRequired,
+  troops: PropTypes.array.isRequired,
 };
 
 const mapStateToProps = ({ kingdom, troops }) => {
