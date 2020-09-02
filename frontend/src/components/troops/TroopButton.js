@@ -15,5 +15,5 @@ export default function TroopButton({ troopSummary }) {
 }
 
 TroopButton.propTypes = {
-  troopSummary: PropTypes.any.isRequired,
+  troopSummary: PropTypes.object.isRequired,
 };
