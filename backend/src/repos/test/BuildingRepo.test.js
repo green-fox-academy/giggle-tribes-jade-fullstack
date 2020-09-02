@@ -49,3 +49,19 @@ test('add: valid params return db query with params', async () => {
     params: [ 1, 'academy', 0, 0, '2020-08-19 19:06:22', '2020-08-19 19:07:22' ]
   });
 });
+
+test('getByKingdomId: missing kingdomId returns error 104', async () => {
+  try {
+    const result = await building.getByKingdomId({});
+  } catch(err) {
+    expect(err).toStrictEqual( Error(104) );
+  }
+});
+
+test('getByKingdomId: valid params return db query with params', async () => {
+  const result = await building.getByKingdomId({kingdomId: 1});
+  expect(result).toStrictEqual({
+    query: `SELECT * FROM buildings WHERE kingdom_id = ?`,
+    params: [ 1 ]
+  });
+});

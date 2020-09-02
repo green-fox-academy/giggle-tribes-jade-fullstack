@@ -33,11 +33,10 @@ export class ResourceRepo extends QueryHandler {
         return await (this.sendQuery(query));
     };
 
-    async get({kingdomId}) {
+    async getByKingdomId({kingdomId}) {
         if (!kingdomId) throw new Error(this.errorCodes.missingKingdomId);
         const query = this.validateQuery`SELECT * FROM kingdoms_resources WHERE kingdom_id = ${kingdomId}`;
         return await (this.sendQuery(query));
     };
-
 
 };

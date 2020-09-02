@@ -46,3 +46,19 @@ test('add: valid kingdomId and code returns db query with params', async () => {
   });
 });
 
+test('getByKingdomId: missing kingdomId returns error 104', async () => {
+  try {
+    const result = await location.getByKingdomId({});
+  } catch(err) {
+    expect(err).toStrictEqual( Error(104) );
+  }
+});
+
+test('getByKingdomId: valid params return db query with params', async () => {
+  const result = await location.getByKingdomId({kingdomId: 1});
+  expect(result).toStrictEqual({
+    query: `SELECT * FROM locations WHERE kingdom_id = ?`,
+    params: [ 1 ]
+  });
+});
+

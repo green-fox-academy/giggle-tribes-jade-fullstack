@@ -14,15 +14,15 @@ const db = {
 
 const kingdom = new KingdomRepo(db,errorCodes);
 
-test('get: missing kingdomId returns error 104', async () => {
+test('getByKingdomId: missing kingdomId returns error 104', async () => {
     try {
-      const result = await kingdom.get({});
+      const result = await kingdom.getByKingdomId({});
     } catch(err) {
       expect(err).toStrictEqual( Error(104) );
     }
 });
 
-test('get: invalid kingdomId (zero result) returns error 204', async () => {
+test('getByKingdomId: invalid kingdomId (zero result) returns error 204', async () => {
     const db = {
         query: (...query) => {
             return {
@@ -32,20 +32,20 @@ test('get: invalid kingdomId (zero result) returns error 204', async () => {
       };
     const kingdom = new KingdomRepo(db,errorCodes);
     try {
-      const result = await kingdom.get({kingdomId:1});
+      const result = await kingdom.getByKingdomId({kingdomId:1});
     } catch(err) {
       expect(err).toStrictEqual( Error(204) );
     }
 });
 
-test('get: valid kingdomId returns db query with params', async () => {
-  const result = await kingdom.get({kingdomId: 1});
+test('getByKingdomId: valid kingdomId returns db query with params', async () => {
+  const result = await kingdom.getByKingdomId({kingdomId: 1});
   expect(result).toStrictEqual({
     query: `
         SELECT
-            kingdoms.id kingdom_id,
-            kingdoms.name kingdom_name,
-            users_kingdoms.user_id user_id,
+            kingdoms.id kingdomId,
+            kingdoms.name kingdomName,
+            users_kingdoms.user_id userId,
             locations.code location
         FROM kingdoms
         RIGHT JOIN users_kingdoms ON users_kingdoms.kingdom_id = kingdoms.id
@@ -95,4 +95,21 @@ test('add: valid kingdomId and userId returns db query with params', async () =>
     params: [ 1, 2 ]
   });
 });
+
+test('get: returns db query with params', async () => {
+  const result = await kingdom.get();
+  expect(result).toStrictEqual({
+    query: `
+        SELECT
+            kingdoms.id kingdomId,
+            kingdoms.name kingdomName,
+            locations.code location
+        FROM kingdoms
+        LEFT JOIN locations ON locations.kingdom_id = kingdoms.id
+        `,
+    params: []
+  });
+});
+
+
 

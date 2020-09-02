@@ -104,16 +104,17 @@ test('update: valid params return db query with params', async () => {
 
 test('get: missing kingdomId returns error 104', async () => {
   try {
-    const result = await resource.get({});
+    const result = await resource.getByKingdomId({});
   } catch(err) {
     expect(err).toStrictEqual( Error(104) );
   }
 });
 
 test('get: valid kingdomId return db query with params', async () => {
-  const result = await resource.get({kingdomId: 1});
+  const result = await resource.getByKingdomId({kingdomId: 1});
   expect(result).toStrictEqual({
     query: `SELECT * FROM kingdoms_resources WHERE kingdom_id = ?`,
     params: [ 1 ]
   });
 });
+

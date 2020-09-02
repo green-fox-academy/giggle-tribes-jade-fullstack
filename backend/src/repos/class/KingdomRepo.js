@@ -6,13 +6,13 @@ export class KingdomRepo extends QueryHandler {
         super(db,errorCodes);
     };
 
-    async get({kingdomId}) {
+    async getByKingdomId({kingdomId}) {
         if (!kingdomId) throw new Error(this.errorCodes.missingKingdomId);
         const query = this.validateQuery`
         SELECT
-            kingdoms.id kingdom_id,
-            kingdoms.name kingdom_name,
-            users_kingdoms.user_id user_id,
+            kingdoms.id kingdomId,
+            kingdoms.name kingdomName,
+            users_kingdoms.user_id userId,
             locations.code location
         FROM kingdoms
         RIGHT JOIN users_kingdoms ON users_kingdoms.kingdom_id = kingdoms.id
@@ -34,6 +34,18 @@ export class KingdomRepo extends QueryHandler {
         if (!kingdomId) throw new Error(this.errorCodes.missingKingdomId);
         if (!userId) throw new Error(this.errorCodes.missingUserId);
         const query = this.validateQuery`INSERT INTO users_kingdoms (user_id,kingdom_id) VALUES(${userId},${kingdomId})`;
+        return await (this.sendQuery(query));
+    };
+
+    async get() {
+        const query = this.validateQuery`
+        SELECT
+            kingdoms.id kingdomId,
+            kingdoms.name kingdomName,
+            locations.code location
+        FROM kingdoms
+        LEFT JOIN locations ON locations.kingdom_id = kingdoms.id
+        `;
         return await (this.sendQuery(query));
     };
 

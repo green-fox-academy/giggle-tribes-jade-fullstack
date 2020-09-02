@@ -18,4 +18,10 @@ export class LocationRepo extends QueryHandler {
         return await (this.sendQuery(query));
     };
 
+    async getByKingdomId({kingdomId}) {
+        if (!kingdomId) throw new Error(this.errorCodes.missingKingdomId);
+        const query = this.validateQuery`SELECT * FROM locations WHERE kingdom_id = ${kingdomId}`;
+        return await (this.sendQuery(query));
+    };
+
 };
