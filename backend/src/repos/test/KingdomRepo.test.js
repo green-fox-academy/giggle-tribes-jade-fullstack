@@ -14,15 +14,15 @@ const db = {
 
 const kingdom = new KingdomRepo(db,errorCodes);
 
-test('getByKingdomId: missing kingdomId returns error 104', async () => {
+test('getById: missing kingdomId returns error 104', async () => {
     try {
-      const result = await kingdom.getByKingdomId({});
+      const result = await kingdom.getById({});
     } catch(err) {
       expect(err).toStrictEqual( Error(104) );
     }
 });
 
-test('getByKingdomId: invalid kingdomId (zero result) returns error 204', async () => {
+test('getById: invalid kingdomId (zero result) returns error 204', async () => {
     const db = {
         query: (...query) => {
             return {
@@ -32,14 +32,14 @@ test('getByKingdomId: invalid kingdomId (zero result) returns error 204', async 
       };
     const kingdom = new KingdomRepo(db,errorCodes);
     try {
-      const result = await kingdom.getByKingdomId({kingdomId:1});
+      const result = await kingdom.getById({kingdomId:1});
     } catch(err) {
       expect(err).toStrictEqual( Error(204) );
     }
 });
 
-test('getByKingdomId: valid kingdomId returns db query with params', async () => {
-  const result = await kingdom.getByKingdomId({kingdomId: 1});
+test('getById: valid kingdomId returns db query with params', async () => {
+  const result = await kingdom.getById({kingdomId: 1});
   expect(result).toStrictEqual({
     query: `
         SELECT

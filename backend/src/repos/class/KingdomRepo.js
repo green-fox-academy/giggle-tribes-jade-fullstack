@@ -6,7 +6,7 @@ export class KingdomRepo extends QueryHandler {
         super(db,errorCodes);
     };
 
-    async getByKingdomId({kingdomId}) {
+    async getById({kingdomId}) {
         if (!kingdomId) throw new Error(this.errorCodes.missingKingdomId);
         const query = this.validateQuery`
         SELECT

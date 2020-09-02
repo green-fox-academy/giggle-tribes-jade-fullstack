@@ -16,7 +16,7 @@ const location = new LocationRepo(db,errorCodes);
 
 test('add: missing kingdomId returns error 104', async () => {
     try {
-      const result = await location.add({code:'GBR'});
+      const result = await location.add({locationCode:'GBR'});
     } catch(err) {
       expect(err).toStrictEqual( Error(104) );
     }
@@ -32,14 +32,14 @@ test('add: missing code returns error 109', async () => {
 
 test('add: invalid code (too short) returns error 209', async () => {
   try {
-    const result = await location.add({kingdomId: 1, code:'GB'});
+    const result = await location.add({kingdomId: 1, locationCode:'GB'});
   } catch(err) {
     expect(err).toStrictEqual( Error(209) );
   }
 });
 
 test('add: valid kingdomId and code returns db query with params', async () => {
-  const result = await location.add({kingdomId: 1, code:'GBR'});
+  const result = await location.add({kingdomId: 1, locationCode:'GBR'});
   expect(result).toStrictEqual({
     query: `INSERT INTO locations (kingdom_id,code) VALUES(?,?)`,
     params: [ 1, 'GBR' ]

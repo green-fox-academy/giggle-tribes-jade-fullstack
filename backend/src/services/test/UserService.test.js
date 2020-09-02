@@ -16,7 +16,7 @@ const db = {
     }
   };
 
-const user = new UserService(UserRepo,KingdomRepo,ResourceRepo,db,errorCodes);
+const user = new UserService({UserRepo,KingdomRepo,ResourceRepo,db,errorCodes});
 
 test('add: missing username and password returns error 110', async () => {
     try {
@@ -79,7 +79,7 @@ test('add: username already in use returns error 201', async () => {
             throw new duplicateError;
         }
     };
-    const user = new UserService(UserRepo,KingdomRepo,ResourceRepo,db,errorCodes);
+    const user = new UserService({UserRepo,KingdomRepo,ResourceRepo,db,errorCodes});
     try {
         const result = await user.add({userName:'username',password:'secretpassword',kingdomName:'kingdom'});
     } catch(err) {

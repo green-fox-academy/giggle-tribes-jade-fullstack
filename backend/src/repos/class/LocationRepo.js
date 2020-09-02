@@ -6,15 +6,15 @@ export class LocationRepo extends QueryHandler {
         super(db,errorCodes);
     };
 
-    validateParams = ({kingdomId,code}) => {
+    validateParams = ({kingdomId,locationCode}) => {
         if (!kingdomId) throw new Error(this.errorCodes.missingKingdomId);
-        if (!code) throw new Error(this.errorCodes.missingLocationCode);
-        if (code.length < 3) throw new Error(this.errorCodes.invalidLocationCode);
+        if (!locationCode) throw new Error(this.errorCodes.missingLocationCode);
+        if (locationCode.length < 3) throw new Error(this.errorCodes.invalidLocationCode);
     };
 
-    async add({kingdomId,code}) {
-        this.validateParams({kingdomId,code});
-        const query = this.validateQuery`INSERT INTO locations (kingdom_id,code) VALUES(${kingdomId},${code})`;
+    async add({kingdomId,locationCode}) {
+        this.validateParams({kingdomId,locationCode});
+        const query = this.validateQuery`INSERT INTO locations (kingdom_id,code) VALUES(${kingdomId},${locationCode})`;
         return await (this.sendQuery(query));
     };
 
