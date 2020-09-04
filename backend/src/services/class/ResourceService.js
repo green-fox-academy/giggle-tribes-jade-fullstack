@@ -5,7 +5,7 @@ export class ResourceService {
         this.errorCodes = errorCodes;
     };
 
-    async getById({kingdomId}) {
+    async getByKingdomId({kingdomId}) {
         if (!kingdomId) throw new Error(this.errorCodes.missingKingdomId);
         let resources = await this.resources.getByKingdomId({kingdomId});
         if (resources.length === 0) throw new Error(this.errorCodes.invalidKingdomId);
