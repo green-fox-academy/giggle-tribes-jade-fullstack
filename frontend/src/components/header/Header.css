@@ -1,13 +1,10 @@
-body {
-  margin: 0px;
-}
 /* Navbar container */
 nav.header {
+  grid-column: 1 / span 3;
   display: flex;
   justify-content: space-between;
   overflow: hidden;
   background-color: #009587;
-  font-family: Arial;
   font-weight: bold;
 }
 

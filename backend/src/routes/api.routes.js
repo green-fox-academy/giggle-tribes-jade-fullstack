@@ -7,12 +7,12 @@ import {
   sessionController,
   resourceController,
   authController,
+  troopsController,
   kingdomController,
-  buildingsController
+  buildingsController,
 } from '../controllers';
 import { resourceMiddleware } from '../middlewares/resourceMiddleware';
 import { authUser } from '../middlewares';
-
 
 const router = express.Router();
 
@@ -31,9 +31,9 @@ router.use(authUser);
 router.post('/auth', authController);
 router.use('/kingdoms/:kingdomId', resourceMiddleware);
 
-router.get('/kingdoms/:kingdomId/resource', resourceController.get);
-
+router.get('/kingdoms/:kingdomID/resource', resourceController.get);
+router.get('/kingdoms/:kingdomID/troops', troopsController.get);
+router.post('/kingdoms/:kingdomID/troops', troopsController.post);
 router.post('/kingdoms/:kingdomId/buildings', buildingsController.post);
-
 
 export default router;

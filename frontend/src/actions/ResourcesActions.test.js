@@ -35,7 +35,7 @@ beforeEach(() => {
   fetch.mockClear();
 });
 
-describe('actions', () => {
+describe('Resource actions', () => {
   it('should create an action to update resources', () => {
     const expectedActions = [
       { type: types.UPDATE_RESOURCES },

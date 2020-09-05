@@ -1,33 +1,33 @@
 .button {
-    background-color: #eee;
-    width: 7em;
-    height: 6em;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-decoration: none;
-    cursor: pointer;
-    flex-shrink: 0;
+  background-color: transparent;
+  width: 7em;
+  height: 6em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  cursor: pointer;
+  flex-shrink: 0;
 }
 
 .buttonimage {
-    width: 4em;
-    height: 4em;
-    background-size: cover;
+  width: 4em;
+  height: 4em;
+  background-size: cover;
 }
 
-.button h4 {
-    margin: 0;
-    padding: 0;
+.button p {
+  margin: 0;
+  padding: 0;
 }
 
-.buttonimage.farm {
-    background-image: url('/icons/addfarm.png');
+.buttonimage.addfarm {
+  background-image: url('/icons/addfarm.png');
 }
-.buttonimage.mine {
-    background-image: url('/icons/addmine.png');
+.buttonimage.addmine {
+  background-image: url('/icons/addmine.png');
 }
-.buttonimage.academy {
-    background-image: url('/icons/addacademy.png');
+.buttonimage.addacademy {
+  background-image: url('/icons/addacademy.png');
 }
