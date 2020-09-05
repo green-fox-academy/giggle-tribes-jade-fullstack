@@ -13,8 +13,6 @@ const Login = () => {
         <p>Registration screen.</p>
         <Link to='/kingdom/map'>kingdom's map</Link>
         
-        <p>kingdom's buildings</p>
-        <Link to='/kingdom/buildings'>kingdom's buildings</Link>
         </>
     );
 };

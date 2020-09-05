@@ -1,7 +1,65 @@
-div.buildings {
-  grid-area: 3 / 1 / span 1 / span 2;
-  display: grid;
-  background-color: rgba(201, 204, 205, 0.8);
-  min-width: 500px;
-  min-height: 436px;
+body{
+  background-image: url("/bg3-01.png");
+  background-color: black;
+  background-position: center;
+}
+
+.buildingBox{
+  margin: 50px;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.buildingList {
+  flex-wrap: wrap;
+  background-color: rgba(190, 190, 190, 0.61);
+  margin: 25px;
+  padding: 25px;
+}
+
+.image{
+  height: 100px;
+  width: auto;
+}
+
+.buildings{
+  margin: 5px;
+  padding: 5px;
+  float: left;
+  width: 100px;
+}
+
+.buildingName{
+  padding: 5px;
+  text-align: center;
+}
+
+.addBuildings{
+  margin-left: auto;
+  margin-right: auto;
+  float: right;
+}
+
+button{
+  background-color: transparent;
+  border: none;
+  padding: 5px;
+  cursor: pointer;
+}
+
+button:focus{
+  outline: none;
+  border: none;
+}
+
+button:hover{
+  border-radius: 50%;
+  box-shadow: 0 9px #999;
+}
+
+button:active {
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
 }

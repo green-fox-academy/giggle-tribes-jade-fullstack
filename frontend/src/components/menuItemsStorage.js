@@ -1,12 +1,12 @@
 import MenuComponent from './MenuComponent';
 import Troops from './troops/Troops';
-import Buildings from './buildings/Buildings';
+import BuildingsContainer from './buildings/BuildingsContainer';
 
 export const menuItems = [
   {
     name: 'Buildings',
     link: '/buildings',
-    component: Buildings,
+    component: BuildingsContainer,
   },
   {
     name: 'Troops',
