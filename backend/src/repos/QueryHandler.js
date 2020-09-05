@@ -5,7 +5,7 @@ export default class QueryHandler {
         this.errorCodes = errorCodes;
     };
 
-    validateParams = (params) => {
+    validateParams(params) {
         Object.keys(params).forEach( param => {
             if (params[param] === "") throw new Error(this.errorCodes.invalidParam);
         });

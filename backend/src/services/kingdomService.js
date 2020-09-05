@@ -1,78 +1,59 @@
-import { kingdomRepo } from '../repos/kingdomRepo';
-import { locationRepo } from '../repos/locationRepo';
+export class KingdomService {
 
-const returnObject = (input,data) => ({
-    "id" : input.kingdomId,
-    "name" : data.kingdomname,
-    "userId" : data.userid,
-    "buildings": [
-      {
-        "id" : 1,
-        "type" : "townhall",
-        "level": 1,
-        "hp": 1,
-        "started_at": 12345789,
-        "finished_at": 12399999
-      }
-    ],
-    "resources": [
-      {
-        "type" : "food",
-        "amount": 1,
-        "generation": 1
-      },
-      {
-        "type" : "gold",
-        "amount": 1,
-        "generation": 1
-      }
-    ],
-    "troops": [
-      {
-        "id": 1,
-        "level": 1,
-        "hp": 1,
-        "attack": 1,
-        "defence": 1,
-        "started_at": 12345789,
-        "finished_at": 12399999
-      }
-    ],
-    "location": {
-      "country_code": input.countryCode
-    }
-  });
+    constructor({KingdomRepo,ResourceRepo,BuildingRepo,LocationRepo,db,errorCodes}) {
+        this.kingdom = new KingdomRepo(db,errorCodes);
+        this.resources = new ResourceRepo(db,errorCodes);
+        this.buildings = new BuildingRepo(db,errorCodes);
+        this.location = new LocationRepo(db,errorCodes);
+        this.errorCodes = errorCodes;
+    };
 
-  
-const isKingdomLocated = async (input) => {
-  const isLocated = await kingdomRepo.getKingdomNullLocation({'kingdom_id' : input.kingdomId});
-  if ( isLocated.length === 0 ) throw new Error('located');
-};
+    validateParams({kingdomId,locationCode}) {
+        if (!kingdomId) throw new Error(this.errorCodes.missingKingdomId);
+        if (!locationCode) throw new Error(this.errorCodes.missingLocationCode);
+    };
 
-const add = async (input) => {
-  try {
-    await isKingdomLocated(input);
-    const kingdomBase = (await kingdomRepo.getKingdomBaseData({'kingdom_id' : input.kingdomId}));
-    await locationRepo.add({'kingdomid' : input.kingdomId, 'code' : input.countryCode});
-    return returnObject(input,kingdomBase);
-  } catch(error) {
-      if (error.message === 'located') return {error: 'Invalid kingdom id.'};
-      if (error.duplication) return {error: 'Location is already occupied.'};
-      return error;
-  }
-};
+    async attachLocation({kingdomId,locationCode}) {
+        this.validateParams({kingdomId,locationCode});
+        if ((await this.kingdom.get()).find( kingdom => kingdom.location === locationCode )) throw new Error(this.errorCodes.usedLocationCode);
+        
+        let kingdomData = await this.getById({kingdomId});
+        if (kingdomData.location.country_code !== null ) throw new Error(this.errorCodes.usedKingdomId);
+        kingdomData.location.country_code = locationCode;
+        
+        await this.location.add({kingdomId,locationCode});
+        
+        return kingdomData;
+    };
 
-const get = async () => {
-  try {
-    const kingdomsData = (await kingdomRepo.getKingdomsData({}));
-    return { kingdoms : kingdomsData };
-  } catch(error) {
-    if (error.validationError) return {error: 'No data.'};
-    return error;
-  }
-};
+    async getById({kingdomId}) {
+        if (!kingdomId) throw new Error(this.errorCodes.missingKingdomId);
+        const kingdom = (await this.kingdom.getById({kingdomId}))[0];
+        let buildings = await this.buildings.getByKingdomId({kingdomId});
+        buildings.forEach( e => {delete e.kingdom_id} );
+        const resources = await this.resources.getByKingdomId({kingdomId});
+        const troops = [];
+        let kingdomData = {
+            id: 0,
+            name: '',
+            userId: 0,
+            buildings: [],
+            resources: [],
+            troops: [],
+            location: { "country_code": null }
+        };
+            kingdomData.id = kingdom.kingdomId;
+            kingdomData.name = kingdom.kingdomName;
+            kingdomData.userId = kingdom.userId;
+            kingdomData.buildings = buildings;
+            kingdomData.resources = resources.map( e => ({"type": e.type,"amount": e.amount,"generation": e.generation}) );
+            kingdomData.troops = troops;
+            kingdomData.location.country_code = kingdom.location;
+        return kingdomData;
+    };
 
-export const kingdomService = {
-    add,
-    get
+    async get() {
+        return await this.kingdom.get();
+    };
+
 };

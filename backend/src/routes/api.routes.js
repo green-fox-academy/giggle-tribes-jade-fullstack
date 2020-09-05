@@ -24,13 +24,14 @@ router.post('/sessions', sessionController.post);
 router.post('/users', userController.post);
 
 router.post('/kingdoms/:kingdomId/map', kingdomController.post);
+router.get('/kingdoms/:kingdomId/map', kingdomController.getById);
 router.get('/kingdoms/map', kingdomController.get);
 
 router.use(authUser);
 router.post('/auth', authController);
-router.use('/kingdoms/:kingdomID', resourceMiddleware);
+router.use('/kingdoms/:kingdomId', resourceMiddleware);
 
-router.get('/kingdoms/:kingdomID/resource', resourceController.get);
+router.get('/kingdoms/:kingdomId/resource', resourceController.get);
 
 router.post('/kingdoms/:kingdomId/buildings', buildingsController.post);
 

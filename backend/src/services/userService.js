@@ -1,56 +1,32 @@
-import { userRepo } from '../repos/userRepo';
-import { kingdomRepo } from '../repos/kingdomRepo';
-import { getUser, getKingdomIdForUser } from '../repos/user';
-import { resourceService } from './resourceService';
+export class UserService {
 
-const filterInput = input => {
-  if (!input.username && !input.password)
-    return 'Username and password are required.';
-  if (input.username && !input.password) return 'Password is required.';
-  if (!input.username && input.password) return 'Username is required.';
-  if (input.password.length < 8) return 'Password must be 8 characters.';
-  return '';
-};
+    constructor({UserRepo,KingdomRepo,ResourceRepo,db,errorCodes}) {
+        this.user = new UserRepo(db,errorCodes);
+        this.kingdom = new KingdomRepo(db,errorCodes);
+        this.resource = new ResourceRepo(db,errorCodes);
+        this.errorCodes = errorCodes;
+    };
 
-const add = (input) => {
-    return new Promise( async (resolve,reject) => {
-        const invalidInput = filterInput(input);
-        if ( invalidInput ) {
-            reject(invalidInput);
-        } else {
-            try {
-                const userid = await userRepo.add({'username' : input.username, 'password' : input.password});
-                const kingdomid = await kingdomRepo.add('kingdom', {'kingdomname' : input.kingdomname});
-                await kingdomRepo.add('user_kingdom', {'userid' : userid, 'kingdomid' : kingdomid});
-                await resourceService.createResource({ kingdomID: kingdomid });
-                resolve({
-                    'id' : userid,
-                    'username' : input.username,
-                    'kingdomId' : kingdomid
-                });
-            } catch(error) {
-                if (error.duplication) reject('Username is already taken.');
-                if (error.validationError) reject(error.validationError);
-                reject(error);
-            }
-        }
-    });
-};
+    validateParams({userName,password,kingdomName}) {
+        if (!userName && !password) throw new Error(this.errorCodes.missingUserNameAndPassword);
+        if (!userName) throw new Error(this.errorCodes.missingUserName);
+        if (!password) throw new Error(this.errorCodes.missingPassword);
+        if (password.length < 8) throw new Error(this.errorCodes.invalidPassword);
+        if (!kingdomName) throw new Error(this.errorCodes.missingKingdomName);
+    };
 
-const get = async ({ username, password }) => {
-  const user = await getUser(username, password);
-  if (user.length > 0) {
-    const kingdom = await getKingdomIdForUser(user[0].id);
-    if (kingdom.length > 0) {
-      return { userID: user[0].id, kindomID: kingdom[0].kingdom_id };
-    }
-  } else {
-    throw { error: 'Username or password is incorrect.' };
-  }
-};
+    async add({userName,password,kingdomName}) {
+        this.validateParams({userName,password,kingdomName});
+        const userId = (await this.user.add({userName,password})).insertId;
+        const kingdomId = (await this.kingdom.add({kingdomName})).insertId;
+        await this.kingdom.attachUser({kingdomId, userId});
+        await this.resource.add({kingdomId,type:'gold',amount:500,generation:0});
+        await this.resource.add({kingdomId,type:'food',amount:500,generation:0});
+        return {
+            'id' : userId,
+            'username' : userName,
+            'kingdomId' : kingdomId
+        };
+    };
 
-export const userService = {
-  filterInput,
-  add,
-  get,
 };

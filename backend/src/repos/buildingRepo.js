@@ -1,13 +1,25 @@
-import { save } from './repoSave';
+import QueryHandler from './QueryHandler';
 
-const insertQueries = {
-    buildings : 'INSERT INTO buildings (id,kingdom_id,type,level,hp,started_at,finished_at) VALUES(?,?,?,?,?,?,?)'
-};
+export class BuildingRepo extends QueryHandler {
 
-const add = (params) => {
-    return save(insertQueries['buildings'],params);
-};
+    constructor(db,errorCodes) {
+        super(db,errorCodes);
+    };
 
-export const buildingRepo = {
-    add
+    async add({kingdomId,type,level,hp,started_at,finished_at}) {
+        if (!kingdomId) throw new Error(this.errorCodes.missingKingdomId);
+        const query = this.validateQuery`
+            INSERT INTO buildings 
+            (kingdom_id,type,level,hp,started_at,finished_at) 
+            VALUES(${kingdomId},${type},${level},${hp},${started_at},${finished_at})
+        `;
+        return await (this.sendQuery(query));
+    };
+
+    async getByKingdomId({kingdomId}) {
+        if (!kingdomId) throw new Error(this.errorCodes.missingKingdomId);
+        const query = this.validateQuery`SELECT * FROM buildings WHERE kingdom_id = ${kingdomId}`;
+        return await (this.sendQuery(query));
+    };
+
 };

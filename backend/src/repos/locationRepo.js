@@ -1,13 +1,27 @@
-import { save } from './repoSave';
+import QueryHandler from './QueryHandler';
 
-const insertQueries = {
-    location : 'INSERT INTO locations (kingdom_id,code) VALUES(?,?)'
-};
+export class LocationRepo extends QueryHandler {
 
-const add = (params) => {
-    return save(insertQueries['location'],params);
-};
+    constructor(db,errorCodes) {
+        super(db,errorCodes);
+    };
 
-export const locationRepo = {
-    add
+    validateParams({kingdomId,locationCode}) {
+        if (!kingdomId) throw new Error(this.errorCodes.missingKingdomId);
+        if (!locationCode) throw new Error(this.errorCodes.missingLocationCode);
+        if (locationCode.length < 3) throw new Error(this.errorCodes.invalidLocationCode);
+    };
+
+    async add({kingdomId,locationCode}) {
+        this.validateParams({kingdomId,locationCode});
+        const query = this.validateQuery`INSERT INTO locations (kingdom_id,code) VALUES(${kingdomId},${locationCode})`;
+        return await (this.sendQuery(query));
+    };
+
+    async getByKingdomId({kingdomId}) {
+        if (!kingdomId) throw new Error(this.errorCodes.missingKingdomId);
+        const query = this.validateQuery`SELECT * FROM locations WHERE kingdom_id = ${kingdomId}`;
+        return await (this.sendQuery(query));
+    };
+
 };

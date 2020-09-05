@@ -46,7 +46,7 @@ test('add: valid userdata returns db query with params', async () => {
     });
 });
 
-test('add: username already in use returns error 201', async () => {
+test('add: username already in use returns error 301', async () => {
     class duplicateError extends Error {
         constructor() {
             super();
@@ -62,7 +62,7 @@ test('add: username already in use returns error 201', async () => {
     try {
         const result = await user.add({userName:'username',password:'secretpassword'});
     } catch(err) {
-        expect(err).toStrictEqual( Error(201) );
+        expect(err).toStrictEqual( Error(301) );
     }
 });
 

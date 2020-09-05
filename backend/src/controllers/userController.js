@@ -1,9 +1,14 @@
-import { userService } from '../services';
+import { UserService } from '../services';
+import { UserRepo, KingdomRepo, ResourceRepo, errorCodes } from '../repos';
+import { db } from '../data/connection';
+
+const user = new UserService({UserRepo,KingdomRepo,ResourceRepo,db,errorCodes});
 
 const post = (req,res) => {
-    userService.add(req.body)
+    const {username,password,kingdomname} = req.body;
+    user.add({userName:username,password,kingdomName:kingdomname})
      .then( response => res.status(201).json(response) )
-     .catch( error => res.status(400).json({error}) );
+     .catch( error => res.status(400).json({error:error.message}) );
 };
 
 export const userController = {

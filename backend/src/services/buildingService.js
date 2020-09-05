@@ -1,91 +1,52 @@
-import { kingdomRepo } from '../repos/kingdomRepo';
-import { buildingRepo } from '../repos/buildingRepo';
-import { resourceService } from './resourceService';
+export class BuildingService {
 
-const errorMessages = {
-  missingType: 1,
-  wrongType: 2,
-  notEnoughGold: 3,
-  invalidId: 4
-};
+    constructor({BuildingRepo,ResourceService,ResourceRepo,db,errorCodes}) {
+        this.building = new BuildingRepo(db,errorCodes);
+        this.resources = new ResourceService({ResourceRepo,db,errorCodes});
+        this.errorCodes = errorCodes;
+        this.buildingData = {};
+        this.buildingStats = {
+            farm : { hp : 1, cost : 100, time : 60000, gen : 5 },
+            mine : { hp : 1, cost : 100, time : 60000, gen : 5 },
+            academy : { hp : 1, cost : 100, time : 60000, gen : 0 }
+        };
+    };
 
-const buildingStats = {
-  farm : { hp : 1, cost : 100, time : 60000, gen : 5, genType : 'food' },
-  mine : { hp : 1, cost : 100, time : 60000, gen : 5, genType : 'gold' },
-  academy : { hp : 1, cost : 100, time : 60000, gen : 0, genType : '-' }
-}
+    validateParams({kingdomId,buildingType}) {
+        if (!kingdomId) throw new Error(this.errorCodes.missingKingdomId);
+        if (!buildingType) throw new Error(this.errorCodes.missingBuildingType);
+        if (!['farm','mine','academy'].includes(buildingType)) throw new Error(this.errorCodes.invalidBuildingType);
+    };
 
-const createBuildingData = (data) => {
-  const start = new Date();
-  const finish = new Date( start.getTime() + buildingStats[data.type].time );
-  return {
-    id : null,
-    kingdomId : data.kingdomId,
-    type : data.type,
-    level : 1,
-    hp : buildingStats[data.type].hp,
-    started_at : start.toLocaleString(),
-    finished_at : finish.toLocaleString()
-    }
-};
+    setBuildingData({kingdomId,buildingType}) {
+        const start = new Date();
+        const finish = new Date( start.getTime() + this.buildingStats[buildingType].time );
+        this.buildingData = {
+            id : null,
+            kingdomId : kingdomId,
+            type : buildingType,
+            level : 1,
+            hp : this.buildingStats[buildingType].hp,
+            started_at : start.toLocaleString(),
+            finished_at : finish.toLocaleString()
+        };
+    };
 
-const formatData = (id,data) => ({
-  id : id,
-  kingdomId : data.kingdomId,
-  type : data.type,
-  level : data.level,
-  hp : data.hp,
-  started_at : new Date(data.started_at).getTime(),
-  finished_at : new Date(data.finished_at).getTime()
-});
+    async add({kingdomId,buildingType}) {
+        this.validateParams({kingdomId,buildingType});
+        const resources = await this.resources.getByKingdomId({kingdomId});
+        const gold = resources.filter(e => e.type === 'gold')[0].amount;
+        const {cost,gen} = this.buildingStats[buildingType]; 
+        if ( gold < cost ) throw new Error(this.errorCodes.invalidResourceAmount);
 
+        this.setBuildingData({kingdomId,buildingType});
+        this.buildingData.id = (await this.building.add(this.buildingData)).insertId;
 
-const validateType = (type) => {
-  if( !type ) throw new Error(errorMessages.missingType);
-  if( !['farm','mine','academy'].includes(type) ) throw new Error(errorMessages.wrongType);
-};
+        await this.resources.spendGold({kingdomId,amount:cost});
+        if (buildingType === 'mine') await this.resources.updateGoldGeneration({kingdomId,generation:gen});
+        if (buildingType === 'farm') await this.resources.updateFoodGeneration({kingdomId,generation:gen});
 
-const validateKingdomId = async (id) => {
-  const kingdomBase = await kingdomRepo.getKingdomBaseData({'kingdom_id' : id});
-  if ( kingdomBase.length === 0 ) throw new Error(errorMessages.invalidId);
-};
+        return this.buildingData;
+    };
 
-const getResourceChanges = async (id,type) => {
-  const resources = await resourceService.getResource(id);
-  const gold = resources.resources.filter(e => e.type === 'gold')[0].amount;
-  if ( gold < buildingStats[type].cost ) throw new Error(errorMessages.notEnoughGold);
-  return {
-    cost: buildingStats[type].cost,
-    genAdd: buildingStats[type].gen,
-    genType: buildingStats[type].genType
-  };
-};
-
-const add = async (input) => {
-    validateType(input.type);
-    await validateKingdomId(input.kingdomId);
-    const resourcesData = await getResourceChanges({kingdomID:input.kingdomId},input.type);
-    const buildingDataInput = createBuildingData(input);
-    const buildingId = await buildingRepo.add( buildingDataInput );
-    switch (input.type) {
-      case 'academy':
-        await resourceService.spendGold(input.kingdomId,resourcesData.cost);
-        break;
-      case 'farm':
-        await resourceService.spendGold(input.kingdomId,resourcesData.cost);
-        await resourceService.updateFoodGeneration(input.kingdomId,resourcesData.genAdd);
-        break;
-      case 'mine':
-        await resourceService.spendGold(input.kingdomId,resourcesData.cost);
-        await resourceService.updateGoldGeneration(input.kingdomId,resourcesData.genAdd);
-        break;
-      default:
-        break;
-    }
-    return formatData(buildingId,buildingDataInput);
-};
-
-export const buildingService = {
-    add,
-    errorMessages
 };
