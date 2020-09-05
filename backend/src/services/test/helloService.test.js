@@ -1,4 +1,4 @@
-import { helloService } from './helloService';
+import { helloService } from '../helloService';
 
 test('getHelloWorld', async () => {
   let result = await helloService.getHelloWorld();
