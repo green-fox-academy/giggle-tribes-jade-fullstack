@@ -31,6 +31,7 @@ router.post('/auth', authController);
 router.use('/kingdoms/:kingdomID', resourceMiddleware);
 
 router.get('/kingdoms/:kingdomID/resource', resourceController.get);
+router.get('/kingdoms/:kingdomID/troops', troopsController.get);
 router.post('/kingdoms/:kingdomID/troops', troopsController.post);
 router.post('/kingdoms/:kingdomId/buildings', buildingsController.post);
 
