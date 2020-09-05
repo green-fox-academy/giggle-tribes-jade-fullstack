@@ -1,7 +1,6 @@
 import request from 'supertest';
 
 import app from '../src/app';
-import { getResourceForKingdom } from '../src/repos/resource';
 jest.mock('../src/repos/resource');
 jest.mock('../src/services/authService');
 import { authService } from '../src/services/authService';
@@ -15,7 +14,11 @@ authService.mockImplementation(() => ({
 }));
 
 test('should respond with 400 - Resource for this kingdom not found.', done => {
-  resourceService.generateResources.mockImplementation(() => { throw new Error ('UpdateResource failed. Resource for this kingdom not found.') });
+  resourceService.generateResources.mockImplementation(() => {
+    throw new Error(
+      'UpdateResource failed. Resource for this kingdom not found.'
+    );
+  });
 
   request(app)
     .get('/api/kingdoms/1/resource')
@@ -23,7 +26,6 @@ test('should respond with 400 - Resource for this kingdom not found.', done => {
     .expect('Content-Type', /json/)
     .expect(400)
     .end((err, data) => {
-      console.log(data.body)
       if (err) return done(err);
       expect(data.body.error).toBe(
         'UpdateResource failed. Resource for this kingdom not found.'
@@ -33,8 +35,10 @@ test('should respond with 400 - Resource for this kingdom not found.', done => {
 });
 
 test('should respond with 200 - Resource for this kingdom found.', done => {
-  resourceService.generateResources.mockImplementation( async () => Promise.resolve({ message: 'UpdateResource successful' }));
-  resourceService.getResource.mockImplementation( async () => {
+  resourceService.generateResources.mockImplementation(async () =>
+    Promise.resolve({ message: 'UpdateResource successful' })
+  );
+  resourceService.getResource.mockImplementation(async () => {
     return Promise.resolve({
       resources: [
         {
@@ -52,7 +56,6 @@ test('should respond with 200 - Resource for this kingdom found.', done => {
       ],
     });
   });
-  
 
   request(app)
     .get('/api/kingdoms/1/resource')

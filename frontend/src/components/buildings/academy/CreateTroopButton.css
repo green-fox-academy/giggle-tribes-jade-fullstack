@@ -1,0 +1,19 @@
+button.MuiButton-root {
+  grid-area: 2 / 2 /2 /2;
+  justify-self: center;
+  display: flex;
+  justify-content: space-around;
+  background-color: #009587;
+  width: 20em;
+  height: max-content;
+}
+button.MuiButton-root p {
+  color: white;
+}
+img.addtroop {
+  height: 3em;
+  width: 3em;
+}
+.addtroopBTN div {
+  text-align: start;
+}

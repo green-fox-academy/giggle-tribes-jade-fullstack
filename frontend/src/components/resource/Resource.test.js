@@ -32,7 +32,6 @@ global.fetch = jest.fn(async () => {
 let container;
 beforeEach(() => {
   fetch.mockClear();
-
   container = document.createElement('div');
   document.body.appendChild(container);
 });

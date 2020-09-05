@@ -5,4 +5,5 @@ export * from './sessionService';
 export * from './kingdomService';
 export * from './resourceService';
 export * from './tokenService';
+export * from './TroopsService.js';
 export * from './buildingService';

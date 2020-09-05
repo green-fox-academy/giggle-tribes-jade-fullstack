@@ -14,51 +14,59 @@ import Buildings from './components/Buildings'
 import AddBuilding from './components/buildings/AddBuilding';
 
 function App() {
-  const kingdomID = 3;
-  localStorage.setItem('TRIBES_TOKEN', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOjMsImtpbmdkb21JRCI6NCwiaWF0IjoxNTk2MDU0OTE1fQ.-CZDK-BlkE24wWk4lCpEOp6WcGJMMNJTap0vSQKK8NA');
-  const goldAmount = 500;
+  localStorage.setItem(
+    'TRIBES_TOKEN',
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOjMsImlhdCI6MTU5ODA0MTk3Mn0.cVAcR4UiobKN05oicJYQYPIkibMws4yIATb8GVuVD_g'
+  );
 
   return (
     <div className="App">
       <Router>
+<<<<<<< HEAD
 
       <Header />
         
+=======
+        <Header />
+>>>>>>> 3e2c110ba80a455717152b5537084882480e7b19
         <Switch>
           <Route exact path="/">
             <Login />
           </Route>
-          
+
           <Route path="/login">
             <Login />
           </Route>
 
+<<<<<<< HEAD
           <Route path="/kingdom/buildings">
             <Buildings />
             </Route>
           
           <Route path='/registration'>
               <Registration />
+=======
+          <Route path="/registration">
+            <Registration />
+>>>>>>> 3e2c110ba80a455717152b5537084882480e7b19
           </Route>
 
-          <Route exact path='/kingdom/map'>
+          <Route exact path="/kingdom/map">
             <Map />
           </Route>
-          
+
           <Route path="/kingdom">
             <Menu menuItems={menuItems} />
             {menuItems.map(menuItem => (
               <Route
                 key={menuItem.link}
-                path={'/fandom' + menuItem.link}
+                path={'/kingdom' + menuItem.link}
                 render={() => <menuItem.component name={menuItem.name} />}
               />
             ))}
+            <Resource />
             <Log />
-            <Resource kingdomID={kingdomID} />
-            <AddBuilding goldAmount={goldAmount} kingdomId={kingdomID}/>
           </Route>
-        
         </Switch>
 
       </Router>

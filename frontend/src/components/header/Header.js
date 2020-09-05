@@ -1,9 +1,9 @@
-import React,{useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import './Header.css';
 import HeaderTitle from './HeaderTitle';
-import {fetchKingdom} from '../.././services/fetchKindom';
+import { fetchKingdom } from '../.././services/fetchKindom';
 
 const loggedinHeaderItems = [
   { link: 'Settings', route: '/settings' },
@@ -22,9 +22,13 @@ const Header = ({ kingdom }) => {
 
   useEffect(() => {
     if (kingdom) {
-      fetchKingdom.get('map','')
-      .then( response => response.kingdoms.find( k => k.kingdom_id === kingdom ).kingdomname )
-      .then( kingdomname => setKingdomName(kingdomname) );
+      fetchKingdom
+        .get('map', '')
+        .then(
+          response =>
+            response.kingdoms.find(k => k.kingdom_id === kingdom).kingdomname
+        )
+        .then(kingdomname => setKingdomName(kingdomname));
     }
   }, [kingdom]);
 
@@ -32,18 +36,21 @@ const Header = ({ kingdom }) => {
     headerItems = loggedinHeaderItems;
   }
   return (
-      <nav className="header">
-        <HeaderTitle name={isToken ? kingdomName : ''} route={isToken ? '/buildings' : ''}/>
-        <div className="header">
-          {headerItems.map((item, index) => (
-            <Link className="header" key={index.toString()} to={item.route}>
-              {item.link}
-            </Link>
-          ))}
-        </div>
-      </nav>
+    <nav className="header">
+      <HeaderTitle
+        name={isToken ? kingdomName : ''}
+        route={isToken ? '/kingdom/buildings' : ''}
+      />
+      <div className="header">
+        {headerItems.map((item, index) => (
+          <Link className="header" key={index.toString()} to={item.route}>
+            {item.link}
+          </Link>
+        ))}
+      </div>
+    </nav>
   );
-}
+};
 
 const mapStateToProps = state => {
   return state;
