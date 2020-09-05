@@ -3,14 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-   // "lint": "eslint . --ext .js",
-   // "test": "jest --watchAll",
-   // "test:ci": "jest --ci --collectCoverage --reporters=default",
-   // "test:cover": "jest --collectCoverage",
-   // "start": "nodemon --exec babel-node -r ./node_modules/dotenv/config src/index.js",
     "build": "cd frontend && yarn install && cd ../backend && yarn install",
-   // "serve": "node dist/index.js",
-   // "db": "db-migrate"
   },
   "keywords": [],
   "author": "giggle-tribes-jade",
