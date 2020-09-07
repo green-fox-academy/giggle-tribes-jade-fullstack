@@ -11,6 +11,7 @@ export const errorCodes = {
         missingLocationCode: 109,
         missingUserNameAndPassword: 110,
         missingBuildingType: 111,
+        missingToken: 112,
         invalidParam: 200,
         invalidUserName: 201,
         invalidPassword: 202,
@@ -23,6 +24,7 @@ export const errorCodes = {
         invalidLocationCode: 209,
         invalidUserNameAndPassword: 210,
         invalidBuildingType: 211,
+        invalidToken: 212,
         usedParam: 300,
         usedUserName: 301,
         usedPassword: 302,
@@ -34,5 +36,6 @@ export const errorCodes = {
         usedResourceGeneration: 308,
         usedLocationCode: 309,
         usedUserNameAndPassword: 310,
-        usedBuildingType: 311
+        usedBuildingType: 311,
+        usedToken: 312
 };

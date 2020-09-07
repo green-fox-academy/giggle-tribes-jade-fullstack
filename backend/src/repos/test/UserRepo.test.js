@@ -114,3 +114,51 @@ test('get: invalid userId (zero result) returns error 203', async () => {
     }
 });
 
+test('getAuthentication: missing userName returns error 101', async () => {
+    const user = new UserRepo(db,errorCodes);
+    try {
+        const result = await user.getAuthentication({password: 'password'});
+    } catch(err) {
+      expect(err).toStrictEqual( Error(101) );
+    }
+});
+
+test('getAuthentication: missing password returns error 102', async () => {
+    const user = new UserRepo(db,errorCodes);
+    try {
+        const result = await user.getAuthentication({userName: 'name'});
+    } catch(err) {
+      expect(err).toStrictEqual( Error(102) );
+    }
+});
+
+test('getAuthentication: invalid userName or password returns error 210', async () => {
+    const db = {
+        query: (...query) => {
+            return {
+                results: []
+            }
+        }
+      };
+    const user = new UserRepo(db,errorCodes);
+    try {
+        const result = await user.getAuthentication({userName: 'name',password:'password'});
+    } catch(err) {
+      expect(err).toStrictEqual( Error(210) );
+    }
+});
+
+test('getAuthentication: valid userName and password returns db query with params', async () => {
+    const result = await user.getAuthentication({userName: 'name',password:'password'});
+    expect(result).toStrictEqual({
+        query: `
+        SELECT
+            users.id userId,
+            users_kingdoms.kingdom_id kingdomId 
+        FROM users 
+        LEFT JOIN users_kingdoms ON users.id = users_kingdoms.user_id
+        WHERE users.name=? AND users.password=?
+        `,
+        params: [ 'name', 'password' ]
+      });
+});

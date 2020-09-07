@@ -38,4 +38,20 @@ export class UserRepo extends QueryHandler {
         return dbData;
     };
 
+    async getAuthentication({userName,password}) {
+        if (!userName) throw new Error(this.errorCodes.missingUserName);
+        if (!password) throw new Error(this.errorCodes.missingPassword);
+        const query = this.validateQuery`
+        SELECT
+            users.id userId,
+            users_kingdoms.kingdom_id kingdomId 
+        FROM users 
+        LEFT JOIN users_kingdoms ON users.id = users_kingdoms.user_id
+        WHERE users.name=${userName} AND users.password=${password}
+        `;
+        const dbData = await (this.sendQuery(query));
+        if (dbData.length === 0) throw new Error(this.errorCodes.invalidUserNameAndPassword);
+        return dbData;
+    };
+
 };
