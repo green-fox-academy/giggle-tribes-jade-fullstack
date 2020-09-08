@@ -4,4 +4,4 @@ export * from './UserService';
 export * from './KingdomService';
 export * from './ResourceService';
 export * from './BuildingService';
-export * from './TroopsService.js';
+export * from './TroopService.js';
