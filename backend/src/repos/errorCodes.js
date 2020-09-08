@@ -12,6 +12,7 @@ export const errorCodes = {
         missingUserNameAndPassword: 110,
         missingBuildingType: 111,
         missingToken: 112,
+        missingTroopId: 113,
         invalidParam: 200,
         invalidUserName: 201,
         invalidPassword: 202,
@@ -25,6 +26,7 @@ export const errorCodes = {
         invalidUserNameAndPassword: 210,
         invalidBuildingType: 211,
         invalidToken: 212,
+        invalidTroopId: 213,
         usedParam: 300,
         usedUserName: 301,
         usedPassword: 302,
@@ -37,5 +39,6 @@ export const errorCodes = {
         usedLocationCode: 309,
         usedUserNameAndPassword: 310,
         usedBuildingType: 311,
-        usedToken: 312
+        usedToken: 312,
+        usedTroopId: 313
 };
