@@ -102,8 +102,9 @@ test('add: invalid buildingType returns error 211', async () => {
   }
 });
 
-test('add: academy returns building data', async () => {
-  const result = await building.add({kingdomId: 3, buildingType: 'academy'});
+test('add: academy->farm->mine returns building data', async () => {
+  
+  let result = await building.add({kingdomId: 3, buildingType: 'academy'});
   result.started_at = '2020-08-19 19:06:22';
   result.finished_at = '2020-08-19 19:06:22';
   expect(result).toStrictEqual({
@@ -119,10 +120,8 @@ test('add: academy returns building data', async () => {
   expect(ResourceRepo.food).toBe( 200 );
   expect(ResourceRepo.gold_generation).toBe( 5 );
   expect(ResourceRepo.food_generation).toBe( 10 );
-});
 
-test('add: farm returns building data', async () => {
-  const result = await building.add({kingdomId: 3, buildingType: 'farm'});
+  result = await building.add({kingdomId: 3, buildingType: 'farm'});
   result.started_at = '2020-08-19 19:06:22';
   result.finished_at = '2020-08-19 19:06:22';
   expect(result).toStrictEqual({
@@ -138,10 +137,8 @@ test('add: farm returns building data', async () => {
   expect(ResourceRepo.food).toBe( 200 );
   expect(ResourceRepo.gold_generation).toBe( 5 );
   expect(ResourceRepo.food_generation).toBe( 15 );
-});
 
-test('add: mine returns building data', async () => {
-  const result = await building.add({kingdomId: 3, buildingType: 'mine'});
+  result = await building.add({kingdomId: 3, buildingType: 'mine'});
   result.started_at = '2020-08-19 19:06:22';
   result.finished_at = '2020-08-19 19:06:22';
   expect(result).toStrictEqual({
@@ -157,11 +154,12 @@ test('add: mine returns building data', async () => {
   expect(ResourceRepo.food).toBe( 200 );
   expect(ResourceRepo.gold_generation).toBe( 10 );
   expect(ResourceRepo.food_generation).toBe( 15 );
+
 });
 
 test('add: not enough gold returns error 207', async () => {
   try {
-    const result = await building.add({kingdomId: 3, buildingType: 'academy'}); 
+    for (let i = 0; i < 100; i++) await building.add({kingdomId: 3, buildingType: 'mine'}); 
   } catch(err) {
     expect(err).toStrictEqual( Error(207) );
   }

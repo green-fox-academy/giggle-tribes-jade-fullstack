@@ -1,13 +1,17 @@
-export class TroopService {
+import {ResourceSpender} from './ResurceSpender';
+
+export class TroopService extends ResourceSpender {
 
     constructor({TroopRepo,ResourceService,ResourceRepo,db,errorCodes}) {
+        super({ResourceService,ResourceRepo,db,errorCodes});
         this.troop = new TroopRepo(db,errorCodes);
-        this.resources = new ResourceService({ResourceRepo,db,errorCodes});
-        this.errorCodes = errorCodes;
         this.troopData = {};
         this.troopStats = {
-            troop : { cost : 10, hp : 1, attack : 1, defence : 1, time : 60000, gen : -1 },
+            troop : { hp : 1, attack : 1, defence : 1, time : 60000 },
             troopLimit : 100
+        };
+        this.resourceStats = {
+            troop : { cost : 10, res: 'food', gen : -1 }
         };
     };
 
@@ -32,16 +36,12 @@ export class TroopService {
         const troopsNumber = (await this.getByKingdomId({kingdomId})).length;
         if ( troopsNumber >= this.troopStats.troopLimit ) throw new Error(this.errorCodes.usedKingdomId);
 
-        const resources = await this.resources.getByKingdomId({kingdomId});
-        const gold = resources.filter(e => e.type === 'gold')[0].amount;
-        const {cost,gen} = this.troopStats['troop']; 
-        if ( gold < cost ) throw new Error(this.errorCodes.invalidResourceAmount);
+        await this.setResources(kingdomId,'troop');
 
         this.setTroopData({kingdomId});
         this.troopData.id = (await this.troop.add(this.troopData)).insertId;
 
-        await this.resources.spendGold({kingdomId,amount:cost});
-        await this.resources.updateFoodGeneration({kingdomId,generation:gen});
+        await this.spendResources();
 
         return this.troopData;
     };

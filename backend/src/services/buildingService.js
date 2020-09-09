@@ -1,14 +1,20 @@
-export class BuildingService {
+import {ResourceSpender} from './ResurceSpender';
+
+export class BuildingService extends ResourceSpender {
 
     constructor({BuildingRepo,ResourceService,ResourceRepo,db,errorCodes}) {
+        super({ResourceService,ResourceRepo,db,errorCodes});
         this.building = new BuildingRepo(db,errorCodes);
-        this.resources = new ResourceService({ResourceRepo,db,errorCodes});
-        this.errorCodes = errorCodes;
         this.buildingData = {};
         this.buildingStats = {
-            farm : { hp : 1, cost : 100, time : 60000, gen : 5 },
-            mine : { hp : 1, cost : 100, time : 60000, gen : 5 },
-            academy : { hp : 1, cost : 100, time : 60000, gen : 0 }
+            farm : { hp : 1, time : 60000 },
+            mine : { hp : 1, time : 60000 },
+            academy : { hp : 1, time : 60000 }
+        };
+        this.resourceStats = {
+            farm : { cost : 100, res: 'food', gen : 5 },
+            mine : { cost : 100, res: 'gold', gen : 5 },
+            academy : { cost : 100, res: '', gen : 0 }
         };
     };
 
@@ -34,17 +40,13 @@ export class BuildingService {
 
     async add({kingdomId,buildingType}) {
         this.validateParams({kingdomId,buildingType});
-        const resources = await this.resources.getByKingdomId({kingdomId});
-        const gold = resources.filter(e => e.type === 'gold')[0].amount;
-        const {cost,gen} = this.buildingStats[buildingType]; 
-        if ( gold < cost ) throw new Error(this.errorCodes.invalidResourceAmount);
+
+        await this.setResources(kingdomId,buildingType);
 
         this.setBuildingData({kingdomId,buildingType});
         this.buildingData.id = (await this.building.add(this.buildingData)).insertId;
 
-        await this.resources.spendGold({kingdomId,amount:cost});
-        if (buildingType === 'mine') await this.resources.updateGoldGeneration({kingdomId,generation:gen});
-        if (buildingType === 'farm') await this.resources.updateFoodGeneration({kingdomId,generation:gen});
+        await this.spendResources();
 
         return this.buildingData;
     };
