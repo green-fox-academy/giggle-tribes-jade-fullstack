@@ -1,16 +1,15 @@
-import { UserService } from '../services';
-import { UserRepo, KingdomRepo, ResourceRepo, errorCodes } from '../repos';
-import { db } from '../data/connection';
+export class UserController {
 
-const user = new UserService({UserRepo,KingdomRepo,ResourceRepo,db,errorCodes});
+    constructor({UserService,UserRepo,KingdomRepo,ResourceRepo,db,errorCodes}) {
+        this.user = new UserService({UserRepo,KingdomRepo,ResourceRepo,db,errorCodes});
+        this.post = this.post.bind(this);
+    };
 
-const post = (req,res) => {
-    const {username,password,kingdomname} = req.body;
-    user.add({userName:username,password,kingdomName:kingdomname})
-     .then( response => res.status(201).json(response) )
-     .catch( error => res.status(400).json({error:error.message}) );
-};
+    post(req,res) {
+        const {username,password,kingdomname} = req.body;
+        this.user.add({userName:username,password,kingdomName:kingdomname})
+        .then( response => res.status(201).json(response) )
+        .catch( error => res.status(400).json({error:error.message}) );
+    };
 
-export const userController = {
-    post
 };

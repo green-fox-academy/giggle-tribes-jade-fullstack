@@ -3,7 +3,7 @@ import bodyParser from 'body-parser';
 const cors = require('cors');
 import {
   helloController,
-  userController,
+  UserController,
   sessionController,
   resourceController,
   authController,
@@ -11,8 +11,28 @@ import {
   kingdomController,
   buildingsController,
 } from '../controllers';
+import {
+  BuildingService,
+  KingdomService,
+  ResourceService,
+  SessionService,
+  TroopService,
+  UserService
+} from '../services';
+import {
+  BuildingRepo,
+  errorCodes,
+  KingdomRepo,
+  LocationRepo,
+  ResourceRepo,
+  TroopRepo,
+  UserRepo
+} from '../repos';
+import { db } from '../data/connection';
 import { resourceMiddleware } from '../middlewares/resourceMiddleware';
 import { authUser } from '../middlewares';
+
+const userController = new UserController({UserService,UserRepo,KingdomRepo,ResourceRepo,db,errorCodes});
 
 const router = express.Router();
 
