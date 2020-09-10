@@ -4,7 +4,7 @@ const cors = require('cors');
 import {
   helloController,
   UserController,
-  sessionController,
+  SessionController,
   resourceController,
   authController,
   troopsController,
@@ -33,6 +33,7 @@ import { resourceMiddleware } from '../middlewares/resourceMiddleware';
 import { authUser } from '../middlewares';
 
 const userController = new UserController({UserService,UserRepo,KingdomRepo,ResourceRepo,db,errorCodes});
+const sessionController = new SessionController({SessionService,UserRepo,db,errorCodes});
 
 const router = express.Router();
 
