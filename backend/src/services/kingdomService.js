@@ -15,6 +15,7 @@ export class KingdomService {
 
     async attachLocation({kingdomId,locationCode}) {
         this.validateParams({kingdomId,locationCode});
+
         if ((await this.kingdom.get()).find( kingdom => kingdom.location === locationCode )) throw new Error(this.errorCodes.usedLocationCode);
         
         let kingdomData = await this.getById({kingdomId});

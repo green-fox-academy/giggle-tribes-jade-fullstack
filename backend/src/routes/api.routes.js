@@ -8,7 +8,7 @@ import {
   resourceController,
   authController,
   troopsController,
-  kingdomController,
+  KingdomController,
   buildingsController,
 } from '../controllers';
 import {
@@ -34,6 +34,7 @@ import { authUser } from '../middlewares';
 
 const userController = new UserController({UserService,UserRepo,KingdomRepo,ResourceRepo,db,errorCodes});
 const sessionController = new SessionController({SessionService,UserRepo,db,errorCodes});
+const kingdomController = new KingdomController({KingdomService,KingdomRepo,ResourceRepo,BuildingRepo,LocationRepo,db,errorCodes});
 
 const router = express.Router();
 
