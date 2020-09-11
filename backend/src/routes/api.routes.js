@@ -2,11 +2,14 @@ import express from 'express';
 import bodyParser from 'body-parser';
 const cors = require('cors');
 import {
+  AuthenticationMiddleware
+} from '../middlewares';
+import {
   helloController,
   UserController,
   SessionController,
   resourceController,
-  authController,
+  AuthenticationController,
   troopsController,
   KingdomController,
   buildingsController,
@@ -30,8 +33,9 @@ import {
 } from '../repos';
 import { db } from '../data/connection';
 import { resourceMiddleware } from '../middlewares/resourceMiddleware';
-import { authUser } from '../middlewares';
 
+const authenticationMiddleware = new AuthenticationMiddleware({SessionService,UserRepo,db,errorCodes});
+const authenticationController = new AuthenticationController();
 const userController = new UserController({UserService,UserRepo,KingdomRepo,ResourceRepo,db,errorCodes});
 const sessionController = new SessionController({SessionService,UserRepo,db,errorCodes});
 const kingdomController = new KingdomController({KingdomService,KingdomRepo,ResourceRepo,BuildingRepo,LocationRepo,db,errorCodes});
@@ -49,8 +53,8 @@ router.post('/kingdoms/:kingdomId/map', kingdomController.post);
 router.get('/kingdoms/:kingdomId/map', kingdomController.getById);
 router.get('/kingdoms/map', kingdomController.get);
 
-router.use(authUser);
-router.post('/auth', authController);
+router.use(authenticationMiddleware.validate);
+router.post('/auth', authenticationController.post);
 router.use('/kingdoms/:kingdomId', resourceMiddleware);
 
 router.get('/kingdoms/:kingdomID/resource', resourceController.get);
