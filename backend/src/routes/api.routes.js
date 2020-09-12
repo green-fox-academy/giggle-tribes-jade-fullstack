@@ -11,7 +11,7 @@ import {
   SessionController,
   ResourceController,
   AuthenticationController,
-  troopsController,
+  TroopController,
   KingdomController,
   BuildingController,
 } from '../controllers';
@@ -43,6 +43,7 @@ const sessionController = new SessionController({SessionService,UserRepo,db,erro
 const kingdomController = new KingdomController({KingdomService,KingdomRepo,ResourceRepo,BuildingRepo,LocationRepo,db,errorCodes});
 const resourceController = new ResourceController({ResourceService,ResourceRepo,db,errorCodes});
 const buildingController = new BuildingController({BuildingService,ResourceService,ResourceRepo,BuildingRepo,db,errorCodes});
+const troopController = new TroopController({TroopService,ResourceService,ResourceRepo,TroopRepo,db,errorCodes});
 
 const router = express.Router();
 
@@ -63,8 +64,8 @@ router.use('/kingdoms/:kingdomId', resourceMiddleware.post);
 
 router.get('/kingdoms/:kingdomId/resource', resourceController.get);
 router.post('/kingdoms/:kingdomId/buildings', buildingController.post);
-/*router.get('/kingdoms/:kingdomID/troops', troopsController.get);
-router.post('/kingdoms/:kingdomID/troops', troopsController.post);
-*/
+router.get('/kingdoms/:kingdomId/troops', troopController.get);
+router.post('/kingdoms/:kingdomId/troops', troopController.post);
+
 
 export default router;

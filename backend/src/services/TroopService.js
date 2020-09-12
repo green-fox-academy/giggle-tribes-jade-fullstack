@@ -48,7 +48,8 @@ export class TroopService extends ResourceSpender {
 
     async getByKingdomId({kingdomId}) {
         if (!kingdomId) throw new Error(this.errorCodes.missingKingdomId);
-        return await this.troop.getByKingdomId({kingdomId});
+        const result = await this.troop.getByKingdomId({kingdomId});
+        return result;
     };
 
 };

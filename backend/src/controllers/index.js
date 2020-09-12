@@ -5,4 +5,4 @@ export * from './SessionController';
 export * from './KingdomController';
 export * from './ResourceController';
 export * from './BuildingController';
-export * from './troopsController';
+export * from './TroopController';
