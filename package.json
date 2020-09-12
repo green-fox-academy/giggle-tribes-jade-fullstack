@@ -7,8 +7,8 @@
 		"yarn": "1.x"
 	},
 	"scripts": {
-		"start": "cd ~/backend && yarn start",
-		"build": "cd backend && yarn install && yarn db up && cd ../frontend && yarn install && yarn build && mv build/* ../backend/src/static"
+		"start": "cd backend && yarn start",
+		"build": "cd backend && yarn install && yarn db up && cd ../frontend && yarn install && yarn build && mv build/* ../backend/src/static && cd .."
 	},
 	"author": "",
 	"license": "ISC"
