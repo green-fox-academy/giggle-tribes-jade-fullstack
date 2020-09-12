@@ -1,16 +1,18 @@
-import { ResourceService } from '../services';
-import { errorCodes, ResourceRepo } from '../repos';
-import { db } from '../data/connection';
+export class ResourceMiddleware {
 
-const resources = new ResourceService({ResourceRepo,db,errorCodes});
+    constructor({ResourceService,ResourceRepo,db,errorCodes}) {
+        this.resources = new ResourceService({ResourceRepo,db,errorCodes});
+        this.post = this.post.bind(this);
+    };
 
-export const resourceMiddleware = async (req, res, next) => {
-  const {kingdomId} = req.params;
-  try {
-    await resources.generateResources({kingdomId});
-    next();
-  } catch (error) {
-    res.status(400).json({error: error.message});
-  }
+    async post(req, res, next) {
+        const {kingdomId} = req.params;
+        try {
+            await this.resources.generateResources({kingdomId});
+            next();
+        } catch(error) {
+            res.status(400).json({error: error.message});
+        }
+    };
+
 };
-

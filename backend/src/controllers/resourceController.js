@@ -1,16 +1,15 @@
-import { ResourceService } from '../services';
-import { ResourceRepo, errorCodes } from '../repos';
-import { db } from '../data/connection';
+export class ResourceController {
 
-const resources = new ResourceService({ResourceRepo,db,errorCodes});
+    constructor({ResourceService,ResourceRepo,db,errorCodes}) {
+        this.resources = new ResourceService({ResourceRepo,db,errorCodes});
+        this.get = this.get.bind(this);
+    };
 
-const get = (req,res) => {
-  const kingdomId = req.params.kingdomId;
-  resources.getByKingdomId({kingdomId})
-   .then( response => res.status(200).json(response) )
-   .catch( error => res.status(400).json({error:error.message}) );
-};
+    get(req,res) {
+        const kingdomId = req.params.kingdomId;
+        this.resources.getByKingdomId({kingdomId})
+         .then( response => res.status(200).json(response) )
+         .catch( error => res.status(400).json({error:error.message}) );
+    };
 
-export const resourceController = {
-  get
 };
