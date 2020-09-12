@@ -48,8 +48,8 @@ test('getById: valid kingdomId returns db query with params', async () => {
             users_kingdoms.user_id userId,
             locations.code location
         FROM kingdoms
-        RIGHT JOIN users_kingdoms ON users_kingdoms.kingdom_id = kingdoms.id
-        RIGHt JOIN locations ON locations.kingdom_id = kingdoms.id
+        LEFT JOIN users_kingdoms ON users_kingdoms.kingdom_id = kingdoms.id
+        LEFT JOIN locations ON locations.kingdom_id = kingdoms.id
         WHERE kingdoms.id = ?
         `,
     params: [ 1 ]

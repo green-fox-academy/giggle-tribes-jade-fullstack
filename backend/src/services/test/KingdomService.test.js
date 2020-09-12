@@ -10,7 +10,7 @@ class LocationRepo {
 };
 
 class BuildingRepo {
-  async getById({kingdomId}) {
+  async getByKingdomId({kingdomId}) {
     return [
       {
         id: 1,
@@ -35,7 +35,7 @@ class BuildingRepo {
 };
 
 class ResourceRepo {
-  async getById({kingdomId}) {
+  async getByKingdomId({kingdomId}) {
     return [
       {
         id: 1,
@@ -128,7 +128,7 @@ test('attachLocation: missing locationCode returns error 109', async () => {
 test('attachLocation: located kingdomId returns error 304', async () => {
   const kingdom = new KingdomService({KingdomRepo:KingdomRepo_notnullLocation,ResourceRepo,BuildingRepo,LocationRepo,db,errorCodes});
   try {
-    const result = await kingdom.attachLocation({kingdomId: 13, locationCode: 'TST'}); 
+    const result = await kingdom.attachLocation({kingdomId: 13, locationCode: 'TST'});
   } catch(err) {
     expect(err).toStrictEqual( Error(304) );
   }

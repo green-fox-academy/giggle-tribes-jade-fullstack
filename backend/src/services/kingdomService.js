@@ -17,7 +17,7 @@ export class KingdomService {
         this.validateParams({kingdomId,locationCode});
 
         if ((await this.kingdom.get()).find( kingdom => kingdom.location === locationCode )) throw new Error(this.errorCodes.usedLocationCode);
-        
+
         let kingdomData = await this.getById({kingdomId});
         if (kingdomData.location.country_code !== null ) throw new Error(this.errorCodes.usedKingdomId);
         kingdomData.location.country_code = locationCode;

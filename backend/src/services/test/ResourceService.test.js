@@ -84,7 +84,7 @@ class ResourceRepo_noResource {
 test('getById: missing kingdomId returns error 104', async () => {
   const resources = new ResourceService({ResourceRepo,db,errorCodes});
   try {
-    const result = await resources.getById({}); 
+    const result = await resources.getByKingdomId({}); 
   } catch(err) {
     expect(err).toStrictEqual( Error(104) );
   }
@@ -92,7 +92,7 @@ test('getById: missing kingdomId returns error 104', async () => {
 
 test('getById: returns valid result', async () => {
   const resources = new ResourceService({ResourceRepo,db,errorCodes});
-  const result = await resources.getById({kingdomId: 77}); 
+  const result = await resources.getByKingdomId({kingdomId: 77}); 
   expect(result).toStrictEqual([
     {
       type: 'gold',
@@ -130,7 +130,7 @@ test('add: existing resource returns error 304', async () => {
 test('add: kingdomId without startAmount returns modified data', async () => {
   const resources = new ResourceService({ResourceRepo:ResourceRepo_noResource,db,errorCodes});
   await resources.add({kingdomId:77});
-  const result = await resources.getById({kingdomId: 77}); 
+  const result = await resources.getByKingdomId({kingdomId: 77}); 
   expect(result).toStrictEqual([
     {
       type: 'gold',
@@ -150,7 +150,7 @@ test('add: kingdomId without startAmount returns modified data', async () => {
 test('add: kingdomId with startAmount returns modified data', async () => {
   const resources = new ResourceService({ResourceRepo:ResourceRepo_noResource,db,errorCodes});
   await resources.add({kingdomId:77, startAmount: 500});
-  const result = await resources.getById({kingdomId: 77}); 
+  const result = await resources.getByKingdomId({kingdomId: 77}); 
   expect(result).toStrictEqual([
     {
       type: 'gold',
@@ -179,7 +179,7 @@ test('generateResources: missing kingdomId returns error 104', async () => {
 test('generateResources: valid kingdomId returns modified data', async () => {
   const resources = new ResourceService({ResourceRepo,db,errorCodes});
   await resources.generateResources({kingdomId: 77}); 
-  const result = await resources.getById({kingdomId: 77}); 
+  const result = await resources.getByKingdomId({kingdomId: 77}); 
   expect(result).toStrictEqual([
     {
       type: 'gold',
@@ -211,7 +211,7 @@ test('spends and updates: valid kingdomId returns modified data', async () => {
   await resources.spendFood({kingdomId: 23, amount: 100});
   await resources.updateGoldGeneration({kingdomId: 23, generation: 10});
   await resources.updateFoodGeneration({kingdomId: 23, generation: 20});
-  const result = await resources.getById({kingdomId: 23}); 
+  const result = await resources.getByKingdomId({kingdomId: 23}); 
   expect(result).toStrictEqual([
     {
       type: 'gold',
