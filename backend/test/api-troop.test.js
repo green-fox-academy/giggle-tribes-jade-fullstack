@@ -40,7 +40,7 @@ test('post: invalid kingdomId returns error 204', done => {
     });
 });
 
-test('post: valid kingdomId but not enough gold returns error 207', done => {
+test('post: valid kingdomId but not enough gold returns error "Not enough gold."', done => {
   db.query.mockImplementation( () => (
     { results: [
       { id: 1, kingdom_id: 3, type: 'food', amount: 5, generation: 10, updatedAt: '2020-08-15 13:04:53' },
@@ -55,7 +55,7 @@ test('post: valid kingdomId but not enough gold returns error 207', done => {
     .expect(400)
     .end((err, data) => {
       if (err) return done(err);
-      expect(data.body.error).toBe("207");
+      expect(data.body.error).toBe("Not enough gold.");
       return done();
     });
 });

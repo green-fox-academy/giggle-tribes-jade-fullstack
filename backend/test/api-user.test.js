@@ -14,7 +14,7 @@ class duplicateError extends Error {
   };
 };
 
-test('missing username and password returns error 110', done => {
+test('missing username and password returns error "Username and password are required."', done => {
   request(app)
     .post('/api/users')
     .set('Accept', 'application/json')
@@ -23,12 +23,12 @@ test('missing username and password returns error 110', done => {
     .expect(400)
     .end((err, data) => {
       if (err) return done(err);
-      expect(data.body.error).toBe("110");
+      expect(data.body.error).toBe('Username and password are required.');
       return done();
     });
 });
 
-test('missing username returns error 101', done => {
+test('missing username returns error "Username is reuired."', done => {
   request(app)
     .post('/api/users')
     .set('Accept', 'application/json')
@@ -37,12 +37,12 @@ test('missing username returns error 101', done => {
     .expect(400)
     .end((err, data) => {
       if (err) return done(err);
-      expect(data.body.error).toBe("101");
+      expect(data.body.error).toBe("Username is reuired.");
       return done();
     });
 });
 
-test('missing password returns error 102', done => {
+test('missing password returns error "Password is required."', done => {
   request(app)
     .post('/api/users')
     .set('Accept', 'application/json')
@@ -51,12 +51,12 @@ test('missing password returns error 102', done => {
     .expect(400)
     .end((err, data) => {
       if (err) return done(err);
-      expect(data.body.error).toBe("102");
+      expect(data.body.error).toBe("Password is required.");
       return done();
     });
 });
 
-test('missing kingdomname returns error 105', done => {
+test('missing kingdomname returns error "Kingdom name is required."', done => {
   request(app)
     .post('/api/users')
     .set('Accept', 'application/json')
@@ -65,12 +65,12 @@ test('missing kingdomname returns error 105', done => {
     .expect(400)
     .end((err, data) => {
       if (err) return done(err);
-      expect(data.body.error).toBe("105");
+      expect(data.body.error).toBe("Kingdom name is required.");
       return done();
     });
 });
 
-test('too short password returns error 202', done => {
+test('too short password returns error "Password is too short."', done => {
   request(app)
     .post('/api/users')
     .set('Accept', 'application/json')
@@ -79,12 +79,12 @@ test('too short password returns error 202', done => {
     .expect(400)
     .end((err, data) => {
       if (err) return done(err);
-      expect(data.body.error).toBe("202");
+      expect(data.body.error).toBe("Password is too short.");
       return done();
     });
 });
 
-test('username already in use returns error 301', done => {
+test('username already in use returns error "Username is already taken."', done => {
   db.query.mockImplementation( () => {throw new duplicateError;} );
   request(app)
     .post('/api/users')
@@ -94,7 +94,7 @@ test('username already in use returns error 301', done => {
     .expect(400)
     .end((err, data) => {
       if (err) return done(err);
-      expect(data.body.error).toBe("301");
+      expect(data.body.error).toBe("Username is already taken.");
       return done();
     });
 });

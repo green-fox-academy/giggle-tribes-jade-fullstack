@@ -40,7 +40,7 @@ test('post: invalid kingdomId returns error 204', done => {
     });
 });
 
-test('post: missing buildingType returns error 111', done => {
+test('post: missing buildingType returns error "Building type is required."', done => {
   db.query.mockImplementation( () => (
     { results: [
       { id: 1, kingdom_id: 3, type: 'food', amount: 5, generation: 10, updatedAt: '2020-08-15 13:04:53' },
@@ -55,12 +55,12 @@ test('post: missing buildingType returns error 111', done => {
     .expect(400)
     .end((err, data) => {
       if (err) return done(err);
-      expect(data.body.error).toBe("111");
+      expect(data.body.error).toBe("Building type is required.");
       return done();
     });
 });
 
-test('post: invalid buildingType returns error 211', done => {
+test('post: invalid buildingType returns error "Wrong building type."', done => {
   db.query.mockImplementation( () => (
     { results: [
       { id: 1, kingdom_id: 3, type: 'food', amount: 5, generation: 10, updatedAt: '2020-08-15 13:04:53' },
@@ -76,12 +76,12 @@ test('post: invalid buildingType returns error 211', done => {
     .expect(400)
     .end((err, data) => {
       if (err) return done(err);
-      expect(data.body.error).toBe("211");
+      expect(data.body.error).toBe("Wrong building type.");
       return done();
     });
 });
 
-test('valid kingdomId and buildingType but not enough gold returns error 207', done => {
+test('valid kingdomId and buildingType but not enough gold returns error "Not enough gold."', done => {
   db.query.mockImplementation( () => (
     { results: [
       { id: 1, kingdom_id: 3, type: 'food', amount: 5, generation: 10, updatedAt: '2020-08-15 13:04:53' },
@@ -97,7 +97,7 @@ test('valid kingdomId and buildingType but not enough gold returns error 207', d
     .expect(400)
     .end((err, data) => {
       if (err) return done(err);
-      expect(data.body.error).toBe("207");
+      expect(data.body.error).toBe("Not enough gold.");
       return done();
     });
 });

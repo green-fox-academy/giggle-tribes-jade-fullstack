@@ -7,7 +7,7 @@ db.query.mockImplementation( () => (
   { results: [{ userId: 2, kingdomId: 3 }] }
 ));
 
-test('missing username and password returns error 110', done => {
+test('missing username and password returns error "Username and password are required."', done => {
   request(app)
     .post('/api/sessions')
     .set('Accept', 'application/json')
@@ -16,12 +16,12 @@ test('missing username and password returns error 110', done => {
     .expect(401)
     .end((err, data) => {
       if (err) return done(err);
-      expect(data.body.error).toBe("110");
+      expect(data.body.error).toBe("Username and password are required.");
       return done();
     });
 });
 
-test('missing username returns error 101', done => {
+test('missing username returns error "Username is reuired."', done => {
   request(app)
     .post('/api/sessions')
     .set('Accept', 'application/json')
@@ -30,12 +30,12 @@ test('missing username returns error 101', done => {
     .expect(401)
     .end((err, data) => {
       if (err) return done(err);
-      expect(data.body.error).toBe("101");
+      expect(data.body.error).toBe("Username is reuired.");
       return done();
     });
 });
 
-test('missing password returns error 102', done => {
+test('missing password returns error "Password is required."', done => {
   request(app)
     .post('/api/sessions')
     .set('Accept', 'application/json')
@@ -44,12 +44,12 @@ test('missing password returns error 102', done => {
     .expect(401)
     .end((err, data) => {
       if (err) return done(err);
-      expect(data.body.error).toBe("102");
+      expect(data.body.error).toBe("Password is required.");
       return done();
     });
 });
 
-test('invalid data returns error 210', done => {
+test('invalid data returns error "Invalid username or password."', done => {
   db.query.mockImplementation( () => (
     { results: [] }
   ));
@@ -61,7 +61,7 @@ test('invalid data returns error 210', done => {
     .expect(401)
     .end((err, data) => {
       if (err) return done(err);
-      expect(data.body.error).toBe("210");
+      expect(data.body.error).toBe("Invalid username or password.");
       return done();
     });
 });

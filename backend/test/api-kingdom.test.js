@@ -7,7 +7,7 @@ db.query.mockImplementation( () => (
   { results: [{ userId: 2, kingdomId: 3 }] }
 ));
 
-test('post: missing location returns error 109', done => {
+test('post: missing location returns error "Missing locationCode."', done => {
   request(app)
     .post('/api/kingdoms/1/map')
     .set('Accept', 'application/json')
@@ -16,12 +16,12 @@ test('post: missing location returns error 109', done => {
     .expect(400)
     .end((err, data) => {
       if (err) return done(err);
-      expect(data.body.error).toBe("109");
+      expect(data.body.error).toBe("Missing locationCode.");
       return done();
     });
 });
 
-test('post: already used location returns error 309', done => {
+test('post: already used location returns error "Location is already taken."', done => {
   db.query.mockImplementation( () => (
     { results: [{ location: 'TST' }] }
   ));
@@ -33,12 +33,12 @@ test('post: already used location returns error 309', done => {
     .expect(400)
     .end((err, data) => {
       if (err) return done(err);
-      expect(data.body.error).toBe("309");
+      expect(data.body.error).toBe("Location is already taken.");
       return done();
     });
 });
 
-test('post: invalid kingdomId returns error 204', done => {
+test('post: invalid kingdomId returns error "Invalid kingdomId."', done => {
   db.query.mockImplementation( () => (
     { results: [] }
   ));
@@ -50,12 +50,12 @@ test('post: invalid kingdomId returns error 204', done => {
     .expect(400)
     .end((err, data) => {
       if (err) return done(err);
-      expect(data.body.error).toBe("204");
+      expect(data.body.error).toBe("Invalid kingdomId.");
       return done();
     });
 });
 
-test('post: already located kingdomId returns error 304', done => {
+test('post: already located kingdomId returns error "Kingdom is already located."', done => {
   db.query.mockImplementation( () => (
     { results: [{location: 'ABC'}] }
   ));
@@ -67,7 +67,7 @@ test('post: already located kingdomId returns error 304', done => {
     .expect(400)
     .end((err, data) => {
       if (err) return done(err);
-      expect(data.body.error).toBe("304");
+      expect(data.body.error).toBe("Kingdom is already located.");
       return done();
     });
 });
@@ -91,7 +91,7 @@ test('post: proper data returns kingdom object', done => {
     });
 });
 
-test('getById: invalid kingdomId returns error 204', done => {
+test('getById: invalid kingdomId returns error "Invalid kingdomId."', done => {
   db.query.mockImplementation( () => (
     { results: [] }
   ));
@@ -102,7 +102,7 @@ test('getById: invalid kingdomId returns error 204', done => {
     .expect(400)
     .end((err, data) => {
       if (err) return done(err);
-      expect(data.body.error).toBe("204");
+      expect(data.body.error).toBe("Invalid kingdomId.");
       return done();
     });
 });
