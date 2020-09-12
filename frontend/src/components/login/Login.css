@@ -5,6 +5,7 @@ body {
 }
 
 .login {
+  grid-column: 1 / span 3;
   display: flex;
   flex-direction: column;
 }
@@ -29,7 +30,7 @@ body {
   justify-content: center;
 }
 
-.registrationButton {
+.loginButton {
   width: 9rem;
   height: 3.4rem;
   background-color: green;
@@ -58,11 +59,11 @@ body {
   margin-top: 4.25rem;
 }
 
-.registrationButton:hover {
+.loginButton:hover {
   background-color: #75be3e;
 }
 
-.registrationButton:focus {
+.loginButton:focus {
   outline: none;
 }
 

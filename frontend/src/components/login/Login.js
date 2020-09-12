@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
-// import { useDispatch } from 'react-redux';
 import './Login.css';
 
 class Login extends Component{
@@ -10,7 +9,6 @@ class Login extends Component{
     this.state = {
       username: '',
       password: '',
-      error: '',
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleUsername = this.handleUsername.bind(this);
@@ -39,65 +37,59 @@ class Login extends Component{
           history.push('/kingdom');
         }
       });
+    }
+
+    handleUsername(e) {
+      let value = e.target.value;
+      this.setState(prevState => ({ ...prevState, username: value }));
+    }
+
+    handlePassword(e) {
+      let value = e.target.value;
+      this.setState(prevState => ({ ...prevState, password: value }));
+    }
+
+    render (){
+      return(
+    
+        <div className="login">
+        <div className="title">
+          <h2>Tribes of Vulpes</h2>
+        </div>
+
+        <div className="form">
+          <form onSubmit={this.handleSubmit}>
+            <div>
+              <input
+                type="text"
+                name="username"
+                placeholder="Username"
+                onChange={this.handleUsername}>
+              </input>
+            </div>
+
+            <div>
+              <input
+                type="password"
+                name="password"
+                placeholder="Password"
+                onChange={this.handlePassword}>
+              </input>
+            </div>
+
+            <div className="submitLine">
+              {this.state.error && (
+                <div className="errorMessage">{this.state.error}</div>
+              )}
+              <button type="submit" className="loginButton">
+                SIGN IN
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>    
+    );
   }
-
-  handleUsername(e) {
-    let value = e.target.value;
-    this.setState(prevState => ({ ...prevState, username: value }));
-  }
-
-  handlePassword(e) {
-    let value = e.target.value;
-    this.setState(prevState => ({ ...prevState, password: value }));
-  }
-
-  render (){
-    return(
-  
-      <div className="login">
-      <div className="title">
-        <h2>Tribes of Vulpes</h2>
-      </div>
-
-      <div className="form">
-        <form onSubmit={this.handleSubmit}>
-          <div>
-            <input
-              type="text"
-              name="username"
-              /*className={this.validUsername() ? 'green' : 'red'}*/
-              placeholder="Username"
-              onChange={this.handleUsername}>
-            </input>
-          </div>
-
-          <div>
-            <input
-              type="password"
-              name="password"
-              /*className={this.validPassword() ? 'green' : 'red'}*/
-              placeholder="Password"
-              onChange={this.handlePassword}>
-            </input>
-          </div>
-
-          <div className="submitLine">
-            {this.state.error && (
-              <div className="errorMessage">{this.state.error}</div>
-            )}
-            <button type="submit" className="registrationButton">
-              SIGN IN
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>    
-  );
-}
 }
 
 export default withRouter(Login);
-
-// };
-
-// export default Login;
