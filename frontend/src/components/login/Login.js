@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import './Login.css';
+import { LoginActions } from '../../actions/LoginActions';
+
 
 class Login extends Component{
 
@@ -13,6 +16,7 @@ class Login extends Component{
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleUsername = this.handleUsername.bind(this);
     this.handlePassword = this.handlePassword.bind(this);
+    // this.login = this.login(this);
   }
 
   handleSubmit(event) {
@@ -21,23 +25,13 @@ class Login extends Component{
     let userData = this.state;
     const { history } = this.props;
 
-    fetch('http://localhost:5000/api/sessions', {
-      method: 'POST',
-      body: JSON.stringify(userData),
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-    })
-      .then(response => response.json())
-      .then(data => {
-        if (data.error) {
-          this.setState(prevState => ({ ...prevState, error: data.error }));
-        } else {
-          history.push('/kingdom');
-        }
-      });
-    }
+    console.log(userData);
+    this.props.login(userData).then(success => {
+      if (success){
+        history.push('/kingdom');
+      }
+    });
+   }
 
     handleUsername(e) {
       let value = e.target.value;
@@ -92,4 +86,19 @@ class Login extends Component{
   }
 }
 
-export default withRouter(Login);
+// export default withRouter(Login);
+
+const mapStateToProps = ({ kingdom, user }) => {
+  return { kingdom, user };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    login: (data) => {
+      return dispatch(LoginActions(data));
+    
+    },
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Login));

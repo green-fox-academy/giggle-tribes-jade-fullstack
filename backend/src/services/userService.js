@@ -50,7 +50,7 @@ const get = async ({ username, password }) => {
   if (user.length > 0) {
     const kingdom = await getKingdomIdForUser(user[0].id);
     if (kingdom.length > 0) {
-      return { userID: user[0].id, kindomID: kingdom[0].kingdom_id };
+      return { userID: user[0].id, kingdomID: kingdom[0].kingdom_id };
     }
   } else {
     throw { error: 'Username or password is incorrect.' };
