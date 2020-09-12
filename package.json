@@ -9,7 +9,7 @@
 	"scripts": {
 		"lint": "eslint . --ext .js",
 		"start": "cd backend && yarn start",
-		"build": "cd backend && yarn install && yarn db up && cd ../frontend && yarn install && yarn build && mv build/* ../backend/src/static/"
+		"build": "cd backend && yarn install && yarn db up && cd ../frontend && yarn install && yarn build && mv build/* /backend/src/static/"
 	},
 	"author": "",
 	"license": "ISC"
