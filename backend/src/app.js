@@ -7,7 +7,7 @@ import errorHandler from './middlewares/error-handler';
 
 const app = express();
 
-app.use('/static', express.static(__dirname + '/static'));
+app.use(express.static('/static'));
 app.use(morgan('combined', { stream: logger.stream }));
 
 app.use('/api', api);
