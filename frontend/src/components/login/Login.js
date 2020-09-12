@@ -86,8 +86,6 @@ class Login extends Component{
   }
 }
 
-// export default withRouter(Login);
-
 const mapStateToProps = ({ kingdom, user }) => {
   return { kingdom, user };
 };
