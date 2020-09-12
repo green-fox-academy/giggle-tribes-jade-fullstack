@@ -8,7 +8,7 @@
 	},
 	"scripts": {
 		"lint": "eslint . --ext .js",
-		"start": "cd frontend && yarn start && cd ../backend && node ./node_modules/dotenv/config src/index.js",
+		"start": "cd frontend && yarn start && cd ../backend && node src/index.js",
 		"build": "cd frontend && yarn install && yarn build && cd ../backend && yarn build"
 	},
 	"author": "",
