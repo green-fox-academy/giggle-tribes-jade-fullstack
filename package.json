@@ -8,15 +8,9 @@
 	},
 	"scripts": {
 		"lint": "eslint . --ext .js",
-		"start": "cd frontend && yarn start && cd ../backend && node src/index.js",
-		"build": "cd frontend && yarn install && yarn build && cd ../backend && yarn build"
+		"start": "cd backend && yarn start",
+		"build": "cd ../backend && yarn install && yarn db up && cd frontend && yarn install && yarn build && mv build/* ../backend/src/assets/"
 	},
 	"author": "",
-	"license": "ISC",
-	"devDependencies": {
-		"@babel/cli": "^7.8.4",
-		"@babel/core": "^7.9.6",
-		"@babel/node": "^7.8.7",
-		"@babel/preset-env": "^7.9.6"
-	}
+	"license": "ISC"
 }
