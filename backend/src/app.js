@@ -9,7 +9,7 @@ const app = express();
 
 app.use(express.static('/static'));
 app.use(morgan('combined', { stream: logger.stream }));
-app.get('/*', function (req, res) {
+app.get('/', function (req, res) {
   res.sendFile('static/index.html');
 });
 
