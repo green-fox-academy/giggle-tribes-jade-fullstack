@@ -8,7 +8,7 @@ import errorHandler from './middlewares/error-handler';
 
 const app = express();
 
-app.use(express.static(path.join(__dirname + 'static')));
+app.use(express.static(__dirname + 'static'));
 app.use(morgan('combined', { stream: logger.stream }));
 
 app.use('/api', api);
@@ -16,7 +16,7 @@ app.use('/system', system);
 
 app.use(errorHandler);
 
-app.get('/', function (req, res) {
+app.get('/*', function (req, res) {
   res.sendFile(path.join(__dirname + 'static/index.html'));
 });
 
