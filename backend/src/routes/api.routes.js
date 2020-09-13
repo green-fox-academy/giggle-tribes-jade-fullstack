@@ -19,9 +19,6 @@ const router = express.Router();
 router.use(cors());
 router.use(bodyParser.json());
 
-router.get('/', function (req, res) {
-  res.sendFile('static/index.html');
-});
 router.get('/hello', helloController.get);
 router.post('/sessions', sessionController.post);
 router.post('/users', userController.post);
