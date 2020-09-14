@@ -10,7 +10,7 @@ db.query.mockImplementation( () => (
   ] }
 ));
 
-test('missing token returns error 112', done => {
+test('missing token returns error "Token is required."', done => {
   request(app)
     .get('/api/kingdoms/3/resource')
     .set('Accept', 'application/json')
@@ -18,7 +18,7 @@ test('missing token returns error 112', done => {
     .expect(401)
     .end((err, data) => {
       if (err) return done(err);
-      expect(data.body.error).toBe("112");
+      expect(data.body.error).toBe("Token is required.");
       return done();
     });
 });

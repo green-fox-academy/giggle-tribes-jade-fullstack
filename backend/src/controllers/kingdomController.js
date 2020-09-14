@@ -22,26 +22,35 @@ export class KingdomController {
         };
         this.kingdom.attachLocation(params)
          .then( response => res.status(201).json(response) )
-         .catch( error => 
-            res.status( this.errorMessages[error.message].status || 400 )
-            .json({ error: this.errorMessages[error.message].message || error.message }) );
+         .catch( error => {
+            const status = (this.errorMessages[error.message]) ? this.errorMessages[error.message].status : 400;
+            const message = (this.errorMessages[error.message]) ? this.errorMessages[error.message].message : error.message;
+            res.status( status )
+                .json({ error: message });
+        });
     };
     
     get(req,res) {
         this.kingdom.get()
         .then( response => res.status(200).json(response) )
-        .catch( error => 
-            res.status( this.errorMessages[error.message].status || 400 )
-            .json({ error: this.errorMessages[error.message].message || error.message }) );
+        .catch( error => {
+            const status = (this.errorMessages[error.message]) ? this.errorMessages[error.message].status : 400;
+            const message = (this.errorMessages[error.message]) ? this.errorMessages[error.message].message : error.message;
+            res.status( status )
+                .json({ error: message });
+        });
     };
     
     getById(req,res) {
         const {kingdomId} = req.params;
         this.kingdom.getById({kingdomId})
         .then( response => res.status(200).json(response) )
-        .catch( error => 
-            res.status( this.errorMessages[error.message].status || 400 )
-            .json({ error: this.errorMessages[error.message].message || error.message }) );
+        .catch( error => {
+            const status = (this.errorMessages[error.message]) ? this.errorMessages[error.message].status : 400;
+            const message = (this.errorMessages[error.message]) ? this.errorMessages[error.message].message : error.message;
+            res.status( status )
+                .json({ error: message });
+        });
     };
 
 };

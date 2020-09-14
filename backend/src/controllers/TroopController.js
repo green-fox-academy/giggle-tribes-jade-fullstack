@@ -27,9 +27,12 @@ export class TroopController {
         const kingdomId = req.params.kingdomId;
         this.troop.getByKingdomId({kingdomId})
          .then( response => res.status(201).json(response) )
-         .catch( error => 
-            res.status( this.errorMessages[error.message].status || 400 )
-            .json({ error: this.errorMessages[error.message].message || error.message }) );
+         .catch( error => {
+            const status = (this.errorMessages[error.message]) ? this.errorMessages[error.message].status : 400;
+            const message = (this.errorMessages[error.message]) ? this.errorMessages[error.message].message : error.message;
+            res.status( status )
+                .json({ error: message });
+        });
     };
     
 };

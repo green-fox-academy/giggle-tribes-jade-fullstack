@@ -15,9 +15,12 @@ export class SessionController {
         const {username,password} = req.body;
         this.session.login({userName:username,password})
         .then( response => res.status(200).json(response) )
-        .catch( error => 
-            res.status( this.errorMessages[error.message].status || 401 )
-            .json({ error: this.errorMessages[error.message].message || error.message }) );
+        .catch( error => {
+            const status = (this.errorMessages[error.message]) ? this.errorMessages[error.message].status : 401;
+            const message = (this.errorMessages[error.message]) ? this.errorMessages[error.message].message : error.message;
+            res.status( status )
+                .json({ error: message });
+        });
     };
 
 };

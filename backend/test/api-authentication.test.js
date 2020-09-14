@@ -1,7 +1,7 @@
 import request from 'supertest';
 import app from '../src/app';
 
-test('post: missing token returns error 112', done => {
+test('post: missing token returns error "Token is required."', done => {
   request(app)
     .post('/api/auth')
     .set('Accept', 'application/json')
@@ -9,12 +9,12 @@ test('post: missing token returns error 112', done => {
     .expect(401)
     .end((err, data) => {
       if (err) return done(err);
-      expect(data.body.error).toBe('112');
+      expect(data.body.error).toBe("Token is required.");
       return done();
     });
 });
 
-test('post: invalid token returns error 212', done => {
+test('post: invalid token returns error "Invalid token."', done => {
   request(app)
     .post('/api/auth')
     .set('Accept', 'application/json')
@@ -23,7 +23,7 @@ test('post: invalid token returns error 212', done => {
     .expect(401)
     .end((err, data) => {
       if (err) return done(err);
-      expect(data.body.error).toBe('212');
+      expect(data.body.error).toBe("Invalid token.");
       return done();
     });
 });
