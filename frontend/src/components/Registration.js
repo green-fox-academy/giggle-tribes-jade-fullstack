@@ -23,7 +23,7 @@ class Registration extends Component {
     let userData = this.state;
     const { history } = this.props;
 
-    fetch(`http://localhost:${process.env.PORT || 3000}/api/users`, {
+    fetch(`http://localhost:${3000}/api/users`, {
       method: 'POST',
       body: JSON.stringify(userData),
       headers: {
