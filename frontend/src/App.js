@@ -17,6 +17,8 @@ function App() {
     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOjMsImlhdCI6MTU5ODA0MTk3Mn0.cVAcR4UiobKN05oicJYQYPIkibMws4yIATb8GVuVD_g'
   );
 
+  console.log(process.env);
+
   return (
     <div className="App">
       <Router>
