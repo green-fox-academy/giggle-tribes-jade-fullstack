@@ -3,6 +3,13 @@ export class ResourceMiddleware {
     constructor({ResourceService,ResourceRepo,db,errorCodes}) {
         this.resources = new ResourceService({ResourceRepo,db,errorCodes});
         this.post = this.post.bind(this);
+        this.errorMessages = {
+            [errorCodes.missingKingdomId]: {status: 400, message: 'Missing kingdomId.'},
+            [errorCodes.missingResourceType]: {status: 400, message: 'Missing resource type.'},
+            [errorCodes.missingResourceAmount]: {status: 400, message: 'Missing resource amount.'},
+            [errorCodes.missingResourceGeneration]: {status: 400, message: 'Missing resource generation.'},
+            [errorCodes.invalidKingdomId]: {status: 400, message: 'Invalid kingdomId.'},
+        };
     };
 
     async post(req, res, next) {
@@ -11,7 +18,10 @@ export class ResourceMiddleware {
             await this.resources.generateResources({kingdomId});
             next();
         } catch(error) {
-            res.status(400).json({error: error.message});
+            const status = (this.errorMessages[error.message]) ? this.errorMessages[error.message].status : 401;
+            const message = (this.errorMessages[error.message]) ? this.errorMessages[error.message].message : error.message;
+            res.status( status )
+                .json({ error: message });
         }
     };
 

@@ -23,7 +23,7 @@ test('post: missing token returns error "Token is required."', done => {
     });
 });
 
-test('post: invalid kingdomId returns error 204', done => {
+test('post: invalid kingdomId returns error "Invalid kingdomId."', done => {
   db.query.mockImplementation( () => (
     { results: [] }
   ));
@@ -35,7 +35,7 @@ test('post: invalid kingdomId returns error 204', done => {
     .expect(400)
     .end((err, data) => {
       if (err) return done(err);
-      expect(data.body.error).toBe("204");
+      expect(data.body.error).toBe("Invalid kingdomId.");
       return done();
     });
 });
