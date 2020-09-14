@@ -239,16 +239,17 @@ test('getById: valid userdata returns valid result', async () => {
 
 test('get: returns valid result', async () => {
   const result = await kingdom.get(); 
-  expect(result).toStrictEqual([
-    {
-      kingdomId: 1,
-      kingdomName: 'firstKingdom',
-      location: 'ABC'
-    },
-    {
-      kingdomId: 2,
-      kingdomName: 'secondKingdom',
-      location: 'DEF'
-    },
-  ]);
+  expect(result).toStrictEqual({
+    kingdoms: 
+      [{
+        kingdomId: 1,
+        kingdomName: 'firstKingdom',
+        location: 'ABC'
+      },
+      {
+        kingdomId: 2,
+        kingdomName: 'secondKingdom',
+        location: 'DEF'
+      }]
+  });
 });

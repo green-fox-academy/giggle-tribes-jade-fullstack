@@ -54,7 +54,7 @@ export class KingdomService {
     };
 
     async get() {
-        return await this.kingdom.get();
+        return { kingdoms : await this.kingdom.get() };
     };
 
 };

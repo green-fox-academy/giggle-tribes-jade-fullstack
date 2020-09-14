@@ -139,10 +139,10 @@ test('get: returns kingdoms object', done => {
     .expect(200)
     .end((err, data) => {
       if (err) return done(err);
-      expect(data.body).toEqual([
+      expect(data.body).toEqual({ kingdoms: [
         {kingdomId: 1, kingdomName: 'testkingdom', location: 'TST'},
         {kingdomId: 2, kingdomName: 'second', location: '2TH'}
-      ]);
+      ]});
       return done();
     });
 });
