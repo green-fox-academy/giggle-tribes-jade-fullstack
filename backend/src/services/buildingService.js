@@ -1,4 +1,4 @@
-import {ResourceSpender} from './ResurceSpender';
+import {ResourceSpender} from './ResourceSpender';
 
 export class BuildingService extends ResourceSpender {
 

@@ -26,7 +26,7 @@ const Header = ({ kingdom }) => {
         .get('map', '')
         .then(
           response =>
-            response.kingdoms.find(k => k.kingdom_id === kingdom).kingdomname
+            response.kingdoms.find(k => k.kingdomId === kingdom).kingdomname
         )
         .then(kingdomname => setKingdomName(kingdomname));
     }
