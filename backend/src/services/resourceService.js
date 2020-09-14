@@ -14,7 +14,7 @@ export class ResourceService {
             delete e.kingdom_id;
             delete e.id;
         } );
-        return resources;
+        return { resources };
     };
 
     async add({kingdomId,startAmount = 0}) {

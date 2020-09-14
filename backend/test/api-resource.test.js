@@ -55,10 +55,10 @@ test('valid kingdomId returns resource object', done => {
     .expect(200)
     .end((err, data) => {
       if (err) return done(err);
-      expect(data.body).toEqual([
+      expect(data.body).toEqual({ resources: [
         {"amount": 5, "generation": 10, "type": "food", "updatedAt": "2020-08-15 13:04:53"},
         {"amount": 20, "generation": 25, "type": "gold", "updatedAt": "2020-08-15 13:04:53"}
-      ]);
+      ]});
       return done();
     });
 });

@@ -14,7 +14,7 @@ export class ResourceSpender {
         if (!kingdomId) throw new Error(this.errorCodes.missingKingdomId);
 
         const {cost, res, gen} = this.resourceStats[productType];
-        const resources = await this.resources.getByKingdomId({kingdomId});
+        const resources = (await this.resources.getByKingdomId({kingdomId})).resources;
         const gold = resources.filter(e => e.type === 'gold')[0].amount;
         if ( gold < cost ) throw new Error(this.errorCodes.invalidResourceAmount);
 
