@@ -1,3 +1,5 @@
+import { env } from '../env';
+
 export const fetchKingdom = {
   async get(kingdomID, endpoint) {
     const fetchedData = await fetch(
@@ -13,7 +15,7 @@ export const fetchKingdom = {
   },
   async post(kingdomID, endpoint, body) {
     const fetchedData = await fetch(
-      `http://localhost:5000/api/kingdoms/${kingdomID}/${endpoint}`,
+      `${env.BACKEND_URL}/api/kingdoms/${kingdomID}/${endpoint}`,
       {
         method: 'POST',
         headers: {

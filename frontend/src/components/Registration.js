@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import './registration.css';
 import { withRouter } from 'react-router-dom';
+
+import './registration.css';
+import { env } from '../env';
 
 class Registration extends Component {
   constructor(props) {
@@ -23,7 +25,7 @@ class Registration extends Component {
     let userData = this.state;
     const { history } = this.props;
 
-    fetch('http://localhost:5000/api/users', {
+    fetch(`${env.BACKEND_URL}/api/users`, {
       method: 'POST',
       body: JSON.stringify(userData),
       headers: {
