@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import './registration.css';
 import { withRouter } from 'react-router-dom';
+
+import './registration.css';
+import { env } from '../env';
 
 class Registration extends Component {
   constructor(props) {
