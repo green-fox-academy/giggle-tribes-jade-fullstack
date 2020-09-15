@@ -25,7 +25,7 @@ class Registration extends Component {
     const PORT =
       process.env.NODE_ENV === 'production' ? process.env.PORT : 5000;
 
-    fetch(`http://localhost:${PORT}/api/users`, {
+    fetch(`${env.BACKEND_URL}/api/users`, {
       method: 'POST',
       body: JSON.stringify(userData),
       headers: {
