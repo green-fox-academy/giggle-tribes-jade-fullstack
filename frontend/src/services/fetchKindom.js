@@ -3,7 +3,7 @@ import { env } from '../env';
 export const fetchKingdom = {
   async get(kingdomID, endpoint) {
     const fetchedData = await fetch(
-      `http://localhost:5000/api/kingdoms/${kingdomID}/${endpoint}`,
+      `${env.BACKEND_URL}/api/kingdoms/${kingdomID}/${endpoint}`,
       {
         method: 'GET',
         headers: {
