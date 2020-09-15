@@ -46,3 +46,23 @@ export const addTroopAction = kingdomID => {
     );
   };
 };
+
+export const upgradeTroopAction = kingdomID => {
+  return dispatch => {
+    dispatch({
+      type: UPDATE_TROOPS,
+    });
+
+    return fetchKingdom.post(kingdomID, 'troops', {}).then(
+      response => {
+        response.error
+          ? dispatch({ type: SET_ERROR_SUCCESS, payload: response.error })
+          : dispatch({
+              type: UPDATE_TROOPS_SUCCESS,
+              payload: response,
+            });
+      },
+      error => dispatch({ type: SET_ERROR_SUCCESS, payload: error.error })
+    );
+  };
+};
