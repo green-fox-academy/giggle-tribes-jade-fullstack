@@ -72,8 +72,8 @@ class Login extends Component{
             </div>
 
             <div className="submitLine">
-              {this.state.error && (
-                <div className="errorMessage">{this.state.error}</div>
+              {this.props.error && (
+                <div className="errorMessage">{this.props.error}</div>
               )}
               <button type="submit" className="loginButton">
                 SIGN IN
@@ -86,8 +86,8 @@ class Login extends Component{
   }
 }
 
-const mapStateToProps = ({ kingdom, user }) => {
-  return { kingdom, user };
+const mapStateToProps = ({ error }) => {
+  return { error };
 };
 
 const mapDispatchToProps = dispatch => {
