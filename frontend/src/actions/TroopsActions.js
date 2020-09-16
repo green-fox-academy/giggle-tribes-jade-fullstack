@@ -47,13 +47,13 @@ export const addTroopAction = kingdomID => {
   };
 };
 
-export const upgradeTroopAction = kingdomID => {
+export const upgradeTroopAction = (kingdomID, amount) => {
   return dispatch => {
     dispatch({
       type: UPDATE_TROOPS,
     });
 
-    return fetchKingdom.post(kingdomID, 'troops', {}).then(
+    return fetchKingdom.put(kingdomID, 'troops', { amount: amount }).then(
       response => {
         response.error
           ? dispatch({ type: SET_ERROR_SUCCESS, payload: response.error })
