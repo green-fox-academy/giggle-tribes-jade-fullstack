@@ -34,7 +34,8 @@ const login = renderer.create(
             <Login />
           </Provider>
         </Route>
-    </Router>
+    </Router>,
+    container
 );}
 
   it('renders correctly', () => {
@@ -44,14 +45,18 @@ const login = renderer.create(
   });
 
 
-// let className = (classname) => {return utils().getElementsByClassName(classname)}
-let fieldByPlaceholderName = (placeholder) => {return utils().getByPlaceholderText(placeholder)}
+  let fieldByPlaceholderName = (placeholder) => {return utils().getByPlaceholderText(placeholder)}
+  
+  it('either input field empty shows error message', async() => {
+    let inputfield = fieldByPlaceholderName("Username" || "Password")
+    fireEvent.change(inputfield, {target: {value: ""}})
+    const text = utils(/required/i);
+    expect(text.baseElement).toBeInTheDocument();
+  });
 
-it('shows error message', async() => {
-  // let field = className("errorMessage")
-  let inputfield = fieldByPlaceholderName("Username" && "Password")
-  container = document.createElement('div');
-  document.body.appendChild(container);
-fireEvent.change(inputfield, {target: {value: ""}})
-expect(container.classname("All fields are required.").toBe(true))
-});
+  it('both input field empty shows error message', async() => {
+    let inputfield = fieldByPlaceholderName("Username" && "Password")
+    fireEvent.change(inputfield, {target: {value: ""}})
+    const text = utils(/required/i);
+    expect(text.baseElement).toBeInTheDocument();
+  });
