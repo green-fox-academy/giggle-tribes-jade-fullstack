@@ -21,14 +21,19 @@ export default function TroopButton({ troopSummary }) {
         <img className="troops button image" src={Troop} alt="troop icon" />
         <p>{troopSummary.amount + ' Troop level ' + troopSummary.level}</p>
       </Button>
-      <p className="costLabel">
+      <div className="costLabel">
         <p>
           Upgrade <br />
           10 <img className="inlineIcon" src={Gold} alt="attack icon" /> per
           troop
         </p>
-      </p>
-      <TroopUpgradeBox open={open} setOpen={setOpen} />
+      </div>
+      <TroopUpgradeBox
+        open={open}
+        setOpen={setOpen}
+        level={troopSummary.level}
+        troopAmount={troopSummary.amount}
+      />
       <Error />
     </div>
   );

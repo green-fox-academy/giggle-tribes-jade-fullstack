@@ -11,8 +11,19 @@ import PropTypes from 'prop-types';
 
 import './TroopButton.css';
 import { upgradeTroopAction } from '../../actions/TroopsActions';
+import { setErrorAction } from '../../actions/ErrorActions';
 
-function TroopUpgradeBox({ open, setOpen, kingdom, upgrade }) {
+function TroopUpgradeBox({
+  open,
+  setOpen,
+  level,
+  troopAmount,
+  kingdom,
+  upgrade,
+  resources,
+  buildings,
+  setError,
+}) {
   const [amount, setAmount] = React.useState(0);
 
   const handleClose = () => {
@@ -20,7 +31,27 @@ function TroopUpgradeBox({ open, setOpen, kingdom, upgrade }) {
   };
 
   const upgradeTroopClickOn = () => {
-    upgrade(kingdom, amount);
+    const troopCost = 10;
+    const goldAmount = resources[1].amount;
+    const upgradeLimit =
+      buildings.length > 0
+        ? buildings.find(e => e.type === 'academy').level
+        : 1;
+    if (
+      goldAmount >= troopCost &&
+      level < upgradeLimit &&
+      amount <= troopAmount
+    ) {
+      upgrade(kingdom, amount, level);
+    } else if (goldAmount < troopCost) {
+      setError("You don't have enough money.");
+    } else if (amount > troopAmount) {
+      setError(
+        `Amount was too much, you have ${troopAmount} troops in that troop level`
+      );
+    } else {
+      setError('Upgrade is not allowed, academy level too low');
+    }
     handleClose();
   };
 
@@ -51,7 +82,11 @@ function TroopUpgradeBox({ open, setOpen, kingdom, upgrade }) {
         <Button onClick={handleClose} color="primary">
           Cancel
         </Button>
-        <Button onClick={upgradeTroopClickOn} color="primary">
+        <Button
+          className="TroopUpgradeBTN"
+          onClick={upgradeTroopClickOn}
+          color="primary"
+        >
           Upgrade
         </Button>
       </DialogActions>
@@ -62,18 +97,26 @@ function TroopUpgradeBox({ open, setOpen, kingdom, upgrade }) {
 TroopUpgradeBox.propTypes = {
   open: PropTypes.bool.isRequired,
   setOpen: PropTypes.func.isRequired,
+  level: PropTypes.number.isRequired,
+  troopAmount: PropTypes.number.isRequired,
   kingdom: PropTypes.number.isRequired,
   troops: PropTypes.array.isRequired,
+  resources: PropTypes.array.isRequired,
+  buildings: PropTypes.array.isRequired,
+  setError: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = ({ kingdom, troops }) => {
-  return { kingdom, troops };
+const mapStateToProps = ({ kingdom, troops, resources, buildings }) => {
+  return { kingdom, troops, resources, buildings };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     upgrade: (kingdomId, amount) => {
       dispatch(upgradeTroopAction(kingdomId, amount));
+    },
+    setError: error => {
+      dispatch(setErrorAction(error));
     },
   };
 };
