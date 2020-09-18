@@ -4,7 +4,6 @@ import {
   } from '../constants/ActionTypes';
 
 export const loginAction = ({username, password}) => {
-    // const {username, password} = data;
     return dispatch => {
       dispatch({
         type: 'START_LOGIN',
