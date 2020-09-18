@@ -27,4 +27,19 @@ export const fetchKingdom = {
     );
     return fetchedData.json();
   },
+
+  async put(kingdomID, endpoint, body) {
+    const fetchedData = await fetch(
+      `${env.BACKEND_URL}/api/kingdoms/${kingdomID}/${endpoint}`,
+      {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          TRIBES_TOKEN: localStorage.getItem('TRIBES_TOKEN'),
+        },
+        body: JSON.stringify(body),
+      }
+    );
+    return fetchedData.json();
+  },
 };
