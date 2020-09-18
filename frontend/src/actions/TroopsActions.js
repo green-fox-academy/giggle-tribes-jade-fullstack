@@ -53,18 +53,16 @@ export const upgradeTroopAction = (kingdomID, amount, level) => {
       type: UPDATE_TROOPS,
     });
 
-    return fetchKingdom
-      .put(kingdomID, 'troops', { amount: amount, level: level })
-      .then(
-        response => {
-          response.error
-            ? dispatch({ type: SET_ERROR_SUCCESS, payload: response.error })
-            : dispatch({
-                type: UPDATE_TROOPS_SUCCESS,
-                payload: response,
-              });
-        },
-        error => dispatch({ type: SET_ERROR_SUCCESS, payload: error.error })
-      );
+    return fetchKingdom.put(kingdomID, 'troops', { amount, level }).then(
+      response => {
+        response.error
+          ? dispatch({ type: SET_ERROR_SUCCESS, payload: response.error })
+          : dispatch({
+              type: UPDATE_TROOPS_SUCCESS,
+              payload: response,
+            });
+      },
+      error => dispatch({ type: SET_ERROR_SUCCESS, payload: error.error })
+    );
   };
 };
