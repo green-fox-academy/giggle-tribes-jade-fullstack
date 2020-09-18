@@ -33,11 +33,6 @@ const Log = ({ kingdom, buildings, troops, get }) => {
   );
 };
 
-/*
-{buildings.map((entry, i) => (
-        <LogEntry key={i} header={false} data={entry} />
-      ))}*/
-
 const mapStateToProps = ({ kingdom, buildings, troops }) => {
   return { kingdom, buildings, troops };
 };
