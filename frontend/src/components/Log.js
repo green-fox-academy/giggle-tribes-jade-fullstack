@@ -11,9 +11,9 @@ const Log = ({ kingdom, buildings, troops, get }) => {
     get(kingdom);
   }, [kingdom, get]);
 
-  const processTroopEntry = entry => {
+  const processEntry = entry => {
     let data = {
-      subject : 'troop',
+      subject : entry.type || 'troop',
       action : (entry.level === 1) ? 'build' : 'upgrade',
       level : entry.level,
       started_at : entry.started_at,
@@ -26,8 +26,8 @@ const Log = ({ kingdom, buildings, troops, get }) => {
   return (
     <div className="log">
       <LogEntry header={true} />
-      {troops.map((entry, i) => (
-        <LogEntry key={i} header={false} data={processTroopEntry(entry)} />
+      {[...troops,...buildings].sort( (a,b) => (a.started_at < b.started_at) ).map((entry, i) => (
+        (i<6) ? <LogEntry key={i} header={false} data={processEntry(entry)} /> : ''
       ))}
     </div>
   );
@@ -46,7 +46,7 @@ const mapDispatchToProps = dispatch => {
   return {
     get: kingdomId => {
       dispatch(getTroopsAction(kingdomId));
-      //dispatch(getBuildingsAction(kingdomId));
+      dispatch(getBuildingsAction(kingdomId));
     },
   };
 };
