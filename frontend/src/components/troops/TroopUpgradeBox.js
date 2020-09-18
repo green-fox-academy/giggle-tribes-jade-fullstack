@@ -31,19 +31,24 @@ function TroopUpgradeBox({
   };
 
   const upgradeTroopClickOn = () => {
-    const troopCost = 10;
-    const goldAmount = resources[1].amount;
-    const upgradeLimit =
-      buildings.length > 0
-        ? buildings.find(e => e.type === 'academy').level
-        : 1;
+    const troopUpgradeConditions = {
+      upgradeCost: 10,
+      goldAmount: resources[1].amount,
+      academyLevel:
+        buildings.length > 0
+          ? buildings.find(e => e.type === 'academy').level
+          : 1,
+    };
+
     if (
-      goldAmount >= troopCost &&
-      level < upgradeLimit &&
+      troopUpgradeConditions.goldAmount >= troopUpgradeConditions.upgradeCost &&
+      level < troopUpgradeConditions.academyLevel &&
       amount <= troopAmount
     ) {
       upgrade(kingdom, amount, level);
-    } else if (goldAmount < troopCost) {
+    } else if (
+      troopUpgradeConditions.goldAmount < troopUpgradeConditions.upgradeCost
+    ) {
       setError("You don't have enough money.");
     } else if (amount > troopAmount) {
       setError(
