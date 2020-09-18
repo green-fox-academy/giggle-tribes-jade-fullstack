@@ -12,10 +12,6 @@ import Map from './components/Map';
 import Log from './components/Log';
 
 function App() {
-  // localStorage.setItem(
-  //   'TRIBES_TOKEN',
-  //   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOjMsImlhdCI6MTU5ODA0MTk3Mn0.cVAcR4UiobKN05oicJYQYPIkibMws4yIATb8GVuVD_g'
-  // );
 
   return (
     <div className="App">

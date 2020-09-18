@@ -11,7 +11,6 @@ export const sessionService = {
     if (username && password) {
       try {
         const result = await userService.get({ username, password });
-        console.log(result);
         return {
           status: 'ok',
           token: await getToken(result.userID, result.kingdomID),

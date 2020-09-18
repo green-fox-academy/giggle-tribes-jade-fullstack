@@ -3,13 +3,12 @@ import {
   SET_ERROR_SUCCESS
   } from '../constants/ActionTypes';
 
-export const LoginActions = (data) => {
-    const {username, password} = data;
+export const loginAction = ({username, password}) => {
+    // const {username, password} = data;
     return dispatch => {
       dispatch({
-        type: 'kiscica',
+        type: 'START_LOGIN',
       });
-  console.log(username, password);
 
       return fetch('http://localhost:5000/api/sessions', {
         method: 'POST',
@@ -24,7 +23,6 @@ export const LoginActions = (data) => {
           if (data.error) {
             dispatch({ type: SET_ERROR_SUCCESS, payload: data.error })
             return false;
-            // this.setState(prevState => ({ ...prevState, error: data.error }));
           } else {
             localStorage.setItem(
                 'TRIBES_TOKEN',
@@ -32,12 +30,11 @@ export const LoginActions = (data) => {
               );
             dispatch({
                 type: SET_KINGDOM_SUCCESS,
-                payload: data.kingdomID, //??? a local sotrage-ban be kell állítani a tokent, authService.js?
+                payload: data.kingdomID,
               })
               return true;
           }
         })
-      
     };
   };
   

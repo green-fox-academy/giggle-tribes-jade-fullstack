@@ -2,10 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import './Login.css';
-import { LoginActions } from '../../actions/LoginActions';
+import { loginAction } from '../../actions/LoginAction';
 
-
-class Login extends Component{
+class Login extends Component {
 
   constructor(props) {
     super(props);
@@ -16,7 +15,6 @@ class Login extends Component{
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleUsername = this.handleUsername.bind(this);
     this.handlePassword = this.handlePassword.bind(this);
-    // this.login = this.login(this);
   }
 
   handleSubmit(event) {
@@ -25,7 +23,6 @@ class Login extends Component{
     let userData = this.state;
     const { history } = this.props;
 
-    console.log(userData);
     this.props.login(userData).then(success => {
       if (success){
         history.push('/kingdom');
@@ -93,7 +90,7 @@ const mapStateToProps = ({ error }) => {
 const mapDispatchToProps = dispatch => {
   return {
     login: (data) => {
-      return dispatch(LoginActions(data));
+      return dispatch(loginAction(data));
     
     },
   };
