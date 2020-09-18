@@ -3,7 +3,7 @@ import { env } from '../env';
 export const fetchKingdom = {
   async get(kingdomID, endpoint) {
     const fetchedData = await fetch(
-      `http://localhost:5000/api/kingdoms/${kingdomID}/${endpoint}`,
+      `${env.BACKEND_URL}/api/kingdoms/${kingdomID}/${endpoint}`,
       {
         method: 'GET',
         headers: {
@@ -18,6 +18,21 @@ export const fetchKingdom = {
       `${env.BACKEND_URL}/api/kingdoms/${kingdomID}/${endpoint}`,
       {
         method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          TRIBES_TOKEN: localStorage.getItem('TRIBES_TOKEN'),
+        },
+        body: JSON.stringify(body),
+      }
+    );
+    return fetchedData.json();
+  },
+
+  async put(kingdomID, endpoint, body) {
+    const fetchedData = await fetch(
+      `${env.BACKEND_URL}/api/kingdoms/${kingdomID}/${endpoint}`,
+      {
+        method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
           TRIBES_TOKEN: localStorage.getItem('TRIBES_TOKEN'),
