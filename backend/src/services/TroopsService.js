@@ -8,8 +8,11 @@ export class TroopsService {
     this.getTroopsByKingdom = troopsRepo.get;
     this.resourceService = resourceService;
     this.insertTroopByKingdom = troopsRepo.insert;
+    this.updateTroopsByKingdom = troopsRepo.update;
     this.setMinutes = async (startTime, minutes) => {
-      return startTime.setUTCMinutes(startTime.getUTCMinutes() + minutes);
+      startTime.setUTCMinutes(startTime.getUTCMinutes() + minutes);
+
+      return startTime;
     };
   }
   async getTroops({ kingdomID }) {
@@ -22,13 +25,9 @@ export class TroopsService {
   }
 
   async addTroop({ kingdomID }) {
-    let goldAmount;
-    const resources = await this.resourceService.getResource({ kingdomID });
-    await resources.resources.map(resource => {
-      if (resource.type === 'gold') {
-        goldAmount = resource.amount;
-      }
-    });
+    const goldAmount = await this.resourceService
+      .getResource(kingdomID)
+      .resources.find(resource => resource.type === 'gold').amount;
     const rules = {
       troopLimit: 100, //need logic for building repo
       troopCost: 10,
@@ -73,6 +72,60 @@ export class TroopsService {
       throw { error: "You don't have enough money." };
     } else {
       throw { error: 'You reached the storage limit, upgrade Townhall first.' };
+    }
+  }
+
+  async upgradeToops({ kingdomID, amount, level }) {
+    const rules = {
+      upgradeCost: 10,
+      academyLevel: 2, //BuildingService.get find building.type === 'academy' return building.level
+      upgradeableTroopAmount: await (
+        await this.getTroopsByKingdom(kingdomID)
+      ).filter(troop => troop.level == level).length,
+      upgradeTime: 1 + level * 0.5,
+    };
+
+    if (level && amount) {
+      const goldAmount = await (
+        await (await this.resourceService.getResource({ kingdomID })).resources
+      ).find(resource => resource.type === 'gold').amount;
+      if (
+        rules.upgradeCost <= goldAmount &&
+        level < rules.academyLevel &&
+        amount <= rules.upgradeableTroopAmount
+      ) {
+        const startTime = new Date();
+        const endTime = await this.setMinutes(new Date(), rules.upgradeTime);
+        const newValues = parseInt(level) + 1;
+
+        const result = await this.updateTroopsByKingdom(
+          kingdomID,
+          amount,
+          level,
+          newValues,
+          newValues,
+          newValues,
+          newValues,
+          startTime,
+          endTime
+        );
+        if (result.changedRows === 0) throw new Error('Data not found.');
+        this.resourceService.spendGold(kingdomID, rules.upgradeCost);
+        const troops = await this.getTroopsByKingdom(kingdomID);
+        return { troops };
+      } else if (rules.upgradeCost > goldAmount) {
+        throw { error: "You don't have enough money" };
+      } else if (level >= rules.academyLevel) {
+        throw { error: 'Upgrade is not allowed, academy level too low' };
+      } else {
+        throw {
+          error: `Amount was too much, you have ${rules.upgradeableTroopAmount} troops in that troop level`,
+        };
+      }
+    } else if (!level) {
+      throw { error: 'Troop level is required' };
+    } else {
+      throw { error: 'Amount is required' };
     }
   }
 }

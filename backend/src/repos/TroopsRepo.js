@@ -24,6 +24,7 @@ class TroopsRepo {
   }
 
   async insert(kingdomID, level, hp, attack, defence, started_at, finished_at) {
+    console.log('repo');
     const troop = await db.query(
       `insert into ${this.tableName} (${[
         this.columns.kingdom_id,
@@ -39,11 +40,32 @@ class TroopsRepo {
     return troop.results;
   }
 
-  async update(troopId, level, hp, attack, defence, started_at, finished_at) {
+  async update(
+    kingdomId,
+    amount,
+    currentLevel,
+    newLevel,
+    hp,
+    attack,
+    defence,
+    started_at,
+    finished_at
+  ) {
+    console.log(amount);
     const troop = await db.query(
-      `update ${this.tableName} set ${this.columns.level}=?, ${this.columns.hp}=?, ${this.columns.attack}=?, ${this.columns.defence}=?, ${this.columns.started_at}=?, ${this.columns.finished_at}=? where ${this.columns.id} = ?  LIMIT 1;`,
-      [level, hp, attack, defence, started_at, finished_at, troopId]
+      `update ${this.tableName} set ${this.columns.level}=?, ${this.columns.hp}=?, ${this.columns.attack}=?, ${this.columns.defence}=?, ${this.columns.started_at}=?, ${this.columns.finished_at}=? where ${this.columns.kingdom_id} = ? and ${this.columns.level} = ?  LIMIT ${amount};`,
+      [
+        newLevel,
+        hp,
+        attack,
+        defence,
+        started_at,
+        finished_at,
+        kingdomId,
+        currentLevel,
+      ]
     );
+
     return troop.results;
   }
 }
