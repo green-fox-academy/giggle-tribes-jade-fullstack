@@ -18,8 +18,8 @@ global.fetch = jest.fn(async () => {
             hp: 1,
             attack: 1,
             defence: 1,
-            started_at: 12345789,
-            finished_at: 12399999,
+            started_at: new Date().getTimezoneOffset()*60*1000,
+            finished_at: new Date().getTimezoneOffset()*60*1000,
           }],
         buildings: [
             {
@@ -27,8 +27,8 @@ global.fetch = jest.fn(async () => {
               type: 'academy',
               level: 1,
               hp: 1,
-              started_at: 12345789,
-              finished_at: 12399999,
+              started_at: new Date().getTimezoneOffset()*60*1000,
+              finished_at: new Date().getTimezoneOffset()*60*1000,
             }],
       }),
   });
@@ -78,4 +78,3 @@ it('matches snapeshot', async () => {
 
   expect(container.innerHTML).toMatchSnapshot();
 });
-
