@@ -2,13 +2,8 @@ import jwt from 'jsonwebtoken';
 
 export class SessionService {
 
-<<<<<<< HEAD
-    constructor({UserRepo,db,errorCodes}) {
-        this.user = new UserRepo(db,errorCodes);
-=======
     constructor({ userRepo, errorCodes }) {
         this.user = userRepo;
->>>>>>> 62cb0ede2476cea6fb24284453fc5293d0cccd5e
         this.errorCodes = errorCodes;
     };
 

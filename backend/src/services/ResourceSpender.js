@@ -1,12 +1,7 @@
 export class ResourceSpender {
 
-<<<<<<< HEAD
-    constructor({ResourceService,ResourceRepo,db,errorCodes}) {
-        this.resources = new ResourceService({ResourceRepo,db,errorCodes});
-=======
     constructor({ resourceService, errorCodes }) {
         this.resources = resourceService;
->>>>>>> 62cb0ede2476cea6fb24284453fc5293d0cccd5e
         this.errorCodes = errorCodes;
         this.kingdomId = '';
         this.cost = 0;
