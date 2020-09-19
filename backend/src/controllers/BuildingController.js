@@ -1,8 +1,9 @@
 export class BuildingController {
 
-    constructor({ResourceService,BuildingService,ResourceRepo,BuildingRepo,db,errorCodes}) {
-        this.building = new BuildingService({BuildingRepo,ResourceService,ResourceRepo,db,errorCodes});
+    constructor( buildingService, errorCodes ) {
+        this.building = buildingService;
         this.post = this.post.bind(this);
+        this.get = this.get.bind(this);
         this.errorMessages = {
             [errorCodes.missingKingdomId]: {status: 400, message: 'KingdomId is missing.'},
             [errorCodes.missingBuildingType]: {status: 400, message: 'Building type is required.'},
@@ -21,6 +22,18 @@ export class BuildingController {
             buildingType : req.body.type
         };
         this.building.add(params)
+         .then( response => res.status(201).json(response) )
+         .catch( error => {
+            const status = (this.errorMessages[error.message]) ? this.errorMessages[error.message].status : 400;
+            const message = (this.errorMessages[error.message]) ? this.errorMessages[error.message].message : error.message;
+            res.status( status )
+                .json({ error: message });
+        });
+    };
+
+    get(req,res) {
+        const kingdomId = req.params.kingdomId;
+        this.building.getByKingdomId({kingdomId})
          .then( response => res.status(201).json(response) )
          .catch( error => {
             const status = (this.errorMessages[error.message]) ? this.errorMessages[error.message].status : 400;

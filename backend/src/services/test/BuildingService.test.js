@@ -76,7 +76,10 @@ class ResourceRepo {
 
 };
 
-const building = new BuildingService({BuildingRepo,ResourceService,ResourceRepo,db,errorCodes});
+const resourceRepo = new ResourceRepo( db, errorCodes );
+const buildingRepo = new BuildingRepo( db, errorCodes );
+const resourceService = new ResourceService({ resourceRepo, errorCodes });
+const building = new BuildingService({ buildingRepo, resourceService, errorCodes });
 
 test('add: missing kingdomId returns error 104', async () => {
   try {

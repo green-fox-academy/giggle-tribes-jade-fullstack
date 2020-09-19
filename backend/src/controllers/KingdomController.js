@@ -1,7 +1,7 @@
 export class KingdomController {
 
-    constructor({KingdomService,KingdomRepo,ResourceRepo,BuildingRepo,LocationRepo,db,errorCodes}) {
-        this.kingdom = new KingdomService({KingdomRepo,ResourceRepo,BuildingRepo,LocationRepo,db,errorCodes});
+    constructor( kingdomService, errorCodes ) {
+        this.kingdom = kingdomService;
         this.post = this.post.bind(this);
         this.get = this.get.bind(this);
         this.getById = this.getById.bind(this);

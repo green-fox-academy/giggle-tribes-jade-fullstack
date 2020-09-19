@@ -1,7 +1,7 @@
 export class ResourceController {
 
-    constructor({ResourceService,ResourceRepo,db,errorCodes}) {
-        this.resources = new ResourceService({ResourceRepo,db,errorCodes});
+    constructor( resourceService, errorCodes ) {
+        this.resources = resourceService;
         this.get = this.get.bind(this);
         this.errorMessages = {
             [errorCodes.missingKingdomId]: {status: 400, message: 'KingdomId is missing.'},

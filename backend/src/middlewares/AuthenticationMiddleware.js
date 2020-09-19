@@ -1,7 +1,7 @@
 export class AuthenticationMiddleware {
 
-    constructor({SessionService,UserRepo,db,errorCodes}) {
-        this.session = new SessionService({UserRepo,db,errorCodes});
+    constructor( sessionService, errorCodes ) {
+        this.session = sessionService;
         this.validate = this.validate.bind(this);
         this.errorMessages = {
             [errorCodes.missingToken]: {status: 401, message: 'Token is required.'},

@@ -82,7 +82,8 @@ class ResourceRepo_noResource {
 
 
 test('getById: missing kingdomId returns error 104', async () => {
-  const resources = new ResourceService({ResourceRepo,db,errorCodes});
+  const resourceRepo = new ResourceRepo( db, errorCodes );
+  const resources = new ResourceService({ resourceRepo, errorCodes });
   try {
     const result = await resources.getByKingdomId({}); 
   } catch(err) {
@@ -91,7 +92,8 @@ test('getById: missing kingdomId returns error 104', async () => {
 });
 
 test('getById: returns valid result', async () => {
-  const resources = new ResourceService({ResourceRepo,db,errorCodes});
+  const resourceRepo = new ResourceRepo( db, errorCodes );
+  const resources = new ResourceService({ resourceRepo, errorCodes });
   const result = await resources.getByKingdomId({kingdomId: 77}); 
   expect(result).toStrictEqual({resources: [
     {
@@ -110,7 +112,8 @@ test('getById: returns valid result', async () => {
 });
 
 test('add: missing kingdomId returns error 104', async () => {
-  const resources = new ResourceService({ResourceRepo,db,errorCodes});
+  const resourceRepo = new ResourceRepo( db, errorCodes );
+  const resources = new ResourceService({ resourceRepo, errorCodes });
   try {
     const result = await resources.add({}); 
   } catch(err) {
@@ -119,7 +122,8 @@ test('add: missing kingdomId returns error 104', async () => {
 });
 
 test('add: existing resource returns error 304', async () => {
-  const resources = new ResourceService({ResourceRepo,db,errorCodes});
+  const resourceRepo = new ResourceRepo( db, errorCodes );
+  const resources = new ResourceService({ resourceRepo, errorCodes });
   try {
     const result = await resources.add({kingdomId:77}); 
   } catch(err) {
@@ -128,7 +132,8 @@ test('add: existing resource returns error 304', async () => {
 });
 
 test('add: kingdomId without startAmount returns modified data', async () => {
-  const resources = new ResourceService({ResourceRepo:ResourceRepo_noResource,db,errorCodes});
+  const resourceRepo = new ResourceRepo_noResource( db, errorCodes );
+  const resources = new ResourceService({ resourceRepo, errorCodes });
   await resources.add({kingdomId:77});
   const result = await resources.getByKingdomId({kingdomId: 77}); 
   expect(result).toStrictEqual({resources: [
@@ -148,7 +153,8 @@ test('add: kingdomId without startAmount returns modified data', async () => {
 });
 
 test('add: kingdomId with startAmount returns modified data', async () => {
-  const resources = new ResourceService({ResourceRepo:ResourceRepo_noResource,db,errorCodes});
+  const resourceRepo = new ResourceRepo_noResource( db, errorCodes );
+  const resources = new ResourceService({ resourceRepo, errorCodes });
   await resources.add({kingdomId:77, startAmount: 500});
   const result = await resources.getByKingdomId({kingdomId: 77}); 
   expect(result).toStrictEqual({resources: [
@@ -168,7 +174,8 @@ test('add: kingdomId with startAmount returns modified data', async () => {
 });
 
 test('generateResources: missing kingdomId returns error 104', async () => {
-  const resources = new ResourceService({ResourceRepo,db,errorCodes});
+  const resourceRepo = new ResourceRepo( db, errorCodes );
+  const resources = new ResourceService({ resourceRepo, errorCodes });
   try {
     const result = await resources.generateResources({}); 
   } catch(err) {
@@ -177,7 +184,8 @@ test('generateResources: missing kingdomId returns error 104', async () => {
 });
 
 test('generateResources: valid kingdomId returns modified data', async () => {
-  const resources = new ResourceService({ResourceRepo,db,errorCodes});
+  const resourceRepo = new ResourceRepo( db, errorCodes );
+  const resources = new ResourceService({ resourceRepo, errorCodes });
   await resources.generateResources({kingdomId: 77}); 
   const result = await resources.getByKingdomId({kingdomId: 77}); 
   expect(result).toStrictEqual({resources: [
@@ -197,7 +205,8 @@ test('generateResources: valid kingdomId returns modified data', async () => {
 });
 
 test('spendGold: missing kingdomId returns error 104', async () => {
-  const resources = new ResourceService({ResourceRepo,db,errorCodes});
+  const resourceRepo = new ResourceRepo( db, errorCodes );
+  const resources = new ResourceService({ resourceRepo, errorCodes });
   try {
     const result = await resources.spendGold({}); 
   } catch(err) {
@@ -206,7 +215,8 @@ test('spendGold: missing kingdomId returns error 104', async () => {
 });
 
 test('spends and updates: valid kingdomId returns modified data', async () => {
-  const resources = new ResourceService({ResourceRepo,db,errorCodes});
+  const resourceRepo = new ResourceRepo( db, errorCodes );
+  const resources = new ResourceService({ resourceRepo, errorCodes });
   await resources.spendGold({kingdomId: 23, amount: 100});
   await resources.spendFood({kingdomId: 23, amount: 100});
   await resources.updateGoldGeneration({kingdomId: 23, generation: 10});

@@ -12,8 +12,8 @@ const db = {
         };
     }
   };
-
-const session = new SessionService({UserRepo,db,errorCodes});
+const userRepo = new UserRepo(db, errorCodes);
+const session = new SessionService({ userRepo, errorCodes });
 
 test('login: missing username and password returns error 110', async () => {
     try {
@@ -47,7 +47,8 @@ test('login: invalid username or password returns error 210', async () => {
         };
     }
   };
-  const session = new SessionService({UserRepo,db,errorCodes});
+  const userRepo = new UserRepo(db, errorCodes);
+  const session = new SessionService({ userRepo, errorCodes });
   try {
     const result = await session.login({userName:'username', password:'password'});
   } catch(err) {

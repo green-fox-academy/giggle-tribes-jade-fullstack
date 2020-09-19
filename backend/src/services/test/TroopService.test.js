@@ -76,7 +76,10 @@ class ResourceRepo {
 
 };
 
-const troop = new TroopService({TroopRepo,ResourceService,ResourceRepo,db,errorCodes});
+const resourceRepo = new ResourceRepo( db, errorCodes );
+const troopRepo = new TroopRepo( db, errorCodes );
+const resourceService = new ResourceService({ resourceRepo, errorCodes });
+const troop = new TroopService({ troopRepo, resourceService, errorCodes });
 
 test('add: missing kingdomId returns error 104', async () => {
   try {
@@ -94,7 +97,10 @@ test('add: exceeded troop limit returns error 304', async () => {
         }
     }
   };
-  const troop = new TroopService({TroopRepo,ResourceService,ResourceRepo,db,errorCodes});
+  const resourceRepo = new ResourceRepo( db, errorCodes );
+  const troopRepo = new TroopRepo( db, errorCodes );
+  const resourceService = new ResourceService({ resourceRepo, errorCodes });
+  const troop = new TroopService({ troopRepo, resourceService, errorCodes });
   try {
     const result = await troop.add({kingdomId: 12});
   } catch(err) {

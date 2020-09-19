@@ -107,7 +107,11 @@ class KingdomRepo_notnullLocation {
   };
 };
 
-const kingdom = new KingdomService({KingdomRepo,ResourceRepo,BuildingRepo,LocationRepo,db,errorCodes});
+const kingdomRepo = new KingdomRepo(db, errorCodes);
+const resourceRepo = new ResourceRepo(db, errorCodes);
+const buildingRepo = new BuildingRepo(db, errorCodes);
+const locationRepo = new LocationRepo(db, errorCodes);
+const kingdom = new KingdomService({ kingdomRepo, resourceRepo, buildingRepo, locationRepo, errorCodes });
 
 test('attachLocation: missing kingdomId returns error 104', async () => {
   try {
@@ -126,7 +130,8 @@ test('attachLocation: missing locationCode returns error 109', async () => {
 });
 
 test('attachLocation: located kingdomId returns error 304', async () => {
-  const kingdom = new KingdomService({KingdomRepo:KingdomRepo_notnullLocation,ResourceRepo,BuildingRepo,LocationRepo,db,errorCodes});
+  const kingdomRepo = new KingdomRepo_notnullLocation(db, errorCodes);
+  const kingdom = new KingdomService({ kingdomRepo, resourceRepo, buildingRepo, locationRepo, errorCodes });
   try {
     const result = await kingdom.attachLocation({kingdomId: 13, locationCode: 'TST'});
   } catch(err) {
@@ -135,7 +140,6 @@ test('attachLocation: located kingdomId returns error 304', async () => {
 });
 
 test('attachLocation: used location returns error 309', async () => {
-  const kingdom = new KingdomService({KingdomRepo,ResourceRepo,BuildingRepo,LocationRepo,db,errorCodes});
   try {
     const result = await kingdom.attachLocation({kingdomId: 13, locationCode: 'ABC'}); 
   } catch(err) {

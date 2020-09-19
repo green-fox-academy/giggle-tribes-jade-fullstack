@@ -1,49 +1,20 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 const cors = require('cors');
-import {
-  AuthenticationMiddleware,
-  ResourceMiddleware
-} from '../middlewares';
-import {
+
+import { 
+  userController,
+  authenticationController,
+  sessionController,
+  kingdomController,
+  resourceController,
+  buildingController,
+  troopController,
   helloController,
-  UserController,
-  SessionController,
-  ResourceController,
-  AuthenticationController,
-  TroopController,
-  KingdomController,
-  BuildingController,
-} from '../controllers';
-import {
-  BuildingService,
-  KingdomService,
-  ResourceService,
-  SessionService,
-  TroopService,
-  UserService
-} from '../services';
-import {
-  BuildingRepo,
-  errorCodes,
-  KingdomRepo,
-  LocationRepo,
-  ResourceRepo,
-  TroopRepo,
-  UserRepo
-} from '../repos';
-import { db } from '../data/connection';
+  authenticationMiddleware,
+  resourceMiddleware
+ } from '../dependencies/dependencyInjection';
 
-const authenticationMiddleware = new AuthenticationMiddleware({SessionService,UserRepo,db,errorCodes});
-const resourceMiddleware = new ResourceMiddleware({ResourceService,ResourceRepo,db,errorCodes});
-
-const authenticationController = new AuthenticationController();
-const userController = new UserController({UserService,UserRepo,KingdomRepo,ResourceRepo,db,errorCodes});
-const sessionController = new SessionController({SessionService,UserRepo,db,errorCodes});
-const kingdomController = new KingdomController({KingdomService,KingdomRepo,ResourceRepo,BuildingRepo,LocationRepo,db,errorCodes});
-const resourceController = new ResourceController({ResourceService,ResourceRepo,db,errorCodes});
-const buildingController = new BuildingController({BuildingService,ResourceService,ResourceRepo,BuildingRepo,db,errorCodes});
-const troopController = new TroopController({TroopService,ResourceService,ResourceRepo,TroopRepo,db,errorCodes});
 
 const router = express.Router();
 
@@ -64,6 +35,7 @@ router.use('/kingdoms/:kingdomId', resourceMiddleware.post);
 
 router.get('/kingdoms/:kingdomId/resource', resourceController.get);
 router.post('/kingdoms/:kingdomId/buildings', buildingController.post);
+router.get('/kingdoms/:kingdomId/buildings', buildingController.get);
 router.get('/kingdoms/:kingdomId/troops', troopController.get);
 router.post('/kingdoms/:kingdomId/troops', troopController.post);
 

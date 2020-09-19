@@ -1,7 +1,7 @@
 export class ResourceMiddleware {
 
-    constructor({ResourceService,ResourceRepo,db,errorCodes}) {
-        this.resources = new ResourceService({ResourceRepo,db,errorCodes});
+    constructor( resourceService, errorCodes ) {
+        this.resources = resourceService;
         this.post = this.post.bind(this);
         this.errorMessages = {
             [errorCodes.missingKingdomId]: {status: 400, message: 'Missing kingdomId.'},

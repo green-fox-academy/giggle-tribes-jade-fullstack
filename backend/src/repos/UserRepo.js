@@ -2,19 +2,19 @@ import QueryHandler from './QueryHandler';
 
 export class UserRepo extends QueryHandler {
 
-    constructor(db,errorCodes) {
-        super(db,errorCodes);
+    constructor( db, errorCodes ) {
+        super( db, errorCodes );
     };
 
-    validateParams({userName,password}) {
+    validateParams({userName, password}) {
         if (!userName) throw new Error(this.errorCodes.missingUserName);
         if (userName == '') throw new Error(this.errorCodes.invalidUserName);
         if (!password) throw new Error(this.errorCodes.missingPassword);
         if (password.length < 8) throw new Error(this.errorCodes.invalidPassword);
     };
 
-    async add({userName,password}) {
-        this.validateParams({userName,password});
+    async add({userName, password}) {
+        this.validateParams({userName, password});
         const query = this.validateQuery`INSERT INTO users (name,password) VALUES(${userName},${password})`;
         try {
             return await (this.sendQuery(query));
@@ -38,7 +38,7 @@ export class UserRepo extends QueryHandler {
         return dbData;
     };
 
-    async getAuthentication({userName,password}) {
+    async getAuthentication({userName, password}) {
         if (!userName) throw new Error(this.errorCodes.missingUserName);
         if (!password) throw new Error(this.errorCodes.missingPassword);
         const query = this.validateQuery`

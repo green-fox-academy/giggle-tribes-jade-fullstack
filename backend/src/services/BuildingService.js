@@ -2,9 +2,9 @@ import {ResourceSpender} from './ResourceSpender';
 
 export class BuildingService extends ResourceSpender {
 
-    constructor({BuildingRepo,ResourceService,ResourceRepo,db,errorCodes}) {
-        super({ResourceService,ResourceRepo,db,errorCodes});
-        this.building = new BuildingRepo(db,errorCodes);
+    constructor({ buildingRepo, resourceService, errorCodes}) {
+        super({ resourceService, errorCodes });
+        this.building = buildingRepo;
         this.buildingData = {};
         this.buildingStats = {
             farm : { hp : 1, time : 60000 },
@@ -18,13 +18,13 @@ export class BuildingService extends ResourceSpender {
         };
     };
 
-    validateParams({kingdomId,buildingType}) {
+    validateParams({ kingdomId, buildingType }) {
         if (!kingdomId) throw new Error(this.errorCodes.missingKingdomId);
         if (!buildingType) throw new Error(this.errorCodes.missingBuildingType);
         if (!['farm','mine','academy'].includes(buildingType)) throw new Error(this.errorCodes.invalidBuildingType);
     };
 
-    setBuildingData({kingdomId,buildingType}) {
+    setBuildingData({ kingdomId, buildingType }) {
         const start = new Date();
         const finish = new Date( start.getTime() + this.buildingStats[buildingType].time );
         this.buildingData = {
@@ -38,17 +38,23 @@ export class BuildingService extends ResourceSpender {
         };
     };
 
-    async add({kingdomId,buildingType}) {
-        this.validateParams({kingdomId,buildingType});
+    async add({ kingdomId, buildingType} ) {
+        this.validateParams({ kingdomId, buildingType });
 
-        await this.setResources(kingdomId,buildingType);
+        await this.setResources( kingdomId, buildingType );
 
-        this.setBuildingData({kingdomId,buildingType});
+        this.setBuildingData({ kingdomId, buildingType });
         this.buildingData.id = (await this.building.add(this.buildingData)).insertId;
 
         await this.spendResources();
 
         return this.buildingData;
+    };
+
+    async getByKingdomId({kingdomId}) {
+        if (!kingdomId) throw new Error(this.errorCodes.missingKingdomId);
+        const buildings = await this.building.getByKingdomId({kingdomId});
+        return { buildings };
     };
 
 };

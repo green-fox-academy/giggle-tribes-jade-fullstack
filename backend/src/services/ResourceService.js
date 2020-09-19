@@ -1,7 +1,7 @@
 export class ResourceService {
 
-    constructor({ResourceRepo,db,errorCodes}) {
-        this.resources = new ResourceRepo(db,errorCodes);
+    constructor({ resourceRepo, errorCodes}) {
+        this.resources = resourceRepo;
         this.errorCodes = errorCodes;
     };
 

@@ -1,8 +1,5 @@
 import { UserService } from '../../services';
-import { UserRepo } from '../../repos';
-import { KingdomRepo } from '../../repos';
-import { ResourceRepo } from '../../repos';
-import { errorCodes } from '../../repos';
+import { errorCodes, UserRepo, ResourceRepo, KingdomRepo } from '../../repos';
 
 const db = {
     query: (...query) => {
@@ -15,8 +12,10 @@ const db = {
         }
     }
   };
-
-const user = new UserService({UserRepo,KingdomRepo,ResourceRepo,db,errorCodes});
+const userRepo = new UserRepo(db, errorCodes);
+const resourceRepo = new ResourceRepo(db, errorCodes);
+const kingdomRepo = new KingdomRepo(db, errorCodes);
+const user = new UserService({userRepo, kingdomRepo, resourceRepo, errorCodes});
 
 test('add: missing username and password returns error 110', async () => {
     try {
@@ -79,7 +78,10 @@ test('add: username already in use returns error 301', async () => {
             throw new duplicateError;
         }
     };
-    const user = new UserService({UserRepo,KingdomRepo,ResourceRepo,db,errorCodes});
+    const userRepo = new UserRepo(db, errorCodes);
+    const resourceRepo = new ResourceRepo(db, errorCodes);
+    const kingdomRepo = new KingdomRepo(db, errorCodes);
+    const user = new UserService({userRepo, kingdomRepo, resourceRepo, errorCodes});
     try {
         const result = await user.add({userName:'username',password:'secretpassword',kingdomName:'kingdom'});
     } catch(err) {

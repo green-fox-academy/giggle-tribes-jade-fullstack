@@ -1,7 +1,7 @@
 export class ResourceSpender {
 
-    constructor({ResourceService,ResourceRepo,db,errorCodes}) {
-        this.resources = new ResourceService({ResourceRepo,db,errorCodes});
+    constructor({ resourceService, errorCodes }) {
+        this.resources = resourceService;
         this.errorCodes = errorCodes;
         this.kingdomId = '';
         this.cost = 0;

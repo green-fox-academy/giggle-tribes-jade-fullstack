@@ -1,7 +1,7 @@
 export class SessionController {
 
-    constructor({SessionService,UserRepo,db,errorCodes}) {
-        this.session = new SessionService({UserRepo,db,errorCodes});
+    constructor( sessionService, errorCodes ) {
+        this.session = sessionService;
         this.post = this.post.bind(this);
         this.errorMessages = {
             [errorCodes.missingUserNameAndPassword]: {status: 401, message: 'Username and password are required.'},

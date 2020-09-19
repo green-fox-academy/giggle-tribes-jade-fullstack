@@ -1,20 +1,20 @@
 export class KingdomService {
 
-    constructor({KingdomRepo,ResourceRepo,BuildingRepo,LocationRepo,db,errorCodes}) {
-        this.kingdom = new KingdomRepo(db,errorCodes);
-        this.resources = new ResourceRepo(db,errorCodes);
-        this.buildings = new BuildingRepo(db,errorCodes);
-        this.location = new LocationRepo(db,errorCodes);
+    constructor({ kingdomRepo, resourceRepo, buildingRepo, locationRepo, errorCodes }) {
+        this.kingdom = kingdomRepo;
+        this.resources = resourceRepo;
+        this.buildings = buildingRepo;
+        this.location = locationRepo;
         this.errorCodes = errorCodes;
     };
 
-    validateParams({kingdomId,locationCode}) {
+    validateParams({ kingdomId, locationCode }) {
         if (!kingdomId) throw new Error(this.errorCodes.missingKingdomId);
         if (!locationCode) throw new Error(this.errorCodes.missingLocationCode);
     };
 
-    async attachLocation({kingdomId,locationCode}) {
-        this.validateParams({kingdomId,locationCode});
+    async attachLocation({ kingdomId, locationCode }) {
+        this.validateParams({ kingdomId, locationCode });
 
         if ((await this.kingdom.get()).find( kingdom => kingdom.location === locationCode )) throw new Error(this.errorCodes.usedLocationCode);
 
@@ -22,7 +22,7 @@ export class KingdomService {
         if (kingdomData.location.country_code !== null ) throw new Error(this.errorCodes.usedKingdomId);
         kingdomData.location.country_code = locationCode;
         
-        await this.location.add({kingdomId,locationCode});
+        await this.location.add({ kingdomId, locationCode });
         
         return kingdomData;
     };
