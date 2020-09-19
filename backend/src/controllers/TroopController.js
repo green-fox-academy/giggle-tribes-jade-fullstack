@@ -1,12 +1,7 @@
 export class TroopController {
 
-<<<<<<< HEAD
-    constructor({ResourceService,TroopService,ResourceRepo,TroopRepo,db,errorCodes}) {
-        this.troop = new TroopService({TroopRepo,ResourceService,ResourceRepo,db,errorCodes});
-=======
     constructor( troopService, errorCodes ) {
         this.troop = troopService;
->>>>>>> 62cb0ede2476cea6fb24284453fc5293d0cccd5e
         this.post = this.post.bind(this);
         this.get = this.get.bind(this);
         this.errorMessages = {

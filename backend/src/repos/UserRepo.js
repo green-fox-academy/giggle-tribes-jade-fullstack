@@ -2,32 +2,19 @@ import QueryHandler from './QueryHandler';
 
 export class UserRepo extends QueryHandler {
 
-<<<<<<< HEAD
-    constructor(db,errorCodes) {
-        super(db,errorCodes);
-    };
-
-    validateParams({userName,password}) {
-=======
     constructor( db, errorCodes ) {
         super( db, errorCodes );
     };
 
     validateParams({userName, password}) {
->>>>>>> 62cb0ede2476cea6fb24284453fc5293d0cccd5e
         if (!userName) throw new Error(this.errorCodes.missingUserName);
         if (userName == '') throw new Error(this.errorCodes.invalidUserName);
         if (!password) throw new Error(this.errorCodes.missingPassword);
         if (password.length < 8) throw new Error(this.errorCodes.invalidPassword);
     };
 
-<<<<<<< HEAD
-    async add({userName,password}) {
-        this.validateParams({userName,password});
-=======
     async add({userName, password}) {
         this.validateParams({userName, password});
->>>>>>> 62cb0ede2476cea6fb24284453fc5293d0cccd5e
         const query = this.validateQuery`INSERT INTO users (name,password) VALUES(${userName},${password})`;
         try {
             return await (this.sendQuery(query));
@@ -51,11 +38,7 @@ export class UserRepo extends QueryHandler {
         return dbData;
     };
 
-<<<<<<< HEAD
-    async getAuthentication({userName,password}) {
-=======
     async getAuthentication({userName, password}) {
->>>>>>> 62cb0ede2476cea6fb24284453fc5293d0cccd5e
         if (!userName) throw new Error(this.errorCodes.missingUserName);
         if (!password) throw new Error(this.errorCodes.missingPassword);
         const query = this.validateQuery`
