@@ -10,6 +10,6 @@ test('renders login screen', () => {
     <App />
   </Provider>,
   );
-  const text = getByText(/login screen/i);
+  const text = getByText(/sign in/i);
   expect(text).toBeInTheDocument();
 });

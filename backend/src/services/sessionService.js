@@ -14,6 +14,7 @@ export const sessionService = {
         return {
           status: 'ok',
           token: await getToken(result.userID, result.kingdomID),
+          kingdomID: result.kingdomID,
         };
       } catch (error) {
         return error;

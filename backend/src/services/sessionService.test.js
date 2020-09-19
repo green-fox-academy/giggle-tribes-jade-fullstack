@@ -62,7 +62,7 @@ test('Username and password are correct.', async () => {
     password: 'dummy_password',
   });
 
-  await expect(result).toStrictEqual({
+  await expect(result).toEqual({
     status: 'ok',
     token:
       'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOjEsImlhdCI6MTU5MzM2Mzc3Mn0.NH561vc3u6ic2YO64Xyw25DIJ7UWjPdFL-JA561Srw8',
