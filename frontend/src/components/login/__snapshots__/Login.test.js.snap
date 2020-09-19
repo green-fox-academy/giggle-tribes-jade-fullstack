@@ -1,0 +1,49 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<div
+  className="login"
+>
+  <div
+    className="title"
+  >
+    <h2>
+      Tribes of Vulpes
+    </h2>
+  </div>
+  <div
+    className="form"
+  >
+    <form
+      onSubmit={[Function]}
+    >
+      <div>
+        <input
+          name="username"
+          onChange={[Function]}
+          placeholder="Username"
+          type="text"
+        />
+      </div>
+      <div>
+        <input
+          name="password"
+          onChange={[Function]}
+          placeholder="Password"
+          type="password"
+        />
+      </div>
+      <div
+        className="submitLine"
+      >
+        <button
+          className="loginButton"
+          type="submit"
+        >
+          SIGN IN
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+`;
