@@ -155,3 +155,195 @@ describe('addTroop', () => {
     });
   });
 });
+
+describe('upgradeTroops', () => {
+  test('upgradeTroops is ok', async () => {
+    const mockDate = new Date(0);
+    jest.spyOn(global, 'Date').mockImplementation(() => mockDate);
+
+    const troopsRepo = {
+      get: async () => {
+        return troopsFactory.get([
+          {
+            id: 1,
+            level: 1,
+            hp: 1,
+            attack: 1,
+            defence: 1,
+            started_at: mockDate,
+            finished_at: mockDate,
+          },
+        ]);
+      },
+      update: async () => {
+        return troopsFactory.insert({ changedRows: 1 });
+      },
+    };
+
+    const resourceService = {
+      async getResource() {
+        return resourceFactory.getResource(10);
+      },
+      async spendGold() {
+        return resourceFactory.spendGold();
+      },
+    };
+
+    const troopsService = new TroopsService({
+      troopsRepo,
+      resourceService,
+    });
+
+    expect(
+      await troopsService.upgradeTroops({ kingdomID: 1, level: 1, amount: 1 })
+    ).toStrictEqual({
+      troops: [
+        {
+          id: 1,
+          level: 1,
+          hp: 1,
+          attack: 1,
+          defence: 1,
+          started_at: mockDate,
+          finished_at: mockDate,
+        },
+      ],
+    });
+  });
+  test('upgradeTroops fails, academy level is too low', async () => {
+    const mockDate = new Date(0);
+    jest.spyOn(global, 'Date').mockImplementation(() => mockDate);
+
+    const troopsRepo = {
+      get: async () => {
+        return troopsFactory.get([
+          {
+            id: 1,
+            level: 2,
+            hp: 2,
+            attack: 2,
+            defence: 2,
+            started_at: mockDate,
+            finished_at: mockDate,
+          },
+        ]);
+      },
+      update: async () => {
+        return troopsFactory.insert({ changedRows: 0 });
+      },
+    };
+
+    const resourceService = {
+      async getResource() {
+        return resourceFactory.getResource(10);
+      },
+      async spendGold() {
+        return resourceFactory.spendGold();
+      },
+    };
+
+    const troopsService = new TroopsService({
+      troopsRepo,
+      resourceService,
+    });
+
+    expect(async () => {
+      await troopsService.upgradeTroops({ kingdomID: 1, level: 2, amount: 1 });
+    }).rejects.toStrictEqual({
+      error: 'Upgrade is not allowed, academy level too low.',
+    });
+  });
+  test('upgradeTroops fails, not enough money', async () => {
+    const resourceService = {
+      async getResource() {
+        return resourceFactory.getResource(9);
+      },
+    };
+
+    const troopsRepo = {
+      get: async () => {
+        return troopsFactory.get([]);
+      },
+    };
+
+    const troopsService = new TroopsService({
+      resourceService,
+      troopsRepo,
+    });
+
+    expect(async () => {
+      await troopsService.upgradeTroops({ kingdomID: 1, level: 1, amount: 1 });
+    }).rejects.toStrictEqual({
+      error: "You don't have enough money.",
+    });
+  });
+  test('upgradeTroops fails, not enough troop at this level', async () => {
+    const resourceService = {
+      async getResource() {
+        return resourceFactory.getResource(10);
+      },
+    };
+    const troopsRepo = {
+      get: async () => {
+        return troopsFactory.get([]);
+      },
+    };
+
+    const troopsService = new TroopsService({
+      resourceService,
+      troopsRepo,
+    });
+
+    expect(async () => {
+      await troopsService.upgradeTroops({ kingdomID: 1, level: 1, amount: 1 });
+    }).rejects.toStrictEqual({
+      error: 'Amount was too much, you have 0 troops in that troop level.',
+    });
+  });
+  test('upgradeTroops fails, missing amount', async () => {
+    const resourceService = {
+      async getResource() {
+        return resourceFactory.getResource(10);
+      },
+    };
+    const troopsRepo = {
+      get: async () => {
+        return troopsFactory.get([]);
+      },
+    };
+
+    const troopsService = new TroopsService({
+      resourceService,
+      troopsRepo,
+    });
+
+    expect(async () => {
+      await troopsService.upgradeTroops({ kingdomID: 1, level: 1 });
+    }).rejects.toStrictEqual({
+      error: 'Amount is required.',
+    });
+  });
+  test('upgradeTroops fails, missing amount', async () => {
+    const resourceService = {
+      async getResource() {
+        return resourceFactory.getResource(10);
+      },
+    };
+    const troopsRepo = {
+      get: async () => {
+        return troopsFactory.get([]);
+      },
+    };
+
+    const troopsService = new TroopsService({
+      resourceService,
+      troopsRepo,
+    });
+
+    expect(async () => {
+      await troopsService.upgradeTroops({ kingdomID: 1, amount: 1 });
+    }).rejects.toStrictEqual({
+      error: 'Troop level is required.',
+    });
+  });
+});

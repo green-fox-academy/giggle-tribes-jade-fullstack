@@ -26,7 +26,7 @@ export const troopsController = {
         amount: req.body.amount,
         level: req.body.level,
       };
-      const data = await troopsService.upgradeToops(input);
+      const data = await troopsService.upgradeTroops(input);
 
       res.status(200).json(data);
     } catch (error) {

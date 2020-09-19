@@ -25,9 +25,9 @@ export class TroopsService {
   }
 
   async addTroop({ kingdomID }) {
-    const goldAmount = await this.resourceService
-      .getResource(kingdomID)
-      .resources.find(resource => resource.type === 'gold').amount;
+    const goldAmount = await (
+      await (await this.resourceService.getResource({ kingdomID })).resources
+    ).find(resource => resource.type === 'gold').amount;
     const rules = {
       troopLimit: 100, //need logic for building repo
       troopCost: 10,
@@ -75,7 +75,7 @@ export class TroopsService {
     }
   }
 
-  async upgradeToops({ kingdomID, amount, level }) {
+  async upgradeTroops({ kingdomID, amount, level }) {
     const rules = {
       upgradeCost: 10,
       academyLevel: 2, //BuildingService.get find building.type === 'academy' return building.level
@@ -114,18 +114,18 @@ export class TroopsService {
         const troops = await this.getTroopsByKingdom(kingdomID);
         return { troops };
       } else if (rules.upgradeCost > goldAmount) {
-        throw { error: "You don't have enough money" };
+        throw { error: "You don't have enough money." };
       } else if (level >= rules.academyLevel) {
-        throw { error: 'Upgrade is not allowed, academy level too low' };
+        throw { error: 'Upgrade is not allowed, academy level too low.' };
       } else {
         throw {
-          error: `Amount was too much, you have ${rules.upgradeableTroopAmount} troops in that troop level`,
+          error: `Amount was too much, you have ${rules.upgradeableTroopAmount} troops in that troop level.`,
         };
       }
     } else if (!level) {
-      throw { error: 'Troop level is required' };
+      throw { error: 'Troop level is required.' };
     } else {
-      throw { error: 'Amount is required' };
+      throw { error: 'Amount is required.' };
     }
   }
 }
