@@ -1,18 +1,19 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 const cors = require('cors');
+
 import {
-  helloController,
   userController,
+  authenticationController,
   sessionController,
-  resourceController,
-  authController,
-  troopsController,
   kingdomController,
-  buildingsController,
-} from '../controllers';
-import { resourceMiddleware } from '../middlewares/resourceMiddleware';
-import { authUser } from '../middlewares';
+  resourceController,
+  buildingController,
+  troopController,
+  helloController,
+  authenticationMiddleware,
+  resourceMiddleware,
+} from '../dependencies/dependencyInjection';
 
 const router = express.Router();
 
@@ -24,16 +25,17 @@ router.post('/sessions', sessionController.post);
 router.post('/users', userController.post);
 
 router.post('/kingdoms/:kingdomId/map', kingdomController.post);
+router.get('/kingdoms/:kingdomId/map', kingdomController.getById);
 router.get('/kingdoms/map', kingdomController.get);
 
-router.use(authUser);
-router.post('/auth', authController);
-router.use('/kingdoms/:kingdomID', resourceMiddleware);
+router.use(authenticationMiddleware.validate);
+router.post('/auth', authenticationController.post);
+router.use('/kingdoms/:kingdomId', resourceMiddleware.post);
 
-router.get('/kingdoms/:kingdomID/resource', resourceController.get);
-router.get('/kingdoms/:kingdomID/troops', troopsController.get);
-router.post('/kingdoms/:kingdomID/troops', troopsController.post);
-router.put('/kingdoms/:kingdomID/troops', troopsController.put);
-router.post('/kingdoms/:kingdomId/buildings', buildingsController.post);
+router.get('/kingdoms/:kingdomId/resource', resourceController.get);
+router.post('/kingdoms/:kingdomId/buildings', buildingController.post);
+router.get('/kingdoms/:kingdomId/buildings', buildingController.get);
+router.get('/kingdoms/:kingdomId/troops', troopController.get);
+router.post('/kingdoms/:kingdomId/troops', troopController.post);
 
 export default router;
