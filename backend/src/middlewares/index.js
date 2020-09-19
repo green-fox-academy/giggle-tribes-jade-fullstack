@@ -1,1 +1,2 @@
-export * from './authUser';
+export * from './AuthenticationMiddleware';
+export * from './ResourceMiddleware';

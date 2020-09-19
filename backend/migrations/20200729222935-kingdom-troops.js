@@ -25,8 +25,8 @@ exports.up = function (db) {
     hp: { type: 'int', notNull: true },
     attack: { type: 'int', notNull: true },
     defence: { type: 'int', notNull: true },
-    started_at: { type: 'timestamp', notNull: true },
-    finished_at: { type: 'timestamp', notNull: true },
+    started_at: { type: "timestamp", notNull: true, defaultValue: new String('CURRENT_TIMESTAMP') },
+    finished_at: { type: "timestamp", notNull: true, defaultValue: new String('CURRENT_TIMESTAMP') }
   });
 };
 

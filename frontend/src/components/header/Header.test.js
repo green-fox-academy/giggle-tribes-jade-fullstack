@@ -39,7 +39,7 @@ it('renders Header without crashing without token', async () => {
     Promise.resolve({
       kingdoms: [
         {
-          kingdom_id: 1,
+          kingdomId: 1,
           kingdomname: 'Mocked Kingdom',
         },
       ],
@@ -66,7 +66,7 @@ it('renders Header without crashing with token but without kingdomName', async (
     Promise.resolve({
       kingdoms: [
         {
-          kingdom_id: 1,
+          kingdomId: 1,
           kingdomname: 'Mocked Kingdom',
         },
       ],
@@ -95,7 +95,7 @@ it('renders Header without crashing with token and kingdomId', async () => {
     Promise.resolve({
       kingdoms: [
         {
-          kingdom_id: 1,
+          kingdomId: 1,
           kingdomname: 'Mocked Kingdom',
         },
       ],
@@ -124,7 +124,7 @@ it('matches snapshot without token', async () => {
     Promise.resolve({
       kingdoms: [
         {
-          kingdom_id: 1,
+          kingdomId: 1,
           kingdomname: 'Mocked Kingdom',
         },
       ],
@@ -152,7 +152,7 @@ it('matches snapshot with token without kingdomID', async () => {
     Promise.resolve({
       kingdoms: [
         {
-          kingdom_id: 1,
+          kingdomId: 1,
           kingdomname: 'Mocked Kingdom',
         },
       ],
@@ -182,7 +182,7 @@ it('matches snapshot with token and kingdomId', async () => {
     Promise.resolve({
       kingdoms: [
         {
-          kingdom_id: 1,
+          kingdomId: 1,
           kingdomname: 'Mocked Kingdom',
         },
       ],

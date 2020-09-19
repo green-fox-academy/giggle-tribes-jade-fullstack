@@ -1,30 +1,43 @@
-import { userService } from '../services/userService';
-import { getToken } from './tokenService';
+import jwt from 'jsonwebtoken';
 
-export const sessionService = {
-  async login({ username, password }) {
-    const errorMessages = {
-      1: 'Password is required.',
-      2: 'Username is required.',
-      3: 'All fields are required.',
+export class SessionService {
+  constructor({ userRepo, errorCodes }) {
+    this.user = userRepo;
+    this.errorCodes = errorCodes;
+  }
+
+  validateParams({ userName, password }) {
+    if (!userName && !password)
+      throw new Error(this.errorCodes.missingUserNameAndPassword);
+    if (!userName) throw new Error(this.errorCodes.missingUserName);
+    if (!password) throw new Error(this.errorCodes.missingPassword);
+  }
+
+  getToken({ userId, kingdomId }) {
+    return jwt.sign({ userId, kingdomId }, process.env.JWT_SECRET || 'tribes');
+  }
+
+  async login({ userName, password }) {
+    this.validateParams({ userName, password });
+    const { userId, kingdomId } = (
+      await this.user.getAuthentication({ userName, password })
+    )[0];
+    return {
+      token: this.getToken({ userId, kingdomId }),
+      kingdomId: kingdomId,
     };
-    if (username && password) {
-      try {
-        const result = await userService.get({ username, password });
-        return {
-          status: 'ok',
-          token: await getToken(result.userID, result.kingdomID),
-          kingdomID: result.kingdomID,
-        };
-      } catch (error) {
-        return error;
-      }
-    } else if (username && !password) {
-      throw { error: errorMessages[1] };
-    } else if (!username && password) {
-      throw { error: errorMessages[2] };
-    } else {
-      throw { error: errorMessages[3] };
+  }
+
+  verifyToken({ token }) {
+    if (!token) throw new Error(this.errorCodes.missingToken);
+    try {
+      const { userId, kingdomId } = jwt.verify(
+        token,
+        process.env.JWT_SECRET || 'tribes'
+      );
+      return { userId, kingdomId };
+    } catch (error) {
+      throw new Error(this.errorCodes.invalidToken);
     }
-  },
-};
+  }
+}
