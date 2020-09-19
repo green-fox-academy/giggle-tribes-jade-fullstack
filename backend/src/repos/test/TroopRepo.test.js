@@ -42,7 +42,11 @@ test('add: valid params return db query with params', async () => {
   const result = await troop.add({kingdomId: 1, level: 0, hp: 0, attack: 0, defence: 0, started_at: '2020-08-19 19:06:22', finished_at: '2020-08-19 19:07:22'});
   expect(result).toStrictEqual({
     query: `
+<<<<<<< HEAD
             INSERT INTO troops
+=======
+            INSERT INTO kingdom_troops
+>>>>>>> 62cb0ede2476cea6fb24284453fc5293d0cccd5e
             (kingdom_id,level,hp,attack,defence,started_at,finished_at) 
             VALUES(?,?,?,?,?,?,?)
         `,
@@ -61,7 +65,11 @@ test('getByKingdomId: missing kingdomId returns error 104', async () => {
 test('getByKingdomId: valid params return db query with params', async () => {
   const result = await troop.getByKingdomId({kingdomId: 1});
   expect(result).toStrictEqual({
+<<<<<<< HEAD
     query: `SELECT * FROM troops WHERE kingdom_id = ?`,
+=======
+    query: `SELECT * FROM kingdom_troops WHERE kingdom_id = ?`,
+>>>>>>> 62cb0ede2476cea6fb24284453fc5293d0cccd5e
     params: [ 1 ]
   });
 });
@@ -78,7 +86,11 @@ test('update: valid params return db query with params', async () => {
   const result = await troop.update({troopId: 99, level: 1, hp: 1, attack: 1, defence: 1, started_at: '2020-08-19 19:06:22', finished_at: '2020-08-19 19:07:22'});
   expect(result).toStrictEqual({
     query: `
+<<<<<<< HEAD
             UPDATE troops
+=======
+            UPDATE kingdom_troops
+>>>>>>> 62cb0ede2476cea6fb24284453fc5293d0cccd5e
             SET level=?, hp=?, attack=?, defence=?,
             started_at=?, finished_at=?
             WHERE id=?

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import {ResourceSpender} from './ResourceSpender';
 
 export class TroopService extends ResourceSpender {
@@ -5,6 +6,15 @@ export class TroopService extends ResourceSpender {
     constructor({TroopRepo,ResourceService,ResourceRepo,db,errorCodes}) {
         super({ResourceService,ResourceRepo,db,errorCodes});
         this.troop = new TroopRepo(db,errorCodes);
+=======
+import { ResourceSpender } from './ResourceSpender';
+
+export class TroopService extends ResourceSpender {
+
+    constructor({ troopRepo, resourceService, errorCodes }) {
+        super({ resourceService, errorCodes });
+        this.troop = troopRepo;
+>>>>>>> 62cb0ede2476cea6fb24284453fc5293d0cccd5e
         this.troopData = {};
         this.troopStats = {
             troop : { hp : 1, attack : 1, defence : 1, time : 60000 },
@@ -48,8 +58,13 @@ export class TroopService extends ResourceSpender {
 
     async getByKingdomId({kingdomId}) {
         if (!kingdomId) throw new Error(this.errorCodes.missingKingdomId);
+<<<<<<< HEAD
         const result = await this.troop.getByKingdomId({kingdomId});
         return result;
+=======
+        const troops = await this.troop.getByKingdomId({kingdomId});
+        return { troops };
+>>>>>>> 62cb0ede2476cea6fb24284453fc5293d0cccd5e
     };
 
 };

@@ -1,6 +1,7 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 const cors = require('cors');
+<<<<<<< HEAD
 import {
   AuthenticationMiddleware,
   ResourceMiddleware
@@ -44,6 +45,22 @@ const kingdomController = new KingdomController({KingdomService,KingdomRepo,Reso
 const resourceController = new ResourceController({ResourceService,ResourceRepo,db,errorCodes});
 const buildingController = new BuildingController({BuildingService,ResourceService,ResourceRepo,BuildingRepo,db,errorCodes});
 const troopController = new TroopController({TroopService,ResourceService,ResourceRepo,TroopRepo,db,errorCodes});
+=======
+
+import { 
+  userController,
+  authenticationController,
+  sessionController,
+  kingdomController,
+  resourceController,
+  buildingController,
+  troopController,
+  helloController,
+  authenticationMiddleware,
+  resourceMiddleware
+ } from '../dependencies/dependencyInjection';
+
+>>>>>>> 62cb0ede2476cea6fb24284453fc5293d0cccd5e
 
 const router = express.Router();
 
@@ -64,6 +81,10 @@ router.use('/kingdoms/:kingdomId', resourceMiddleware.post);
 
 router.get('/kingdoms/:kingdomId/resource', resourceController.get);
 router.post('/kingdoms/:kingdomId/buildings', buildingController.post);
+<<<<<<< HEAD
+=======
+router.get('/kingdoms/:kingdomId/buildings', buildingController.get);
+>>>>>>> 62cb0ede2476cea6fb24284453fc5293d0cccd5e
 router.get('/kingdoms/:kingdomId/troops', troopController.get);
 router.post('/kingdoms/:kingdomId/troops', troopController.post);
 

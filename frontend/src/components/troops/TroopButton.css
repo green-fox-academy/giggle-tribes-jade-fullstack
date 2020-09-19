@@ -1,11 +1,20 @@
+div.troopsButton {
+  justify-content: center;
+  display: flex;
+  align-items: center;
+}
+
 button.MuiButtonBase-root {
   justify-self: center;
   display: flex;
   justify-content: space-around;
+  align-items: center;
   background-color: #009587;
   color: white;
   width: 20em;
-  height: max-content;
+
+  border-radius: 1em;
+  z-index: 2;
 }
 button.MuiButtonBase-root:hover {
   background-color: #009587;
@@ -13,4 +22,35 @@ button.MuiButtonBase-root:hover {
 
 button.MuiButtonBase-root p {
   color: white;
+  text-transform: none;
+  font-size: 1.5em;
+}
+
+button.MuiButtonBase-root.toop.button img {
+  height: 4em;
+  width: 4em;
+}
+
+.costLabel {
+  display: flex;
+  align-items: center;
+  background-color: #ff7743;
+  border-bottom-right-radius: 1em;
+  border-top-right-radius: 1em;
+  width: 9em;
+  height: 4em;
+  position: relative;
+  right: 1.1em;
+  z-index: 1;
+}
+
+.costLabel p {
+  color: white;
+  text-align: center;
+  padding-left: 1.5em;
+}
+
+img.inlineIcon {
+  height: 15px;
+  max-width: 15px;
 }

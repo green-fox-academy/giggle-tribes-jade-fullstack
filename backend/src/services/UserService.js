@@ -1,9 +1,16 @@
 export class UserService {
 
+<<<<<<< HEAD
     constructor({UserRepo,KingdomRepo,ResourceRepo,db,errorCodes}) {
         this.user = new UserRepo(db,errorCodes);
         this.kingdom = new KingdomRepo(db,errorCodes);
         this.resource = new ResourceRepo(db,errorCodes);
+=======
+    constructor({ userRepo, kingdomRepo, resourceRepo, errorCodes }) {
+        this.user = userRepo;
+        this.kingdom = kingdomRepo;
+        this.resource = resourceRepo;
+>>>>>>> 62cb0ede2476cea6fb24284453fc5293d0cccd5e
         this.errorCodes = errorCodes;
     };
 
@@ -30,3 +37,7 @@ export class UserService {
     };
 
 };
+<<<<<<< HEAD
+=======
+
+>>>>>>> 62cb0ede2476cea6fb24284453fc5293d0cccd5e

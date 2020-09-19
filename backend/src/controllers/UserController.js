@@ -1,7 +1,12 @@
 export class UserController {
 
+<<<<<<< HEAD
     constructor({UserService,UserRepo,KingdomRepo,ResourceRepo,db,errorCodes}) {
         this.user = new UserService({UserRepo,KingdomRepo,ResourceRepo,db,errorCodes});
+=======
+    constructor( userService, errorCodes ) {
+        this.user = userService;
+>>>>>>> 62cb0ede2476cea6fb24284453fc5293d0cccd5e
         this.post = this.post.bind(this);
         this.errorCodes = errorCodes;
         this.errorMessages = {

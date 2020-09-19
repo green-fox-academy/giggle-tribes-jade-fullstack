@@ -5,6 +5,7 @@ body {
 }
 
 .registration {
+  grid-column: 1 / span 3;
   display: flex;
   flex-direction: column;
 }
