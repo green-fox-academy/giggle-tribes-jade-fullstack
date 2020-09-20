@@ -108,7 +108,10 @@ test('username already in use returns error "Username is already taken."', done 
 });
 
 test('proper data returns object', done => {
-  db.query.mockImplementation(() => ({ results: { insertId: 4 } }));
+  db.query.mockImplementationOnce(() => ({ results: { insertId: 4 } }));
+  db.query.mockImplementationOnce(() => ({ results: { insertId: 4 } }));
+  db.query.mockImplementation(() => ({ results: [] }));
+
   request(app)
     .post('/api/users')
     .set('Accept', 'application/json')
