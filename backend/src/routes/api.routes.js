@@ -37,5 +37,6 @@ router.post('/kingdoms/:kingdomId/buildings', buildingController.post);
 router.get('/kingdoms/:kingdomId/buildings', buildingController.get);
 router.get('/kingdoms/:kingdomId/troops', troopController.get);
 router.post('/kingdoms/:kingdomId/troops', troopController.post);
+router.put('/kingdoms/:kingdomId/troops', troopController.put);
 
 export default router;
