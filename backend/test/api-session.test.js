@@ -71,7 +71,7 @@ test('proper data returns token', done => {
     .set('Accept', 'application/json')
     .send({ username: 'superuser', password: 'password' })
     .expect('Content-Type', /json/)
-    .expect(200)
+    .expect(201)
     .end((err, data) => {
       if (err) return done(err);
       let token = data.body.token.split('');

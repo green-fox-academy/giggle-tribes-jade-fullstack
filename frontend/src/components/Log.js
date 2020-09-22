@@ -5,11 +5,11 @@ import { getTroopsAction } from '../actions/TroopsActions';
 import { getBuildingsAction } from '../actions/BuildingsActions';
 import './Log.css';
 
-const Log = ({ kingdom, buildings, troops, get }) => {
+const Log = ({ kingdom, buildings, troops, fetchBuildingsAndTroops }) => {
 
   useEffect(() => {
-    get(kingdom);
-  }, [kingdom, get]);
+    fetchBuildingsAndTroops(kingdom);
+  }, [kingdom, fetchBuildingsAndTroops]);
 
   const processEntry = entry => {
     let data = {
@@ -39,7 +39,7 @@ const mapStateToProps = ({ kingdom, buildings, troops }) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    get: kingdomId => {
+    fetchBuildingsAndTroops: kingdomId => {
       dispatch(getTroopsAction(kingdomId));
       dispatch(getBuildingsAction(kingdomId));
     },
