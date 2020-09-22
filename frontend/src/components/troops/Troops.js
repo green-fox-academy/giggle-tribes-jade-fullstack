@@ -59,7 +59,7 @@ function Troops({ kingdom, troops, get }) {
 }
 
 Troops.propTypes = {
-  kingdom: PropTypes.number.isRequired,
+  kingdom: PropTypes.string.isRequired,
   troops: PropTypes.array.isRequired,
 };
 

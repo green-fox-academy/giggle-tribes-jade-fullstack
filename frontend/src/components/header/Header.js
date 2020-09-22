@@ -1,49 +1,49 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import './Header.css';
 import HeaderTitle from './HeaderTitle';
-import { fetchKingdom } from '../.././services/fetchKindom';
+import { setKingdomAction } from '../../actions/KingdomActions';
 
 const loggedinHeaderItems = [
   { link: 'Settings', route: '/settings' },
-  { link: 'Logout', route: '/logout' },
+  { link: 'Logout', route: '/login' },
 ];
 const loggedoutHeaderItems = [
   { link: 'Login', route: '/login' },
   { link: 'Register', route: '/registration' },
 ];
 
-const Header = ({ kingdom }) => {
+const Header = ({ kingdom, token, set }) => {
   let headerItems = loggedoutHeaderItems;
-  const isToken = localStorage.getItem('TRIBES_TOKEN') ? true : false;
-
   const [kingdomName, setKingdomName] = useState('');
 
   useEffect(() => {
     if (kingdom) {
-      fetchKingdom
-        .get('map', '')
-        .then(
-          response =>
-            response.kingdoms.find(k => k.kingdomId === kingdom).kingdomname
-        )
-        .then(kingdomname => setKingdomName(kingdomname));
+      set(kingdom);
     }
-  }, [kingdom]);
+  }, [kingdom, set]);
 
-  if (isToken && kingdom) {
+  if (token && kingdom) {
     headerItems = loggedinHeaderItems;
   }
   return (
     <nav className="header">
       <HeaderTitle
-        name={isToken ? kingdomName : ''}
-        route={isToken ? '/kingdom/buildings' : ''}
+        name={token ? kingdomName : ''}
+        route={token ? '/kingdom/buildings' : ''}
       />
       <div className="header">
         {headerItems.map((item, index) => (
-          <Link className="header" key={index.toString()} to={item.route}>
+          <Link
+            className="header"
+            key={index.toString()}
+            onClick={() => {
+              if (item.link === 'Logout') localStorage.clear();
+            }}
+            to={item.route}
+          >
             {item.link}
           </Link>
         ))}
@@ -52,7 +52,20 @@ const Header = ({ kingdom }) => {
   );
 };
 
-const mapStateToProps = state => {
-  return state;
+Header.propTypes = {
+  set: PropTypes.func.isRequired,
+  token: PropTypes.string.isRequired,
+  kingdom: PropTypes.string.isRequired,
 };
-export default connect(mapStateToProps)(Header);
+
+const mapStateToProps = ({ token, kingdom }) => {
+  return { token, kingdom };
+};
+const mapDispatchToProps = dispatch => {
+  return {
+    set: (kingdomID, setKingdomName) => {
+      dispatch(setKingdomAction(kingdomID, setKingdomName));
+    },
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

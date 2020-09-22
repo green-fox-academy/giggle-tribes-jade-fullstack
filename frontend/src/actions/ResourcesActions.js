@@ -1,24 +1,29 @@
 import {
-  UPDATE_RESOURCES,
   UPDATE_RESOURCES_SUCCESS,
-  UPDATE_RESOURCES_FAILURE,
+  SET_ERROR_SUCCESS,
 } from '../constants/ActionTypes';
 
-import { fetchKingdom } from '../services/fetchKindom';
+import { fetchByKingdom } from '../services/fetchService';
 
-export const setResources = kingdomID => {
+export const setResources = kingdomId => {
   return dispatch => {
     dispatch({
-      type: UPDATE_RESOURCES,
+      type: 'UPDATE_RESOURCES',
     });
 
-    return fetchKingdom.get(kingdomID, 'resource').then(
+    return fetchByKingdom(kingdomId, 'resource', {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+    }).then(
       resources =>
         dispatch({
           type: UPDATE_RESOURCES_SUCCESS,
           payload: resources.resources,
         }),
-      error => dispatch({ type: UPDATE_RESOURCES_FAILURE, error })
+      error => dispatch({ type: SET_ERROR_SUCCESS, error })
     );
   };
 };

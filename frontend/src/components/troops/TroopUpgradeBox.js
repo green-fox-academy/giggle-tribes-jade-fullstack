@@ -33,7 +33,7 @@ function TroopUpgradeBox({
   const upgradeTroopClickOn = () => {
     const troopUpgradeConditions = {
       upgradeCost: 10,
-      goldAmount: resources[1].amount,
+      goldAmount: resources.find(resource => resource.type === 'gold').amount,
       academyLevel:
         buildings.length > 0
           ? buildings.find(e => e.type === 'academy').level
@@ -104,7 +104,7 @@ TroopUpgradeBox.propTypes = {
   setOpen: PropTypes.func.isRequired,
   level: PropTypes.number.isRequired,
   troopAmount: PropTypes.number.isRequired,
-  kingdom: PropTypes.number.isRequired,
+  kingdom: PropTypes.string.isRequired,
   troops: PropTypes.array.isRequired,
   resources: PropTypes.array.isRequired,
   buildings: PropTypes.array.isRequired,

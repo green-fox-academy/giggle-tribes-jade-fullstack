@@ -1,6 +1,4 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
 
 import './Academy.css';
 import Barrack from '../../../assets/buildings/barracks.svg';
@@ -42,12 +40,4 @@ function Academy() {
   );
 }
 
-Academy.propTypes = {
-  kingdom: PropTypes.any.isRequired,
-};
-
-const mapStateToProps = state => {
-  return state;
-};
-
-export default connect(mapStateToProps)(Academy);
+export default Academy;

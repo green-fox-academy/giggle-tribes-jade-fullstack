@@ -14,11 +14,12 @@ const buttons = [
 
 const AddBuilding = ({ resources, kingdom, addBuilding, setErrorState }) => {
   const onButtonClick = buildingData => {
-    const goldAmount = resources[1].amount;
+    const goldAmount = resources.find(resource => resource.type === 'gold')
+      .amount;
     if (buildingData.cost > goldAmount) {
       setErrorState('Not enough gold');
     } else {
-      console.log(addBuilding(kingdom, buildingData.type));
+      addBuilding(kingdom, buildingData.type);
     }
   };
 

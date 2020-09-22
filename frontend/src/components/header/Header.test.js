@@ -5,8 +5,8 @@ import { act } from 'react-dom/test-utils';
 import configureStore from 'redux-mock-store';
 import { Router, Route } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
-jest.mock('../.././services/fetchKindom');
-import { fetchKingdom } from '../.././services/fetchKindom';
+jest.mock('../.././services/fetchService');
+import { fetchByKingdom } from '../.././services/fetchService';
 
 import Header from './Header';
 
@@ -34,12 +34,13 @@ it('renders Header without crashing without token', async () => {
   });
   mockedStore.dispatch = jest.fn();
   Storage.prototype.getItem = jest.fn(key => {});
-  fetchKingdom.get.mockImplementation(() =>
+  fetchByKingdom.mockImplementation(() =>
     Promise.resolve({
       kingdoms: [
         {
           kingdomId: 1,
           kingdomname: 'Mocked Kingdom',
+          token: null,
         },
       ],
     })
@@ -58,12 +59,12 @@ it('renders Header without crashing without token', async () => {
 
 it('renders Header without crashing with token but without kingdomName', async () => {
   const mockStore = configureStore([]);
-  const mockedStore = mockStore({});
-  mockedStore.dispatch = jest.fn();
-  Storage.prototype.getItem = jest.fn(key => {
-    return 'dummy_token';
+  const mockedStore = mockStore({
+    token: 'dummy_token',
   });
-  fetchKingdom.get.mockImplementation(() =>
+  mockedStore.dispatch = jest.fn();
+
+  fetchByKingdom.mockImplementation(() =>
     Promise.resolve({
       kingdoms: [
         {
@@ -86,20 +87,18 @@ it('renders Header without crashing with token but without kingdomName', async (
 });
 
 it('renders Header without crashing with token and kingdomId', async () => {
-  Storage.prototype.getItem = jest.fn(key => {
-    return 'dummy_token';
-  });
   const mockStore = configureStore([]);
   const mockedStore = mockStore({
     kingdom: 1,
   });
   mockedStore.dispatch = jest.fn();
-  fetchKingdom.get.mockImplementation(() =>
+  fetchByKingdom.mockImplementation(() =>
     Promise.resolve({
       kingdoms: [
         {
           kingdomId: 1,
           kingdomname: 'Mocked Kingdom',
+          token: 'dummy_token',
         },
       ],
     })
@@ -117,15 +116,13 @@ it('renders Header without crashing with token and kingdomId', async () => {
 });
 
 it('matches snapshot without token', async () => {
-  Storage.prototype.getItem = jest.fn(key => {
-    return false;
-  });
   const mockStore = configureStore([]);
   const mockedStore = mockStore({
     kingdom: 1,
+    token: null,
   });
   mockedStore.dispatch = jest.fn();
-  fetchKingdom.get.mockImplementation(() =>
+  fetchByKingdom.mockImplementation(() =>
     Promise.resolve({
       kingdoms: [
         {
@@ -149,13 +146,12 @@ it('matches snapshot without token', async () => {
 });
 
 it('matches snapshot with token without kingdomID', async () => {
-  Storage.prototype.getItem = jest.fn(key => {
-    return 'dummy_token';
-  });
   const mockStore = configureStore([]);
-  const mockedStore = mockStore({});
+  const mockedStore = mockStore({
+    token: 'dummy_token',
+  });
   mockedStore.dispatch = jest.fn();
-  fetchKingdom.get.mockImplementation(() =>
+  fetchByKingdom.mockImplementation(() =>
     Promise.resolve({
       kingdoms: [
         {
@@ -179,15 +175,13 @@ it('matches snapshot with token without kingdomID', async () => {
 });
 
 it('matches snapshot with token and kingdomId', async () => {
-  Storage.prototype.getItem = jest.fn(key => {
-    return 'dummy_token';
-  });
   const mockStore = configureStore([]);
   const mockedStore = mockStore({
     kingdom: 1,
+    token: 'kitten',
   });
   mockedStore.dispatch = jest.fn();
-  fetchKingdom.get.mockImplementation(() =>
+  fetchByKingdom.mockImplementation(() =>
     Promise.resolve({
       kingdoms: [
         {
