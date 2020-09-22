@@ -15,9 +15,9 @@ export class ResourceMiddleware {
 
     async post(req, res, next) {
         const { kingdomId } = req.params;
-        const kingdomIdTarget = req.user.kingdomId;
+        const kingdomIdFromToken = req.user.kingdomId;
         try {
-            if ( kingdomId != kingdomIdTarget ) throw new Error('212');
+            if ( kingdomId != kingdomIdFromToken ) throw new Error('212');
             await this.resources.generateResources({kingdomId});
             next();
         } catch(error) {
