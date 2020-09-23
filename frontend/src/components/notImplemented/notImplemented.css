@@ -1,0 +1,26 @@
+.wrapper {
+  width: 100vw;
+  height: 60vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+p {
+  font-size: 2em;
+  color: #eee;
+  margin: 1em;
+}
+
+button {
+  width: 6em;
+  font-size: 1.5em;
+  cursor: pointer;
+  background-color: rgba(0, 177, 118, 0.75);
+  color: #eee;
+}
+button:hover {
+  background-color: #eee;
+  color: rgba(0, 177, 118, 0.75);
+}
