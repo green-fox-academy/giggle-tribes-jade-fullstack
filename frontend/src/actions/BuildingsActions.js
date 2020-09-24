@@ -1,4 +1,5 @@
 import {
+  TYPE,
   UPDATE_BUILDINGS_SUCCESS,
   ADD_BUILDING_SUCCESS,
   SET_ERROR_SUCCESS,
@@ -9,7 +10,7 @@ import { fetchByKingdom } from '../services/fetchService';
 export const getBuildingsAction = kingdomID => {
   return dispatch => {
     dispatch({
-      type: 'UPDATE_BUILDINGS',
+      type: TYPE,
     });
 
     return fetchByKingdom(kingdomID, 'buildings', { method: 'GET' }).then(
@@ -28,7 +29,7 @@ export const getBuildingsAction = kingdomID => {
 export const addBuildingAction = (kingdomID, buildingType) => {
   return dispatch => {
     dispatch({
-      type: 'ADD_BUILDING',
+      type: TYPE,
     });
 
     return fetchByKingdom(kingdomID, 'buildings', {

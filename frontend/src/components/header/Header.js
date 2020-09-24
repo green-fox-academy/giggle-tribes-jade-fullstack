@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -15,24 +15,29 @@ const loggedoutHeaderItems = [
   { link: 'Register', route: '/registration' },
 ];
 
-const Header = ({ kingdom, token, set }) => {
+const Header = ({ kingdom, token, kingdomName, set }) => {
   let headerItems = loggedoutHeaderItems;
-  const [kingdomName, setKingdomName] = useState('');
 
   useEffect(() => {
-    if (kingdom) {
-      set(kingdom);
-    }
-  }, [kingdom, set]);
+    set(kingdom);
+  }, [set, kingdom]);
 
-  if (token && kingdom) {
+  if (kingdomName.length > 0) {
     headerItems = loggedinHeaderItems;
   }
   return (
     <nav className="header">
       <HeaderTitle
-        name={token ? kingdomName : ''}
-        route={token ? '/kingdom/buildings' : ''}
+        name={
+          typeof kingdomName === 'string' && kingdomName.length > 0
+            ? kingdomName
+            : ''
+        }
+        route={
+          typeof kingdomName === 'string' && kingdomName.length > 0
+            ? '/kingdom/buildings'
+            : ''
+        }
       />
       <div className="header">
         {headerItems.map((item, index) => (
@@ -54,18 +59,17 @@ const Header = ({ kingdom, token, set }) => {
 
 Header.propTypes = {
   set: PropTypes.func.isRequired,
-  token: PropTypes.string.isRequired,
   kingdom: PropTypes.string.isRequired,
+  token: PropTypes.string.isRequired,
+  kingdomName: PropTypes.string,
 };
 
-const mapStateToProps = ({ token, kingdom }) => {
-  return { token, kingdom };
+const mapStateToProps = ({ token, kingdom, kingdomName }) => {
+  return { token, kingdom, kingdomName };
 };
 const mapDispatchToProps = dispatch => {
   return {
-    set: (kingdomID, setKingdomName) => {
-      dispatch(setKingdomAction(kingdomID, setKingdomName));
-    },
+    set: kingdomID => dispatch(setKingdomAction(kingdomID)),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Header);

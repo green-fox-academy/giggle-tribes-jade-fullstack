@@ -2,6 +2,7 @@ import {
   UPDATE_TROOPS_SUCCESS,
   ADD_TROOP_SUCCESS,
   SET_ERROR_SUCCESS,
+  TYPE,
 } from '../constants/ActionTypes';
 
 import { fetchByKingdom } from '../services/fetchService';
@@ -9,7 +10,7 @@ import { fetchByKingdom } from '../services/fetchService';
 export const getTroopsAction = kingdomId => {
   return dispatch => {
     dispatch({
-      type: 'UPDATE_TROOPS',
+      type: TYPE,
     });
 
     return fetchByKingdom(kingdomId, 'troops', {
@@ -30,7 +31,7 @@ export const getTroopsAction = kingdomId => {
 export const addTroopAction = kingdomId => {
   return dispatch => {
     dispatch({
-      type: 'ADD_TROOP',
+      type: TYPE,
     });
 
     return fetchByKingdom(kingdomId, 'troops', {
@@ -56,7 +57,7 @@ export const addTroopAction = kingdomId => {
 export const upgradeTroopAction = (kingdomId, amount, level) => {
   return dispatch => {
     dispatch({
-      type: 'UPDATE_TROOPS',
+      type: TYPE,
     });
 
     return fetchByKingdom(kingdomId, 'troops', {

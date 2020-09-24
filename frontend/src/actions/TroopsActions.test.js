@@ -41,7 +41,7 @@ describe('Troops actions', () => {
     });
 
     const expectedActions = [
-      { type: 'UPDATE_TROOPS' },
+      { type: types.TYPE },
       {
         type: types.UPDATE_TROOPS_SUCCESS,
         payload: [
@@ -95,7 +95,7 @@ describe('Troops actions', () => {
     });
 
     const expectedActions = [
-      { type: 'ADD_TROOP' },
+      { type: types.TYPE },
       {
         type: types.ADD_TROOP_SUCCESS,
         payload: {

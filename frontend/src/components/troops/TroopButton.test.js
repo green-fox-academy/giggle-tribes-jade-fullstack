@@ -4,7 +4,6 @@ import { render, unmountComponentAtNode } from 'react-dom';
 import { act, Simulate } from 'react-dom/test-utils';
 
 import TroopButton from './TroopButton';
-import TroopUpgradeBox from './TroopUpgradeBox';
 import { store } from '../../store';
 
 let container;

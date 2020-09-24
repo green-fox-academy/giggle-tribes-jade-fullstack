@@ -1,6 +1,7 @@
 import {
   UPDATE_RESOURCES_SUCCESS,
   SET_ERROR_SUCCESS,
+  TYPE,
 } from '../constants/ActionTypes';
 
 import { fetchByKingdom } from '../services/fetchService';
@@ -8,7 +9,7 @@ import { fetchByKingdom } from '../services/fetchService';
 export const setResources = kingdomId => {
   return dispatch => {
     dispatch({
-      type: 'UPDATE_RESOURCES',
+      type: TYPE,
     });
 
     return fetchByKingdom(kingdomId, 'resource', {

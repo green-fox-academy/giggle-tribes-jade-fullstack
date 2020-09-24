@@ -46,7 +46,7 @@ describe('Buildings actions', () => {
     });
 
     const expectedActions = [
-      { type: 'UPDATE_BUILDINGS' },
+      { type: types.TYPE },
       {
         type: types.UPDATE_BUILDINGS_SUCCESS,
         payload: [
@@ -97,7 +97,7 @@ describe('Buildings actions', () => {
     });
 
     const expectedActions = [
-      { type: 'ADD_BUILDING' },
+      { type: types.TYPE },
       {
         type: types.ADD_BUILDING_SUCCESS,
         payload: {

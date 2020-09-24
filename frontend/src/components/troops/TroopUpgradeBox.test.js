@@ -41,7 +41,7 @@ describe('TroopUpgradeBox tests', () => {
   it('should dispatch an action when clicked', async () => {
     const mockStore = configureStore([]);
     const mockedStore = mockStore({
-      kingdom: 1,
+      kingdom: '1',
       buildings: [{ type: 'academy', level: 2 }],
       resources: [
         {
@@ -82,7 +82,7 @@ describe('TroopUpgradeBox tests', () => {
   it('should dispatch an action when clicked, not enough money', async () => {
     const mockStore = configureStore([]);
     const mockedStore = mockStore({
-      kingdom: 1,
+      kingdom: '1',
       buildings: [{ type: 'academy', level: 2 }],
       resources: [
         {
@@ -122,7 +122,7 @@ describe('TroopUpgradeBox tests', () => {
   it('should dispatch an action when clicked, academy level is too low', async () => {
     const mockStore = configureStore([]);
     const mockedStore = mockStore({
-      kingdom: 1,
+      kingdom: '1',
       buildings: [{ type: 'academy', level: 1 }],
       resources: [
         {
@@ -160,6 +160,9 @@ describe('TroopUpgradeBox tests', () => {
   });
 
   it('matches snapeshot', async () => {
+    Storage.prototype.getItem = jest.fn(key => {
+      return 'dummy';
+    });
     await act(async () => {
       render(
         <Provider store={store}>

@@ -12,9 +12,7 @@ import Gold from '../../assets/sources/GoldIcon.svg';
 
 function Resource({ kingdom, resources, set }) {
   useEffect(() => {
-    if (kingdom) {
-      set(kingdom);
-    }
+    set(kingdom);
   }, [kingdom, set]);
 
   if (resources.length === 0) {

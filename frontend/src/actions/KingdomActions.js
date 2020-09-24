@@ -4,7 +4,7 @@ import { fetchByKingdom } from '../services/fetchService';
 export const setKingdomAction = kingdomID => {
   return dispatch => {
     dispatch({
-      type: 'UPDATE_KITTYCATS',
+      type: actions.TYPE,
     });
 
     return fetchByKingdom(kingdomID, 'map', {
@@ -18,12 +18,12 @@ export const setKingdomAction = kingdomID => {
       } else {
         [
           {
-            type: actions.SET_TOKEN_SUCCESS,
-            payload: response.token,
-          },
-          {
             type: actions.SET_USER_SUCCESS,
             payload: response.userId,
+          },
+          {
+            type: actions.SET_KINGDOMNAME_SUCCESS,
+            payload: response.kingdomName,
           },
           {
             type: actions.UPDATE_BUILDINGS_SUCCESS,
@@ -34,7 +34,6 @@ export const setKingdomAction = kingdomID => {
             payload: response.troops,
           },
         ].forEach(action => dispatch(action));
-        return response.kingdomName;
       }
     });
   };

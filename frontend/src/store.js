@@ -8,11 +8,13 @@ import { resourcesReducer } from './reducers/resourcesReducer';
 import { troopsReducer } from './reducers/troopsReducer';
 import { tokenReducer } from './reducers/tokenReducer';
 import { errorReducer } from './reducers/errorReducer';
+import { kingdomNameReducer } from './reducers/kingdomNameReducer';
 
 function root(state = {}, action) {
   return {
     user: userReducer(state.user, action),
     kingdom: kingdomReducer(state.kingdom, action),
+    kingdomName: kingdomNameReducer(state.kingdomName, action),
     buildings: buildingsReducer(state.buildings, action),
     resources: resourcesReducer(state.resources, action),
     troops: troopsReducer(state.troops, action),

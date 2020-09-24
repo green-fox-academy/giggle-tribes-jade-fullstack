@@ -34,7 +34,7 @@ class Login extends Component {
           return false;
         } else {
           localStorage.setItem('TRIBES_TOKEN', data.token);
-          localStorage.setItem('kingdom', parseInt(data.kingdomId));
+          localStorage.setItem('kingdom', data.kingdomId);
           return true;
         }
       })
