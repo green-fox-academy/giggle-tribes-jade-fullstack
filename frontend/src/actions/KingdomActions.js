@@ -1,13 +1,13 @@
 import * as actions from '../constants/ActionTypes';
 import { fetchByKingdom } from '../services/fetchService';
 
-export const setKingdomAction = kingdomID => {
-  return dispatch => {
+export const setKingdomAction = () => {
+  return (dispatch, getState) => {
     dispatch({
-      type: actions.TYPE,
+      type: actions.SET_KINGDOM,
     });
 
-    return fetchByKingdom(kingdomID, 'map', {
+    return fetchByKingdom(getState().kingdom, 'map', {
       method: 'GET',
     }).then(response => {
       if (response.error) {

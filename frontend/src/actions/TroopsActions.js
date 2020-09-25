@@ -2,18 +2,19 @@ import {
   UPDATE_TROOPS_SUCCESS,
   ADD_TROOP_SUCCESS,
   SET_ERROR_SUCCESS,
-  TYPE,
+  ADD_TROOP,
+  UPDATE_TROOPS,
 } from '../constants/ActionTypes';
 
 import { fetchByKingdom } from '../services/fetchService';
 
-export const getTroopsAction = kingdomId => {
-  return dispatch => {
+export const getTroopsAction = () => {
+  return (dispatch, getState) => {
     dispatch({
-      type: TYPE,
+      type: UPDATE_TROOPS,
     });
 
-    return fetchByKingdom(kingdomId, 'troops', {
+    return fetchByKingdom(getState().kingdom, 'troops', {
       method: 'GET',
     }).then(
       response =>
@@ -28,13 +29,13 @@ export const getTroopsAction = kingdomId => {
   };
 };
 
-export const addTroopAction = kingdomId => {
-  return dispatch => {
+export const addTroopAction = () => {
+  return (dispatch, getState) => {
     dispatch({
-      type: TYPE,
+      type: ADD_TROOP,
     });
 
-    return fetchByKingdom(kingdomId, 'troops', {
+    return fetchByKingdom(getState().kingdom, 'troops', {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -54,13 +55,13 @@ export const addTroopAction = kingdomId => {
   };
 };
 
-export const upgradeTroopAction = (kingdomId, amount, level) => {
-  return dispatch => {
+export const upgradeTroopAction = (amount, level) => {
+  return (dispatch, getState) => {
     dispatch({
-      type: TYPE,
+      type: UPDATE_TROOPS,
     });
 
-    return fetchByKingdom(kingdomId, 'troops', {
+    return fetchByKingdom(getState().kingdom, 'troops', {
       method: 'PUT',
       body: { amount, level },
     }).then(

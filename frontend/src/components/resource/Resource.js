@@ -10,10 +10,10 @@ import Mine from '../../assets/buildings/mine.svg';
 import Food from '../../assets/sources/FoodIcon.svg';
 import Gold from '../../assets/sources/GoldIcon.svg';
 
-function Resource({ kingdom, resources, set }) {
+function Resource({ resources, set }) {
   useEffect(() => {
-    set(kingdom);
-  }, [kingdom, set]);
+    set();
+  }, [set]);
 
   if (resources.length === 0) {
     return <p>Loading</p>;
@@ -68,16 +68,16 @@ function Resource({ kingdom, resources, set }) {
 }
 
 Resource.propTypes = {
-  kingdom: PropTypes.any.isRequired,
+  resources: PropTypes.array,
 };
 
-const mapStateToProps = state => {
-  return state;
+const mapStateToProps = ({ resources }) => {
+  return { resources };
 };
 const mapDispatchToProps = dispatch => {
   return {
-    set: kingdomID => {
-      dispatch(setResources(kingdomID));
+    set: () => {
+      dispatch(setResources());
     },
   };
 };

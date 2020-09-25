@@ -49,7 +49,7 @@ beforeEach(() => {
 describe('Kingdom actions', () => {
   it('should create an action to update user, kingdomName, troops, buildings, resources', () => {
     const expectedActions = [
-      { type: types.TYPE },
+      { type: types.SET_KINGDOM },
       {
         payload: 1,
         type: types.SET_USER_SUCCESS,

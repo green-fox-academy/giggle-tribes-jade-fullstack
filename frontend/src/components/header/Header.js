@@ -15,11 +15,13 @@ const loggedoutHeaderItems = [
   { link: 'Register', route: '/registration' },
 ];
 
-const Header = ({ kingdom, token, kingdomName, set }) => {
+const Header = ({ kingdomName, kingdom, set }) => {
   let headerItems = loggedoutHeaderItems;
 
   useEffect(() => {
-    set(kingdom);
+    if (kingdom) {
+      set();
+    }
   }, [set, kingdom]);
 
   if (kingdomName.length > 0) {
@@ -59,17 +61,15 @@ const Header = ({ kingdom, token, kingdomName, set }) => {
 
 Header.propTypes = {
   set: PropTypes.func.isRequired,
-  kingdom: PropTypes.string.isRequired,
-  token: PropTypes.string.isRequired,
   kingdomName: PropTypes.string,
 };
 
-const mapStateToProps = ({ token, kingdom, kingdomName }) => {
-  return { token, kingdom, kingdomName };
+const mapStateToProps = ({ kingdom, kingdomName }) => {
+  return { kingdom, kingdomName };
 };
 const mapDispatchToProps = dispatch => {
   return {
-    set: kingdomID => dispatch(setKingdomAction(kingdomID)),
+    set: () => dispatch(setKingdomAction()),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Header);

@@ -8,10 +8,10 @@ import Button from './TroopButton';
 
 import Troop from '../../assets/icons/troopbg.svg';
 
-function Troops({ kingdom, troops, get }) {
+function Troops({ troops, get }) {
   useEffect(() => {
-    get(kingdom);
-  }, [kingdom, get]);
+    get();
+  }, [get]);
 
   const analyseTroops = troops => {
     const result = {
@@ -59,18 +59,17 @@ function Troops({ kingdom, troops, get }) {
 }
 
 Troops.propTypes = {
-  kingdom: PropTypes.string.isRequired,
   troops: PropTypes.array.isRequired,
 };
 
-const mapStateToProps = ({ kingdom, troops }) => {
-  return { kingdom, troops };
+const mapStateToProps = ({ troops }) => {
+  return { troops };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    get: kingdomId => {
-      dispatch(getTroopsAction(kingdomId));
+    get: () => {
+      dispatch(getTroopsAction());
     },
   };
 };

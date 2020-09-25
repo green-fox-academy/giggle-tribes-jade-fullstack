@@ -18,7 +18,6 @@ function TroopUpgradeBox({
   setOpen,
   level,
   troopAmount,
-  kingdom,
   upgrade,
   resources,
   buildings,
@@ -45,7 +44,7 @@ function TroopUpgradeBox({
       level < troopUpgradeConditions.academyLevel &&
       amount <= troopAmount
     ) {
-      upgrade(kingdom, amount, level);
+      upgrade(amount, level);
     } else if (
       troopUpgradeConditions.goldAmount < troopUpgradeConditions.upgradeCost
     ) {
@@ -104,21 +103,20 @@ TroopUpgradeBox.propTypes = {
   setOpen: PropTypes.func.isRequired,
   level: PropTypes.number.isRequired,
   troopAmount: PropTypes.number.isRequired,
-  kingdom: PropTypes.string.isRequired,
   troops: PropTypes.array.isRequired,
   resources: PropTypes.array.isRequired,
   buildings: PropTypes.array.isRequired,
   setError: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = ({ kingdom, troops, resources, buildings }) => {
-  return { kingdom, troops, resources, buildings };
+const mapStateToProps = ({ troops, resources, buildings }) => {
+  return { troops, resources, buildings };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    upgrade: (kingdomId, amount) => {
-      dispatch(upgradeTroopAction(kingdomId, amount));
+    upgrade: amount => {
+      dispatch(upgradeTroopAction(amount));
     },
     setError: error => {
       dispatch(setErrorAction(error));

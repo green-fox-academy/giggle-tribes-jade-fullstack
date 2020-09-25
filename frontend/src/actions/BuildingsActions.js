@@ -1,19 +1,22 @@
 import {
-  TYPE,
+  UPDATE_BUILDINGS,
   UPDATE_BUILDINGS_SUCCESS,
+  ADD_BUILDING,
   ADD_BUILDING_SUCCESS,
   SET_ERROR_SUCCESS,
 } from '../constants/ActionTypes';
 
 import { fetchByKingdom } from '../services/fetchService';
 
-export const getBuildingsAction = kingdomID => {
-  return dispatch => {
+export const getBuildingsAction = () => {
+  return (dispatch, getState) => {
     dispatch({
-      type: TYPE,
+      type: UPDATE_BUILDINGS,
     });
 
-    return fetchByKingdom(kingdomID, 'buildings', { method: 'GET' }).then(
+    return fetchByKingdom(getState().kingdom, 'buildings', {
+      method: 'GET',
+    }).then(
       response =>
         response.error
           ? dispatch({ type: SET_ERROR_SUCCESS, payload: response.error })
@@ -26,13 +29,13 @@ export const getBuildingsAction = kingdomID => {
   };
 };
 
-export const addBuildingAction = (kingdomID, buildingType) => {
-  return dispatch => {
+export const addBuildingAction = buildingType => {
+  return (dispatch, getState) => {
     dispatch({
-      type: TYPE,
+      type: ADD_BUILDING,
     });
 
-    return fetchByKingdom(kingdomID, 'buildings', {
+    return fetchByKingdom(getState().kingdom, 'buildings', {
       method: 'POST',
       body: JSON.stringify({ type: buildingType }),
     }).then(
