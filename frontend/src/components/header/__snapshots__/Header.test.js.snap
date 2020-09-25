@@ -1,5 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`matches snapshot with token and kingdomId 1`] = `"<nav class=\\"header\\"><a class=\\"header\\" href=\\"/kingdom/buildings\\"><h1 class=\\"header\\">Mocked Kingdom</h1></a><div class=\\"header\\"><a class=\\"header\\" href=\\"/settings\\">Settings</a><a class=\\"header\\" href=\\"/logout\\">Logout</a></div></nav>"`;
+exports[`matches snapshot with token and kingdomId 1`] = `"<nav class=\\"header\\"><a class=\\"header\\" href=\\"/kingdom/buildings\\"><h1 class=\\"header\\">Mocked Kingdom</h1></a><div class=\\"header\\"><a class=\\"header\\" href=\\"/settings\\">Settings</a><a class=\\"header\\" href=\\"/login\\">Logout</a></div></nav>"`;
 
 exports[`matches snapshot without token and kingdom 1`] = `"<nav class=\\"header\\"><h1 class=\\"header\\">Tribes of Vulpes</h1><div class=\\"header\\"><a class=\\"header\\" href=\\"/login\\">Login</a><a class=\\"header\\" href=\\"/registration\\">Register</a></div></nav>"`;
