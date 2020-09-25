@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import './Login.css';
-import { generalFetch } from '../../services/fetchService';
+import { loginAction } from '../../actions/LoginAction';
 
 class Login extends Component {
   constructor(props) {
@@ -21,28 +22,11 @@ class Login extends Component {
     let userData = this.state;
     const { history } = this.props;
 
-    generalFetch('sessions', {
-      method: 'POST',
-      body: JSON.stringify(userData),
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-    })
-      .then(data => {
-        if (data.error) {
-          return false;
-        } else {
-          localStorage.setItem('TRIBES_TOKEN', data.token);
-          localStorage.setItem('kingdom', data.kingdomId);
-          return true;
-        }
-      })
-      .then(success => {
-        if (success) {
-          history.push('/kingdom/buildings');
-        }
-      });
+    this.props.login(userData).then(success => {
+      if (success) {
+        history.push('/kingdom/buildings');
+      }
+    });
   }
 
   handleUsername(e) {
@@ -97,4 +81,16 @@ class Login extends Component {
   }
 }
 
-export default withRouter(Login);
+const mapStateToProps = ({ error }) => {
+  return { error };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    login: data => {
+      return dispatch(loginAction(data));
+    },
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Login));
