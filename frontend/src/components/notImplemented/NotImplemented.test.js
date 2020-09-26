@@ -13,6 +13,6 @@ test('renders paragraph with button', () => {
   );
   const p = getAllByText('Not Implemented yet.');
   expect(p.length).toBe(1);
-  const button = getAllByText('Go Home');
+  const button = getAllByText('Logout and go to Login');
   expect(button.length).toBe(1);
 });

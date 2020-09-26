@@ -14,7 +14,7 @@ const NotImplemented = () => {
     if (authenticated) return (
         <div className='wrapper'>
             <p>Not Implemented yet.</p>
-            <button onClick={ redirect }>Go Home</button>
+            <button onClick={ redirect }>Logout and go to Login</button>
         </div>
     );
     
