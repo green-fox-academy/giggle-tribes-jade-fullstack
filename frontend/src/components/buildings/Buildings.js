@@ -17,7 +17,11 @@ function Buildings(){
           townhall: townhall,
           academy: academy,
         };
-      
+      const buildings = useSelector(state => state.buildings)
+      const dispatch = useDispatch()
+      useEffect(() => {
+        dispatch(getBuildingsAction)
+      }, [])
 
 function buildingLevel({kingdom}){
 
