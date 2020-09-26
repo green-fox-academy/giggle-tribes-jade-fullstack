@@ -10,7 +10,6 @@ import Troop from '../../../assets/troops/addTroop-removebg-preview.png';
 import Gold from '../../../assets/sources/GoldIcon.svg';
 
 function CreateTroopButton({
-  kingdom,
   resources,
   buildings,
   troops,
@@ -22,7 +21,7 @@ function CreateTroopButton({
     const goldAmount = resources[1].amount;
     const troopsLimit = buildings.length > 0 ? buildings[0].level * 100 : 100;
     if (goldAmount >= troopCost && troops.length < troopsLimit) {
-      addTroop(kingdom);
+      addTroop();
     } else if (goldAmount < troopCost) {
       setError("You don't have enough money.");
     } else {
@@ -49,7 +48,11 @@ function CreateTroopButton({
 }
 
 CreateTroopButton.propTypes = {
-  kingdom: PropTypes.any.isRequired,
+  resources: PropTypes.array.isRequired,
+  buildings: PropTypes.array.isRequired,
+  troops: PropTypes.array.isRequired,
+  addTroop: PropTypes.func.isRequired,
+  setError: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => {
@@ -57,8 +60,8 @@ const mapStateToProps = state => {
 };
 const mapDispatchToProps = dispatch => {
   return {
-    addTroop: kingdomID => {
-      dispatch(addTroopAction(kingdomID));
+    addTroop: () => {
+      dispatch(addTroopAction());
     },
     setError: error => {
       dispatch(setErrorAction(error));

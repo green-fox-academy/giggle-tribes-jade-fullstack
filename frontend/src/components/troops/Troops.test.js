@@ -60,7 +60,7 @@ afterEach(() => {
 it('should dispatch an action when rendered', async () => {
   const mockStore = configureStore([]);
   const mockedStore = mockStore({
-    kingdom: 1,
+    kingdom: '1',
     troops: [],
   });
   mockedStore.dispatch = jest.fn();
@@ -76,6 +76,9 @@ it('should dispatch an action when rendered', async () => {
 });
 
 it('matches snapeshot', async () => {
+  Storage.prototype.getItem = jest.fn(key => {
+    return 'dummy';
+  });
   await act(async () => {
     render(
       <Provider store={store}>

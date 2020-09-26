@@ -12,13 +12,14 @@ const buttons = [
   { type: 'academy', cost: 100 },
 ];
 
-const AddBuilding = ({ resources, kingdom, addBuilding, setErrorState }) => {
+const AddBuilding = ({ resources, addBuilding, setErrorState }) => {
   const onButtonClick = buildingData => {
-    const goldAmount = resources[1].amount;
+    const goldAmount = resources.find(resource => resource.type === 'gold')
+      .amount;
     if (buildingData.cost > goldAmount) {
       setErrorState('Not enough gold');
     } else {
-      console.log(addBuilding(kingdom, buildingData.type));
+      addBuilding(buildingData.type);
     }
   };
 
@@ -36,13 +37,13 @@ const AddBuilding = ({ resources, kingdom, addBuilding, setErrorState }) => {
   );
 };
 
-const mapStateToProps = state => {
-  return state;
+const mapStateToProps = ({ resources }) => {
+  return { resources };
 };
 const mapDispatchToProps = dispatch => {
   return {
-    addBuilding: (kingdomID, type) => {
-      dispatch(addBuildingAction(kingdomID, type));
+    addBuilding: type => {
+      dispatch(addBuildingAction(type));
     },
     setErrorState: error => {
       dispatch(setErrorAction(error));

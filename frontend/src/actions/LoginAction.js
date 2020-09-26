@@ -1,15 +1,18 @@
 import {
+  SET_KINGDOM,
   SET_KINGDOM_SUCCESS,
+  SET_TOKEN_SUCCESS,
   SET_ERROR_SUCCESS,
 } from '../constants/ActionTypes';
+import { generalFetch } from '../services/fetchService';
 
 export const loginAction = ({ username, password }) => {
   return dispatch => {
     dispatch({
-      type: 'START_LOGIN',
+      type: SET_KINGDOM,
     });
 
-    return fetch('http://localhost:5000/api/sessions', {
+    return generalFetch('sessions', {
       method: 'POST',
       body: JSON.stringify({ username, password }),
       headers: {
@@ -17,19 +20,19 @@ export const loginAction = ({ username, password }) => {
         'Content-Type': 'application/json',
       },
     })
-      .then(response => response.json())
       .then(data => {
         if (data.error) {
           dispatch({ type: SET_ERROR_SUCCESS, payload: data.error });
           return false;
         } else {
           localStorage.setItem('TRIBES_TOKEN', data.token);
-          dispatch({
-            type: SET_KINGDOM_SUCCESS,
-            payload: data.kingdomId,
-          });
+          localStorage.setItem('kingdom', data.kingdomId);
+          dispatch({ type: SET_KINGDOM_SUCCESS, payload: data.kingdomId });
+          dispatch({ type: SET_TOKEN_SUCCESS, payload: data.token });
+
           return true;
         }
-      });
+      })
+      .then(result => result);
   };
 };

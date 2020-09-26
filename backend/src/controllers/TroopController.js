@@ -57,6 +57,7 @@ export class TroopController {
       .add({ kingdomId: req.params.kingdomId })
       .then(response => res.status(201).json(response))
       .catch(error => {
+        console.log(error);
         res.status(this.errorMessages[error.message].status || 400).json({
           error: this.errorMessages[error.message].message || error.message,
         });

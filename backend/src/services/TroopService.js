@@ -37,6 +37,7 @@ export class TroopService extends ResourceSpender {
   async getByKingdomId({ kingdomId }) {
     if (!kingdomId) throw new Error(this.errorCodes.missingKingdomId);
     const troops = await this.troop.getByKingdomId({ kingdomId });
+    console.log(troops);
     return { troops };
   }
 
@@ -51,9 +52,10 @@ export class TroopService extends ResourceSpender {
       (await this.building.getByKingdomId({ kingdomId })).buildings.find(
         building => building.type === 'townhall'
       ).level * 100;
+    console.log(troopsNumber);
     if (troopsNumber >= this.troopStats.limit)
       throw new Error(this.errorCodes.invalidAddLimit);
-
+    console.log('success');
     this.setTroopData({ kingdomId, level: 1 });
     this.troopData.id = (await this.troop.add(this.troopData)).insertId;
 

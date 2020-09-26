@@ -5,7 +5,7 @@ jest.mock('../src/data/connection');
 import { db } from '../src/data/connection';
 
 describe('POST/ troops', () => {
-  test('post: missing token returns error "Token is required."', done => {
+  test('missing token returns error "Token is required."', done => {
     request(app)
       .post('/api/kingdoms/7/troops')
       .set('Accept', 'application/json')
@@ -18,7 +18,25 @@ describe('POST/ troops', () => {
       });
   });
 
-  test('post: valid kingdomId but not enough gold returns error "Not enough gold."', done => {
+  test('unmatched kingdomId returns error "Unauthorized for this kingdom."', done => {
+    db.query.mockImplementation(() => ({ results: [] }));
+    request(app)
+      .post('/api/kingdoms/99/troops')
+      .set('Accept', 'application/json')
+      .set(
+        'TRIBES_TOKEN',
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImtpbmdkb21JZCI6MywiaWF0IjoxNTk5NTEyMDU3fQ.L-8Eim9d_jd55V2BKGzHbNnjGXTiAFMPaDRWCkJ6RbE'
+      )
+      .expect('Content-Type', /json/)
+      .expect(403)
+      .end((err, data) => {
+        if (err) return done(err);
+        expect(data.body.error).toBe('Unauthorized for this kingdom.');
+        return done();
+      });
+  });
+
+  test('valid kingdomId but not enough gold returns error "Not enough gold."', done => {
     db.query.mockImplementation(() => ({
       results: [
         {
@@ -29,7 +47,7 @@ describe('POST/ troops', () => {
       ],
     }));
     request(app)
-      .post('/api/kingdoms/7/troops')
+      .post('/api/kingdoms/3/troops')
       .set('Accept', 'application/json')
       .set(
         'TRIBES_TOKEN',
@@ -44,7 +62,7 @@ describe('POST/ troops', () => {
       });
   });
 
-  test('post: valid kingdomId but not enough gold returns error "Townhall capacity has been exceeded."', done => {
+  test('valid kingdomId but not enough capacity returns error "Townhall capacity has been exceeded."', done => {
     db.query.mockImplementationOnce(() => ({
       results: [
         { type: 'gold', amount: 220, generation: 1 },
@@ -63,15 +81,37 @@ describe('POST/ troops', () => {
         { type: 'food', amount: 220, generation: 1 },
       ],
     }));
-    db.query.mockImplementationOnce(() => ({
-      results: new Array(100),
-    }));
+    db.query.mockImplementationOnce(() => {
+      const troops = [];
+      for (let i = 0; i < 100; i++) {
+        troops.push({
+          id: i,
+          kingdom_id: 3,
+          level: 1,
+          hp: 1,
+          attack: 1,
+          defence: 1,
+          started_at: 1,
+          finished_at: 1,
+        });
+      }
+
+      return {
+        results: troops,
+      };
+    });
     db.query.mockImplementationOnce(() => ({
       results: [
         {
           type: 'townhall',
           level: 1,
         },
+      ],
+    }));
+    db.query.mockImplementation(() => ({
+      results: [
+        { type: 'gold', amount: 220, generation: 1 },
+        { type: 'food', amount: 220, generation: 1 },
       ],
     }));
 
@@ -91,7 +131,7 @@ describe('POST/ troops', () => {
       });
   });
 
-  test('post: valid kingdomId and enough gold returns troop array of objects', done => {
+  test('valid kingdomId and enough gold returns troop array of objects', done => {
     db.query.mockImplementationOnce(() => ({
       results: [
         { type: 'gold', amount: 220, generation: 1 },
@@ -159,10 +199,10 @@ describe('POST/ troops', () => {
 });
 
 describe('GET/ troops', () => {
-  test('get: invalid kingdomId returns error "Invalid kingdomId."', done => {
+  test('invalid kingdomId returns error "Invalid kingdomId."', done => {
     db.query.mockImplementation(() => ({ results: [] }));
     request(app)
-      .get('/api/kingdoms/invalid/troops')
+      .get('/api/kingdoms/3/troops')
       .set('Accept', 'application/json')
       .set(
         'TRIBES_TOKEN',
@@ -177,7 +217,25 @@ describe('GET/ troops', () => {
       });
   });
 
-  test('get: valid kingdomId returns object', done => {
+  test('unmatched kingdomId returns error "Unauthorized for this kingdom."', done => {
+    db.query.mockImplementation(() => ({ results: [] }));
+    request(app)
+      .get('/api/kingdoms/99/troops')
+      .set('Accept', 'application/json')
+      .set(
+        'TRIBES_TOKEN',
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImtpbmdkb21JZCI6MywiaWF0IjoxNTk5NTEyMDU3fQ.L-8Eim9d_jd55V2BKGzHbNnjGXTiAFMPaDRWCkJ6RbE'
+      )
+      .expect('Content-Type', /json/)
+      .expect(403)
+      .end((err, data) => {
+        if (err) return done(err);
+        expect(data.body.error).toBe('Unauthorized for this kingdom.');
+        return done();
+      });
+  });
+
+  test('valid kingdomId returns object', done => {
     db.query.mockImplementation(() => ({
       results: [
         {
@@ -199,7 +257,7 @@ describe('GET/ troops', () => {
       ],
     }));
     request(app)
-      .get('/api/kingdoms/7/troops')
+      .get('/api/kingdoms/3/troops')
       .set('Accept', 'application/json')
       .set(
         'TRIBES_TOKEN',
@@ -217,9 +275,9 @@ describe('GET/ troops', () => {
 });
 
 describe('PUT/ troops', () => {
-  test('put: missing token returns error "Token is required."', done => {
+  test('missing token returns error "Token is required."', done => {
     request(app)
-      .put('/api/kingdoms/7/troops')
+      .put('/api/kingdoms/3/troops')
       .set('Accept', 'application/json')
       .expect('Content-Type', /json/)
       .expect(401)
@@ -230,7 +288,24 @@ describe('PUT/ troops', () => {
       });
   });
 
-  test('put: valid kingdomId but missing level returns error "Missing Troop level."', done => {
+  test('valid kingdomId but missing level returns error "Missing Troop level."', done => {
+    request(app)
+      .put('/api/kingdoms/99/troops')
+      .set('Accept', 'application/json')
+      .set(
+        'TRIBES_TOKEN',
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImtpbmdkb21JZCI6MywiaWF0IjoxNTk5NTEyMDU3fQ.L-8Eim9d_jd55V2BKGzHbNnjGXTiAFMPaDRWCkJ6RbE'
+      )
+      .expect('Content-Type', /json/)
+      .expect(403)
+      .end((err, data) => {
+        if (err) return done(err);
+        expect(data.body.error).toBe('Unauthorized for this kingdom.');
+        return done();
+      });
+  });
+
+  test('valid kingdomId but missing level returns error "Missing Troop level."', done => {
     request(app)
       .put('/api/kingdoms/3/troops')
       .set('Accept', 'application/json')
@@ -247,7 +322,7 @@ describe('PUT/ troops', () => {
       });
   });
 
-  test('put: valid kingdomId but missing level returns error "Missing amount."', done => {
+  test('valid kingdomId but missing level returns error "Missing amount."', done => {
     request(app)
       .put('/api/kingdoms/3/troops')
       .set('Accept', 'application/json')
@@ -265,7 +340,7 @@ describe('PUT/ troops', () => {
       });
   });
 
-  test('put: valid kingdomId but not enough gold returns error "Not enough gold."', done => {
+  test('valid kingdomId but not enough gold returns error "Not enough gold."', done => {
     db.query.mockImplementation(() => ({
       results: [
         {
@@ -304,7 +379,7 @@ describe('PUT/ troops', () => {
       });
   });
 
-  test('put: not high enough academy level returns "Academy level is too low."', done => {
+  test('not high enough academy level returns "Academy level is too low."', done => {
     db.query.mockImplementationOnce(() => ({
       results: [
         {
@@ -411,7 +486,7 @@ describe('PUT/ troops', () => {
       });
   });
 
-  test('put: not enough upgradable troop returns "Not enough troop at this level."', done => {
+  test('not enough upgradable troop returns "Not enough troop at this level."', done => {
     db.query.mockImplementationOnce(() => ({
       results: [
         {
@@ -532,7 +607,7 @@ describe('PUT/ troops', () => {
       });
   });
 
-  test('put: valid kingdomId and enough gold returns troop object', done => {
+  test('valid kingdomId and enough gold returns troop object', done => {
     db.query.mockImplementationOnce(() => ({
       results: [{ type: 'gold', generation: 1 }],
     }));
