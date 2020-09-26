@@ -1,15 +1,12 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './Buildings.css';
-import { connect } from 'react-redux';
+import { connect, useSelector, useDispatch } from 'react-redux';
 import farm from '../../assets/buildings/farm.svg';
 import mine from '../../assets/buildings/mine.svg';
 import townhall from '../../assets/buildings/townhall.svg';
 import academy from '../../assets/buildings/barracks.svg';
 import { setErrorAction } from '../../actions/ErrorActions';
 import { getBuildingsAction} from '../../actions/BuildingsActions';
-import { useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
 function Buildings(){
@@ -39,8 +36,8 @@ function Buildings(){
     {buildings.map(building => (
       <div className="icons" onClick={() => goToBuilding(building.id)}>
         <img src={buildingIcons[building.type]} alt={building.type} className="image"></img>
-        <p className="buildingName">{building.type}</p> 
-        <p>{building.level}</p>
+        <p className="buildingName">{building.type} level {building.level}</p> 
+        <p></p>
       </div>
       ))}
         

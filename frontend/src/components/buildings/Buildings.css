@@ -3,6 +3,7 @@
   margin: 5px;
   display: flex;
   width: min-content;
+  grid-area: inherit;
 }
 
 .image{
