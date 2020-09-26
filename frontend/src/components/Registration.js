@@ -24,7 +24,6 @@ class Registration extends Component {
 
     let userData = this.state;
     const { history } = this.props;
-    
     fetch(`${env.BACKEND_URL}/api/users`, {
       method: 'POST',
       body: JSON.stringify(userData),

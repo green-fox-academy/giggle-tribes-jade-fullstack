@@ -35,8 +35,11 @@ const LogEntry = ({header,data}) => {
 
     useEffect( () => {
         if (!header) {
-            setProgress(data.progress_at-data.started_at);
-            setRange(data.finished_at-data.started_at);
+            const start = (new Date(data.started_at)).getTime();
+            const finish = (new Date(data.finished_at)).getTime();
+            const progress = (new Date(data.progress_at)).getTime();
+            setProgress(progress-start);
+            setRange(finish-start);
             setIsReady(progress === range);
         }
     },[header,data,progress,range]);

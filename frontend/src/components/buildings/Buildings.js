@@ -19,7 +19,7 @@ function Buildings(props){
         };
       
 
-function buildingLevel(){
+function buildingLevel({kingdom}){
   
 }
         
