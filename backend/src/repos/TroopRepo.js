@@ -25,7 +25,6 @@ export class TroopRepo extends QueryHandler {
   }
 
   async getByKingdomId({ kingdomId }) {
-    console.log('TroopRepo');
     if (!kingdomId) throw new Error(this.errorCodes.missingKingdomId);
     const query = this
       .validateQuery`SELECT * FROM kingdom_troops WHERE kingdom_id = ${kingdomId}`;

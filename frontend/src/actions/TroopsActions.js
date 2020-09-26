@@ -63,14 +63,14 @@ export const upgradeTroopAction = (amount, level) => {
 
     return fetchByKingdom(getState().kingdom, 'troops', {
       method: 'PUT',
-      body: { amount, level },
+      body: { amount: amount, level: level },
     }).then(
       response => {
         response.error
           ? dispatch({ type: SET_ERROR_SUCCESS, payload: response.error })
           : dispatch({
               type: UPDATE_TROOPS_SUCCESS,
-              payload: response,
+              payload: response.troops,
             });
       },
       error => dispatch({ type: SET_ERROR_SUCCESS, payload: error.error })

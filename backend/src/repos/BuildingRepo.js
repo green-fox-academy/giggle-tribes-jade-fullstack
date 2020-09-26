@@ -16,7 +16,6 @@ export class BuildingRepo extends QueryHandler {
   }
 
   async getByKingdomId({ kingdomId }) {
-    console.log('BuildingRepo');
     if (!kingdomId) throw new Error(this.errorCodes.missingKingdomId);
     const query = this
       .validateQuery`SELECT * FROM buildings WHERE kingdom_id = ${kingdomId}`;

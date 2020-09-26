@@ -18,18 +18,20 @@ global.fetch = jest.fn(async () => {
             hp: 1,
             attack: 1,
             defence: 1,
-            started_at: '',
-            finished_at: ''
-          }],
+            started_at: '2020-09-26T12:44:31.000Z',
+            finished_at: '',
+          },
+        ],
         buildings: [
-            {
-              id: 1,
-              type: 'academy',
-              level: 1,
-              hp: 1,
-              started_at: '',
-              finished_at: ''
-            }],
+          {
+            id: 1,
+            type: 'academy',
+            level: 1,
+            hp: 1,
+            started_at: '',
+            finished_at: '',
+          },
+        ],
       }),
   });
 });
@@ -47,25 +49,6 @@ afterEach(() => {
   container = null;
 });
 
-it('should dispatch an action when rendered', async () => {
-  const mockStore = configureStore([]);
-  const mockedStore = mockStore({
-    kingdom: 1,
-    troops: [],
-    buildings: []
-  });
-  mockedStore.dispatch = jest.fn();
-  await act(async () => {
-    render(
-      <Provider store={mockedStore}>
-        <Log />
-      </Provider>,
-      container
-    );
-  });
-  expect(mockedStore.dispatch).toHaveBeenCalledTimes(2);
-});
-
 it('matches snapeshot', async () => {
   await act(async () => {
     render(
@@ -78,4 +61,3 @@ it('matches snapeshot', async () => {
 
   expect(container.innerHTML).toMatchSnapshot();
 });
-
