@@ -23,12 +23,29 @@ test('missing token returns error "Token is required."', done => {
     });
 });
 
+test('unmatched kingdomId returns error "Unauthorized for this kingdom."', done => {
+  db.query.mockImplementation( () => (
+    { results: [] }
+  ));
+  request(app)
+    .get('/api/kingdoms/999/resource')
+    .set('Accept', 'application/json')
+    .set('TRIBES_TOKEN', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImtpbmdkb21JZCI6MywiaWF0IjoxNTk5NTEyMDU3fQ.L-8Eim9d_jd55V2BKGzHbNnjGXTiAFMPaDRWCkJ6RbE')
+    .expect('Content-Type', /json/)
+    .expect(403)
+    .end((err, data) => {
+      if (err) return done(err);
+      expect(data.body.error).toBe("Unauthorized for this kingdom.");
+      return done();
+    });
+});
+
 test('invalid kingdomId returns error "Invalid kingdomId."', done => {
   db.query.mockImplementation( () => (
     { results: [] }
   ));
   request(app)
-    .get('/api/kingdoms/invalid/resource')
+    .get('/api/kingdoms/3/resource')
     .set('Accept', 'application/json')
     .set('TRIBES_TOKEN', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImtpbmdkb21JZCI6MywiaWF0IjoxNTk5NTEyMDU3fQ.L-8Eim9d_jd55V2BKGzHbNnjGXTiAFMPaDRWCkJ6RbE')
     .expect('Content-Type', /json/)

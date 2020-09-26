@@ -23,12 +23,29 @@ test('post: missing token returns error "Token is required."', done => {
     });
 });
 
+test('post: unmatched kingdomId returns error "Unauthorized for this kingdom."', done => {
+  db.query.mockImplementation( () => (
+    { results: [] }
+  ));
+  request(app)
+    .post('/api/kingdoms/99/troops')
+    .set('Accept', 'application/json')
+    .set('TRIBES_TOKEN', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImtpbmdkb21JZCI6MywiaWF0IjoxNTk5NTEyMDU3fQ.L-8Eim9d_jd55V2BKGzHbNnjGXTiAFMPaDRWCkJ6RbE')
+    .expect('Content-Type', /json/)
+    .expect(403)
+    .end((err, data) => {
+      if (err) return done(err);
+      expect(data.body.error).toBe("Unauthorized for this kingdom.");
+      return done();
+    });
+});
+
 test('post: invalid kingdomId returns error "Invalid kingdomId."', done => {
   db.query.mockImplementation( () => (
     { results: [] }
   ));
   request(app)
-    .post('/api/kingdoms/invalid/troops')
+    .post('/api/kingdoms/3/troops')
     .set('Accept', 'application/json')
     .set('TRIBES_TOKEN', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImtpbmdkb21JZCI6MywiaWF0IjoxNTk5NTEyMDU3fQ.L-8Eim9d_jd55V2BKGzHbNnjGXTiAFMPaDRWCkJ6RbE')
     .expect('Content-Type', /json/)
@@ -48,7 +65,7 @@ test('post: valid kingdomId but not enough gold returns error "Not enough gold."
     ] }
   ));
   request(app)
-    .post('/api/kingdoms/7/troops')
+    .post('/api/kingdoms/3/troops')
     .set('Accept', 'application/json')
     .set('TRIBES_TOKEN', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImtpbmdkb21JZCI6MywiaWF0IjoxNTk5NTEyMDU3fQ.L-8Eim9d_jd55V2BKGzHbNnjGXTiAFMPaDRWCkJ6RbE')
     .expect('Content-Type', /json/)
@@ -68,7 +85,7 @@ test('post: valid kingdomId and enough gold returns troop object', done => {
     ] }
   ));
   request(app)
-    .post('/api/kingdoms/7/troops')
+    .post('/api/kingdoms/3/troops')
     .set('Accept', 'application/json')
     .set('TRIBES_TOKEN', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImtpbmdkb21JZCI6MywiaWF0IjoxNTk5NTEyMDU3fQ.L-8Eim9d_jd55V2BKGzHbNnjGXTiAFMPaDRWCkJ6RbE')
     .expect('Content-Type', /json/)
@@ -79,8 +96,25 @@ test('post: valid kingdomId and enough gold returns troop object', done => {
       result.started_at = '2020-08-19 19:06:22';
       result.finished_at = '2020-08-19 19:06:22';
       expect(result).toEqual({
-        'finished_at': '2020-08-19 19:06:22', 'hp': 1, 'kingdomId': '7', 'level': 1, 'started_at': '2020-08-19 19:06:22', 'attack': 1, 'defence': 1
+        'finished_at': '2020-08-19 19:06:22', 'hp': 1, 'kingdomId': '3', 'level': 1, 'started_at': '2020-08-19 19:06:22', 'attack': 1, 'defence': 1
       });
+      return done();
+    });
+});
+
+test('get: unmatched kingdomId returns error "Unauthorized for this kingdom."', done => {
+  db.query.mockImplementation( () => (
+    { results: [] }
+  ));
+  request(app)
+    .get('/api/kingdoms/99/troops')
+    .set('Accept', 'application/json')
+    .set('TRIBES_TOKEN', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImtpbmdkb21JZCI6MywiaWF0IjoxNTk5NTEyMDU3fQ.L-8Eim9d_jd55V2BKGzHbNnjGXTiAFMPaDRWCkJ6RbE')
+    .expect('Content-Type', /json/)
+    .expect(403)
+    .end((err, data) => {
+      if (err) return done(err);
+      expect(data.body.error).toBe("Unauthorized for this kingdom.");
       return done();
     });
 });
@@ -90,7 +124,7 @@ test('get: invalid kingdomId returns error "Invalid kingdomId."', done => {
     { results: [] }
   ));
   request(app)
-    .get('/api/kingdoms/invalid/troops')
+    .get('/api/kingdoms/3/troops')
     .set('Accept', 'application/json')
     .set('TRIBES_TOKEN', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImtpbmdkb21JZCI6MywiaWF0IjoxNTk5NTEyMDU3fQ.L-8Eim9d_jd55V2BKGzHbNnjGXTiAFMPaDRWCkJ6RbE')
     .expect('Content-Type', /json/)
@@ -110,7 +144,7 @@ test('get: valid kingdomId returns object', done => {
     ] }
   ));
   request(app)
-    .get('/api/kingdoms/7/troops')
+    .get('/api/kingdoms/3/troops')
     .set('Accept', 'application/json')
     .set('TRIBES_TOKEN', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImtpbmdkb21JZCI6MywiaWF0IjoxNTk5NTEyMDU3fQ.L-8Eim9d_jd55V2BKGzHbNnjGXTiAFMPaDRWCkJ6RbE')
     .expect('Content-Type', /json/)
