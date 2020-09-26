@@ -223,7 +223,7 @@ test('getByKingdomId and getByBuildingId: returns valid result', async () => {
     ]
   });
 
-  result = await building.getByBuildingId({kingdomId: 3, buildingId: 3});
+  result = await building.getByKingdomId({kingdomId: 3, buildingId: 3});
   expect(result).toStrictEqual({
     "buildings": [
         {

@@ -33,15 +33,14 @@ export class BuildingController {
 
     async get( req, res ) {
         const { kingdomId, buildingId } = req.params;
-        try {
-            const response = (!buildingId) ? await this.building.getByKingdomId({kingdomId}) : await this.building.getByBuildingId({ kingdomId, buildingId });
-            res.status(201).json(response);
-        } catch(error) {
+        this.building.getByKingdomId({kingdomId, buildingId})
+        .then( response => res.status(201).json(response) )
+        .catch( error => {
             const status = (this.errorMessages[error.message]) ? this.errorMessages[error.message].status : 400;
             const message = (this.errorMessages[error.message]) ? this.errorMessages[error.message].message : error.message;
             res.status( status )
                 .json({ error: message });
-        }
+        });
     };
 
     
