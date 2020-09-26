@@ -30,11 +30,13 @@ function buildingLevel({kingdom}){
   return (
     <section className="buildings">
         
-      <div className="icons">
-        <img src={buildingIcons.townhall} alt="townhall" className="image"></img>
-        <p className="buildingName">Townhall</p> 
-        <p>{buildingLevel.townhall}</p>
+  { buildings.map(building => (
+      <div className="icons" onClick={() => goToBuilding(building.id)}>
+        <img src={buildingIcons[building.type]} alt={building.type} className="image"></img>
+        <p className="buildingName">{building.name}</p> 
+        <p>{building.level}</p>
       </div>
+      ))}
       
       <div className="icons">
         <img src={buildingIcons.farm} alt="farm" className="image"></img>
