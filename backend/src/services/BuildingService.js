@@ -57,4 +57,10 @@ export class BuildingService extends ResourceSpender {
         return { buildings };
     };
 
+    async getByBuildingId({ kingdomId, buildingId }) {
+        if (!kingdomId) throw new Error(this.errorCodes.missingKingdomId);
+        const buildings = (await this.building.getByKingdomId({kingdomId})).filter( e => e.id == buildingId );
+        return { buildings };
+    };
+
 };

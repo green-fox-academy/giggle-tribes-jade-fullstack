@@ -16,7 +16,7 @@ export class BuildingController {
         };
     };
 
-    post(req,res) {
+    post( req, res ) {
         const params = {
             kingdomId : req.params.kingdomId,
             buildingType : req.body.type
@@ -31,16 +31,18 @@ export class BuildingController {
         });
     };
 
-    get(req,res) {
-        const kingdomId = req.params.kingdomId;
-        this.building.getByKingdomId({kingdomId})
-         .then( response => res.status(201).json(response) )
-         .catch( error => {
+    async get( req, res ) {
+        const { kingdomId, buildingId } = req.params;
+        try {
+            const response = (!buildingId) ? await this.building.getByKingdomId({kingdomId}) : await this.building.getByBuildingId({ kingdomId, buildingId });
+            res.status(201).json(response);
+        } catch(error) {
             const status = (this.errorMessages[error.message]) ? this.errorMessages[error.message].status : 400;
             const message = (this.errorMessages[error.message]) ? this.errorMessages[error.message].message : error.message;
             res.status( status )
                 .json({ error: message });
-        });
+        }
     };
+
     
 };

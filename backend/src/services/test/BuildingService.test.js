@@ -1,7 +1,7 @@
 import { ResourceService, BuildingService } from '../../services';
 import { errorCodes, BuildingRepo } from '../../repos';
 
-const db = {
+let db = {
   query: (...query) => {
       return {
           results: {
@@ -76,10 +76,10 @@ class ResourceRepo {
 
 };
 
-const resourceRepo = new ResourceRepo( db, errorCodes );
-const buildingRepo = new BuildingRepo( db, errorCodes );
-const resourceService = new ResourceService({ resourceRepo, errorCodes });
-const building = new BuildingService({ buildingRepo, resourceService, errorCodes });
+let resourceRepo = new ResourceRepo( db, errorCodes );
+let buildingRepo = new BuildingRepo( db, errorCodes );
+let resourceService = new ResourceService({ resourceRepo, errorCodes });
+let building = new BuildingService({ buildingRepo, resourceService, errorCodes });
 
 test('add: missing kingdomId returns error 104', async () => {
   try {
@@ -166,4 +166,76 @@ test('add: not enough gold returns error 207', async () => {
   } catch(err) {
     expect(err).toStrictEqual( Error(207) );
   }
+});
+
+
+test('getByKingdomId and getByBuildingId: returns valid result', async () => {
+  db = {
+    query: (...query) => {
+        return {results: [
+              {
+                  "id": 3,
+                  "kingdom_id": 3,
+                  "type": "farm",
+                  "level": 1,
+                  "hp": 1,
+                  "started_at": "2020-09-26T09:50:18.000Z",
+                  "finished_at": "2020-09-26T09:51:18.000Z"
+              },
+              {
+                  "id": 4,
+                  "kingdom_id": 3,
+                  "type": "farm",
+                  "level": 1,
+                  "hp": 1,
+                  "started_at": "2020-09-26T12:09:28.000Z",
+                  "finished_at": "2020-09-26T12:10:28.000Z"
+              }
+        ]};
+    }
+  };
+  resourceRepo = new ResourceRepo( db, errorCodes );
+  buildingRepo = new BuildingRepo( db, errorCodes );
+  resourceService = new ResourceService({ resourceRepo, errorCodes });
+  building = new BuildingService({ buildingRepo, resourceService, errorCodes });
+  
+  let result = await building.getByKingdomId({kingdomId: 3});
+  expect(result).toStrictEqual({
+    "buildings": [
+        {
+            "id": 3,
+            "kingdom_id": 3,
+            "type": "farm",
+            "level": 1,
+            "hp": 1,
+            "started_at": "2020-09-26T09:50:18.000Z",
+            "finished_at": "2020-09-26T09:51:18.000Z"
+        },
+        {
+            "id": 4,
+            "kingdom_id": 3,
+            "type": "farm",
+            "level": 1,
+            "hp": 1,
+            "started_at": "2020-09-26T12:09:28.000Z",
+            "finished_at": "2020-09-26T12:10:28.000Z"
+        }
+    ]
+  });
+
+  result = await building.getByBuildingId({kingdomId: 3, buildingId: 3});
+  expect(result).toStrictEqual({
+    "buildings": [
+        {
+            "id": 3,
+            "kingdom_id": 3,
+            "type": "farm",
+            "level": 1,
+            "hp": 1,
+            "started_at": "2020-09-26T09:50:18.000Z",
+            "finished_at": "2020-09-26T09:51:18.000Z"
+        }
+    ]
+  });
+
 });
