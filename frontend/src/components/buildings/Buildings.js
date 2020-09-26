@@ -39,7 +39,7 @@ function Buildings(){
     {buildings.map(building => (
       <div className="icons" onClick={() => goToBuilding(building.id)}>
         <img src={buildingIcons[building.type]} alt={building.type} className="image"></img>
-        <p className="buildingName">{building.name}</p> 
+        <p className="buildingName">{building.type}</p> 
         <p>{building.level}</p>
       </div>
       ))}
