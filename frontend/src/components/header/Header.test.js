@@ -2,6 +2,7 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { render, unmountComponentAtNode } from 'react-dom';
 import { act } from 'react-dom/test-utils';
+import { MemoryRouter } from 'react-router-dom';
 import configureStore from 'redux-mock-store';
 import { Router } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
@@ -63,12 +64,10 @@ it('renders Header without crashing without token', async () => {
 
   await act(async () => {
     render(
-      <Provider store={mockedStore}>
-        <Router history={history}>
-          <Header />
-        </Router>
-      </Provider>,
-      container
+    <Provider store={mockedStore}>
+        <MemoryRouter><Header /></MemoryRouter>
+    </Provider>,
+    container
     );
   });
 });
@@ -100,12 +99,10 @@ it('matches snapshot without token and kingdom', async () => {
 
   await act(async () => {
     render(
-      <Provider store={mockedStore}>
-        <Router history={history}>
-          <Header />
-        </Router>
-      </Provider>,
-      container
+    <Provider store={mockedStore}>
+        <MemoryRouter><Header /></MemoryRouter>
+    </Provider>,
+    container
     );
   });
   expect(container.innerHTML).toMatchSnapshot();
