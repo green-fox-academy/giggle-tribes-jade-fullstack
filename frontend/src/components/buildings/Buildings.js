@@ -9,7 +9,7 @@ import { setErrorAction } from '../../actions/ErrorActions';
 import { getBuildingsAction} from '../../actions/BuildingsActions';
 
 
-function Buildings(props){
+function Buildings(){
       
         const buildingIcons = {
           farm: farm,
@@ -70,4 +70,3 @@ const mapDispatchToProps = dispatch => {
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Buildings);
-
