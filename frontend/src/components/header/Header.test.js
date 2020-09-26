@@ -108,20 +108,20 @@ it('matches snapshot without token and kingdom', async () => {
   expect(container.innerHTML).toMatchSnapshot();
 });
 
-it('matches snapshot with token and kingdomId', async () => {
-  Storage.prototype.getItem = jest.fn(key => {
-    return 'dummy';
-  });
+// it('matches snapshot with token and kingdomId', async () => {
+//   Storage.prototype.getItem = jest.fn(key => {
+//     return 'dummy';
+//   });
 
-  await act(async () => {
-    render(
-      <Provider store={store}>
-        <Router history={history}>
-          <Header />
-        </Router>
-      </Provider>,
-      container
-    );
-  });
-  expect(container.innerHTML).toMatchSnapshot();
-});
+//   await act(async () => {
+//     render(
+//       <Provider store={store}>
+//         <Router history={history}>
+//           <Header />
+//         </Router>
+//       </Provider>,
+//       container
+//     );
+//   });
+//   expect(container.innerHTML).toMatchSnapshot();
+// });
