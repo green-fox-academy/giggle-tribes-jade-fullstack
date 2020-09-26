@@ -10,6 +10,7 @@ import Registration from './components/Registration';
 import { menuItems } from './components/menuItemsStorage';
 import Map from './components/Map';
 import Log from './components/Log';
+import NotImplemented from './components/notImplemented/NotImplemented';
 
 function App() {
 
@@ -46,6 +47,12 @@ function App() {
             <Resource />
             <Log />
           </Route>
+
+          <Route path="/">
+            <NotImplemented />
+          </Route>
+
+
         </Switch>
       </Router>
     </div>
