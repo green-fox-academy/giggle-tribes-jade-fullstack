@@ -12,6 +12,7 @@ import Map from './components/Map';
 import Log from './components/Log';
 // import BuildingsContainer from './components/buildings/BuildingsContainer'
 // import AddBuilding from './components/buildings/AddBuilding';
+import NotImplemented from './components/notImplemented/NotImplemented';
 
 function App() {
 
@@ -50,6 +51,12 @@ function App() {
             <Resource />
             <Log />
           </Route>
+
+          <Route path="/">
+            <NotImplemented />
+          </Route>
+
+
         </Switch>
 
       </Router>
