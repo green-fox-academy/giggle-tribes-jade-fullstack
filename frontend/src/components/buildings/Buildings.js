@@ -7,48 +7,42 @@ import townhall from '../../assets/buildings/townhall.svg';
 import academy from '../../assets/buildings/barracks.svg';
 import { setErrorAction } from '../../actions/ErrorActions';
 import { getBuildingsAction} from '../../actions/BuildingsActions';
+import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
+function Buildings(){
+  
+  const buildingIcons = {
+    farm: farm,
+    mine: mine,
+    townhall: townhall,
+    academy: academy,
+  };
 
-function Buildings(props){
-      
-        const buildingIcons = {
-          farm: farm,
-          mine: mine,
-          townhall: townhall,
-          academy: academy,
-        };
-      
+  const buildings = useSelector(state => state.buildings)
+  const dispatch = useDispatch()
+  const history = useHistory()
+  
+  useEffect(() => {
+    dispatch(getBuildingsAction)
+  }, [dispatch])
 
-function buildingLevel({kingdom}){
+  function goToBuilding(buildingId){
+    history.push(`/kingdom/buildings/${buildingId}`);
+  }
 
-}
-        
   return (
     <section className="buildings">
         
-      <div className="icons">
-        <img src={buildingIcons.townhall} alt="townhall" className="image"></img>
-        <p className="buildingName">Townhall</p> 
-        <p>{buildingLevel.townhall}</p>
+    {buildings.map(building => (
+      <div className="icons" onClick={() => goToBuilding(building.id)}>
+        <img src={buildingIcons[building.type]} alt={building.type} className="image"></img>
+        <p className="buildingName">{building.name}</p> 
+        <p>{building.level}</p>
       </div>
-      
-      <div className="icons">
-        <img src={buildingIcons.farm} alt="farm" className="image"></img>
-        <p className="buildingName">Farm</p>
-        <p>{buildingLevel.farm}</p>
-      </div>
-      
-      <div className="icons">
-        <img src={buildingIcons.academy} alt="academy" className="image"></img>
-        <p className="buildingName">Academy</p>
-        <p>{buildingLevel.academy}</p>
-      </div>
-      
-      <div className="icons">
-        <img src={buildingIcons.mine} alt="mine" className="image"></img>
-        <p className="buildingName">Mine</p>
-        <p>{buildingLevel.mine}</p>
-      </div>
+      ))}
         
     </section>
   );

@@ -10,8 +10,6 @@ import Registration from './components/Registration';
 import { menuItems } from './components/menuItemsStorage';
 import Map from './components/Map';
 import Log from './components/Log';
-// import BuildingsContainer from './components/buildings/BuildingsContainer'
-// import AddBuilding from './components/buildings/AddBuilding';
 import NotImplemented from './components/notImplemented/NotImplemented';
 
 function App() {
