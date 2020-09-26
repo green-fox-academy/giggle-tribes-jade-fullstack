@@ -58,7 +58,6 @@ const Map = ({ kingdom }) => {
   const submitClick = (selected, kingdom) => {
     if (selected) {
       addLocation(selected, kingdom).then(result => {
-        console.log(result);
         if (!result.error) setDone(true);
       });
     }
@@ -66,7 +65,7 @@ const Map = ({ kingdom }) => {
 
   if (done) return <Redirect push to={redirectLocation} />;
   return (
-    <div className='mapWrapper'>
+    <div className="mapWrapper">
       <ComposableMap>
         <Geographies geography={geoUrl}>
           {({ geographies }) =>

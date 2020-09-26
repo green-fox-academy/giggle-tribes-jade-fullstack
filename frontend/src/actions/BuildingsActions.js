@@ -6,15 +6,17 @@ import {
   SET_ERROR_SUCCESS,
 } from '../constants/ActionTypes';
 
-import { fetchKingdom } from '../services/fetchKindom';
+import { fetchByKingdom } from '../services/fetchService';
 
-export const getBuildingsAction = kingdomID => {
-  return dispatch => {
+export const getBuildingsAction = () => {
+  return (dispatch, getState) => {
     dispatch({
       type: UPDATE_BUILDINGS,
     });
 
-    return fetchKingdom.get(kingdomID, 'buildings').then(
+    return fetchByKingdom(getState().kingdom, 'buildings', {
+      method: 'GET',
+    }).then(
       response =>
         response.error
           ? dispatch({ type: SET_ERROR_SUCCESS, payload: response.error })
@@ -27,24 +29,25 @@ export const getBuildingsAction = kingdomID => {
   };
 };
 
-export const addBuildingAction = (kingdomID, buildingType) => {
-  return dispatch => {
+export const addBuildingAction = buildingType => {
+  return (dispatch, getState) => {
     dispatch({
       type: ADD_BUILDING,
     });
 
-    return fetchKingdom
-      .post(kingdomID, 'buildings', { type: buildingType })
-      .then(
-        response => {
-          response.error
-            ? dispatch({ type: SET_ERROR_SUCCESS, payload: response.error })
-            : dispatch({
-                type: ADD_BUILDING_SUCCESS,
-                payload: response,
-              });
-        },
-        error => dispatch({ type: SET_ERROR_SUCCESS, payload: error.error })
-      );
+    return fetchByKingdom(getState().kingdom, 'buildings', {
+      method: 'POST',
+      body: JSON.stringify({ type: buildingType }),
+    }).then(
+      response => {
+        response.error
+          ? dispatch({ type: SET_ERROR_SUCCESS, payload: response.error })
+          : dispatch({
+              type: ADD_BUILDING_SUCCESS,
+              payload: response,
+            });
+      },
+      error => dispatch({ type: SET_ERROR_SUCCESS, payload: error.error })
+    );
   };
 };

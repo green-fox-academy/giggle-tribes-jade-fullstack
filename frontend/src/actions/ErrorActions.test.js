@@ -12,7 +12,7 @@ describe('Error actions', () => {
     });
 
     const expectedActions = [
-      { type: 'SET_ERROR' },
+      { type: types.SET_ERROR },
       {
         type: types.SET_ERROR_SUCCESS,
         payload: 'dummyError',

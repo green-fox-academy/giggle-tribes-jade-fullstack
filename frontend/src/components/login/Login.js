@@ -5,7 +5,6 @@ import './Login.css';
 import { loginAction } from '../../actions/LoginAction';
 
 class Login extends Component {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -24,26 +23,25 @@ class Login extends Component {
     const { history } = this.props;
 
     this.props.login(userData).then(success => {
-      if (success){
-        history.push('/kingdom');
+      if (success) {
+        history.push('/kingdom/buildings');
       }
     });
-   }
+  }
 
-    handleUsername(e) {
-      let value = e.target.value;
-      this.setState(prevState => ({ ...prevState, username: value }));
-    }
+  handleUsername(e) {
+    let value = e.target.value;
+    this.setState(prevState => ({ ...prevState, username: value }));
+  }
 
-    handlePassword(e) {
-      let value = e.target.value;
-      this.setState(prevState => ({ ...prevState, password: value }));
-    }
+  handlePassword(e) {
+    let value = e.target.value;
+    this.setState(prevState => ({ ...prevState, password: value }));
+  }
 
-    render (){
-      return(
-    
-        <div className="login">
+  render() {
+    return (
+      <div className="login">
         <div className="title">
           <h2>Tribes of Vulpes</h2>
         </div>
@@ -55,8 +53,8 @@ class Login extends Component {
                 type="text"
                 name="username"
                 placeholder="Username"
-                onChange={this.handleUsername}>
-              </input>
+                onChange={this.handleUsername}
+              ></input>
             </div>
 
             <div>
@@ -64,8 +62,8 @@ class Login extends Component {
                 type="password"
                 name="password"
                 placeholder="Password"
-                onChange={this.handlePassword}>
-              </input>
+                onChange={this.handlePassword}
+              ></input>
             </div>
 
             <div className="submitLine">
@@ -78,7 +76,7 @@ class Login extends Component {
             </div>
           </form>
         </div>
-      </div>    
+      </div>
     );
   }
 }
@@ -89,9 +87,8 @@ const mapStateToProps = ({ error }) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    login: (data) => {
+    login: data => {
       return dispatch(loginAction(data));
-    
     },
   };
 };
