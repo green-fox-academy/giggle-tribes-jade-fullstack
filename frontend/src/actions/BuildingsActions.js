@@ -37,7 +37,7 @@ export const addBuildingAction = buildingType => {
 
     return fetchByKingdom(getState().kingdom, 'buildings', {
       method: 'POST',
-      body: JSON.stringify({ type: buildingType }),
+      body: { type: buildingType },
     }).then(
       response => {
         response.error
