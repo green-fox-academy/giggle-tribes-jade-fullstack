@@ -16,7 +16,9 @@ function App() {
   return (
     <div className="App">
       <Router>
-        <Header />
+
+      <Header />
+        
         <Switch>
           <Route exact path="/">
             <Login />
@@ -25,9 +27,9 @@ function App() {
           <Route path="/login">
             <Login />
           </Route>
-
-          <Route path="/registration">
-            <Registration />
+          
+          <Route path='/registration'>
+              <Registration />
           </Route>
 
           <Route exact path="/kingdom/map">
@@ -52,6 +54,7 @@ function App() {
             <NotImplemented />
           </Route>
         </Switch>
+
       </Router>
     </div>
   );

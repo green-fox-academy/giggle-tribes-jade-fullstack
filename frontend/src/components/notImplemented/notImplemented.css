@@ -7,7 +7,7 @@
   align-items: center;
 }
 
-.wrapper p {
+p.implement {
   font-size: 2em;
   color: #eee;
   margin: 1em;

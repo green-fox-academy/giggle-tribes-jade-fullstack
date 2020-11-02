@@ -144,3 +144,130 @@ test('valid kingdomId and buildingType and enough gold returns building object',
       return done();
     });
 });
+
+test('get: valid kingdomId returns buildings array', done => {
+  db.query.mockImplementationOnce( () => (
+    { results: [
+      { id: 1, kingdom_id: 3, type: 'food', amount: 5, generation: 10, updatedAt: '2020-08-15 13:04:53' },
+      { id: 2, kingdom_id: 3, type: 'gold', amount: 220, generation: 25, updatedAt: '2020-08-15 13:04:53' }
+    ] }
+  ));
+  db.query.mockImplementationOnce( () => (
+    { results: [
+      { id: 1, kingdom_id: 3, type: 'food', amount: 5, generation: 10, updatedAt: '2020-08-15 13:04:53' },
+      { id: 2, kingdom_id: 3, type: 'gold', amount: 220, generation: 25, updatedAt: '2020-08-15 13:04:53' }
+    ] }
+  ));
+  db.query.mockImplementation( () => (
+    { results: [
+      {
+          "id": 3,
+          "kingdom_id": 3,
+          "type": "farm",
+          "level": 1,
+          "hp": 1,
+          "started_at": "2020-09-26T09:50:18.000Z",
+          "finished_at": "2020-09-26T09:51:18.000Z"
+      },
+      {
+          "id": 4,
+          "kingdom_id": 3,
+          "type": "farm",
+          "level": 1,
+          "hp": 1,
+          "started_at": "2020-09-26T12:09:28.000Z",
+          "finished_at": "2020-09-26T12:10:28.000Z"
+      }
+  ] }
+  ));
+  request(app)
+    .get('/api/kingdoms/3/buildings')
+    .set('Accept', 'application/json')
+    .set('TRIBES_TOKEN', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImtpbmdkb21JZCI6MywiaWF0IjoxNTk5NTEyMDU3fQ.L-8Eim9d_jd55V2BKGzHbNnjGXTiAFMPaDRWCkJ6RbE')
+    .expect('Content-Type', /json/)
+    .expect(201)
+    .end((err, data) => {
+      if (err) return done(err);
+      const result = data.body;
+      expect(result).toEqual({buildings: [
+        {
+            "id": 3,
+            "kingdom_id": 3,
+            "type": "farm",
+            "level": 1,
+            "hp": 1,
+            "started_at": "2020-09-26T09:50:18.000Z",
+            "finished_at": "2020-09-26T09:51:18.000Z"
+        },
+        {
+            "id": 4,
+            "kingdom_id": 3,
+            "type": "farm",
+            "level": 1,
+            "hp": 1,
+            "started_at": "2020-09-26T12:09:28.000Z",
+            "finished_at": "2020-09-26T12:10:28.000Z"
+        }
+    ]});
+      return done();
+    });
+});
+
+test('get: valid kingdomId returns buildingId-filtered buildings array', done => {
+  db.query.mockImplementationOnce( () => (
+    { results: [
+      { id: 1, kingdom_id: 3, type: 'food', amount: 5, generation: 10, updatedAt: '2020-08-15 13:04:53' },
+      { id: 2, kingdom_id: 3, type: 'gold', amount: 220, generation: 25, updatedAt: '2020-08-15 13:04:53' }
+    ] }
+  ));
+  db.query.mockImplementationOnce( () => (
+    { results: [
+      { id: 1, kingdom_id: 3, type: 'food', amount: 5, generation: 10, updatedAt: '2020-08-15 13:04:53' },
+      { id: 2, kingdom_id: 3, type: 'gold', amount: 220, generation: 25, updatedAt: '2020-08-15 13:04:53' }
+    ] }
+  ));
+  db.query.mockImplementation( () => (
+    { results: [
+      {
+          "id": 3,
+          "kingdom_id": 3,
+          "type": "farm",
+          "level": 1,
+          "hp": 1,
+          "started_at": "2020-09-26T09:50:18.000Z",
+          "finished_at": "2020-09-26T09:51:18.000Z"
+      },
+      {
+          "id": 4,
+          "kingdom_id": 3,
+          "type": "farm",
+          "level": 1,
+          "hp": 1,
+          "started_at": "2020-09-26T12:09:28.000Z",
+          "finished_at": "2020-09-26T12:10:28.000Z"
+      }
+  ] }
+  ));
+  request(app)
+    .get('/api/kingdoms/3/buildings/4')
+    .set('Accept', 'application/json')
+    .set('TRIBES_TOKEN', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImtpbmdkb21JZCI6MywiaWF0IjoxNTk5NTEyMDU3fQ.L-8Eim9d_jd55V2BKGzHbNnjGXTiAFMPaDRWCkJ6RbE')
+    .expect('Content-Type', /json/)
+    .expect(201)
+    .end((err, data) => {
+      if (err) return done(err);
+      const result = data.body;
+      expect(result).toEqual({buildings: [
+        {
+            "id": 4,
+            "kingdom_id": 3,
+            "type": "farm",
+            "level": 1,
+            "hp": 1,
+            "started_at": "2020-09-26T12:09:28.000Z",
+            "finished_at": "2020-09-26T12:10:28.000Z"
+        }
+    ]});
+      return done();
+    });
+});
