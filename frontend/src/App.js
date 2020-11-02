@@ -6,14 +6,13 @@ import Header from './components/header/Header';
 import Resource from './components/resource/Resource';
 import Menu from './components/Menu';
 import Login from './components/login/Login';
-import Registration from './components/Registration';
+import Registration from './components/registration/Registration';
 import { menuItems } from './components/menuItemsStorage';
 import Map from './components/Map';
 import Log from './components/Log';
 import NotImplemented from './components/notImplemented/NotImplemented';
 
 function App() {
-
   return (
     <div className="App">
       <Router>
@@ -41,6 +40,7 @@ function App() {
               <Route
                 key={menuItem.link}
                 path={'/kingdom' + menuItem.link}
+                exact
                 render={() => <menuItem.component name={menuItem.name} />}
               />
             ))}
@@ -51,8 +51,6 @@ function App() {
           <Route path="/">
             <NotImplemented />
           </Route>
-
-
         </Switch>
       </Router>
     </div>
