@@ -19,6 +19,7 @@ exports[`renders correctly 1`] = `
     >
       <div>
         <input
+          autoComplete="username"
           name="username"
           onChange={[Function]}
           placeholder="Username"
@@ -27,6 +28,7 @@ exports[`renders correctly 1`] = `
       </div>
       <div>
         <input
+          autoComplete="current-password"
           name="password"
           onChange={[Function]}
           placeholder="Password"
