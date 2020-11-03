@@ -2,7 +2,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 const cors = require('cors');
 
-import { 
+import {
   userController,
   authenticationController,
   sessionController,
@@ -12,9 +12,8 @@ import {
   troopController,
   helloController,
   authenticationMiddleware,
-  resourceMiddleware
- } from '../dependencies/dependencyInjection';
-
+  resourceMiddleware,
+} from '../dependencies/dependencyInjection';
 
 const router = express.Router();
 
@@ -36,10 +35,12 @@ router.use('/kingdoms/:kingdomId', resourceMiddleware.post);
 router.get('/kingdoms/:kingdomId/resource', resourceController.get);
 router.post('/kingdoms/:kingdomId/buildings', buildingController.post);
 router.get('/kingdoms/:kingdomId/buildings', buildingController.get);
-router.get('/kingdoms/:kingdomId/buildings/:buildingId', buildingController.get);
+router.get(
+  '/kingdoms/:kingdomId/buildings/:buildingId',
+  buildingController.get
+);
 router.get('/kingdoms/:kingdomId/troops', troopController.get);
 router.post('/kingdoms/:kingdomId/troops', troopController.post);
-
-
+router.put('/kingdoms/:kingdomId/troops', troopController.put);
 
 export default router;

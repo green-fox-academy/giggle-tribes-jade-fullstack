@@ -14,7 +14,7 @@ export const loginAction = ({ username, password }) => {
 
     return generalFetch('sessions', {
       method: 'POST',
-      body: JSON.stringify({ username, password }),
+      body: { username, password },
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',

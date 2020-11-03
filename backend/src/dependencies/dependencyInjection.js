@@ -35,12 +35,6 @@ export const locationRepo = new LocationRepo(db, errorCodes);
 export const resourceRepo = new ResourceRepo(db, errorCodes);
 export const troopRepo = new TroopRepo(db, errorCodes);
 
-export const userService = new UserService({
-  userRepo,
-  kingdomRepo,
-  resourceRepo,
-  errorCodes,
-});
 export const sessionService = new SessionService({ userRepo, errorCodes });
 export const resourceService = new ResourceService({
   resourceRepo,
@@ -54,6 +48,14 @@ export const buildingService = new BuildingService({
 export const troopService = new TroopService({
   troopRepo,
   resourceService,
+  buildingService,
+  errorCodes,
+});
+export const userService = new UserService({
+  userRepo,
+  kingdomRepo,
+  resourceService,
+  buildingService,
   errorCodes,
 });
 export const kingdomService = new KingdomService({

@@ -115,8 +115,8 @@ const mapStateToProps = ({ troops, resources, buildings }) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    upgrade: amount => {
-      dispatch(upgradeTroopAction(amount));
+    upgrade: (amount, level) => {
+      dispatch(upgradeTroopAction(amount, level));
     },
     setError: error => {
       dispatch(setErrorAction(error));

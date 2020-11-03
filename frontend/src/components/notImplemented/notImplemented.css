@@ -13,14 +13,14 @@ p.implement {
   margin: 1em;
 }
 
-button {
+.wrapper button {
   width: 6em;
   font-size: 1.5em;
   cursor: pointer;
   background-color: rgba(0, 177, 118, 0.75);
   color: #eee;
 }
-button:hover {
+.wrapper button:hover {
   background-color: #eee;
   color: rgba(0, 177, 118, 0.75);
 }

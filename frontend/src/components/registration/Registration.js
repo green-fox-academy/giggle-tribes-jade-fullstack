@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 
 import './registration.css';
-import { env } from '../env';
+import { generalFetch } from '../../services/fetchService';
 
 class Registration extends Component {
   constructor(props) {
@@ -24,22 +24,25 @@ class Registration extends Component {
 
     let userData = this.state;
     const { history } = this.props;
-    fetch(`${env.BACKEND_URL}/api/users`, {
+
+    generalFetch('users', {
       method: 'POST',
-      body: JSON.stringify(userData),
+      body: {
+        username: userData.username,
+        password: userData.password,
+        kingdomname: userData.kingdomname,
+      },
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
       },
-    })
-      .then(response => response.json())
-      .then(data => {
-        if (data.error) {
-          this.setState(prevState => ({ ...prevState, error: data.error }));
-        } else {
-          history.push('/login');
-        }
-      });
+    }).then(data => {
+      if (data.error) {
+        this.setState(prevState => ({ ...prevState, error: data.error }));
+      } else {
+        history.push('/login');
+      }
+    });
   }
 
   handleUsername(e) {
@@ -82,6 +85,7 @@ class Registration extends Component {
               <input
                 type="text"
                 name="username"
+                autoComplete="username"
                 className={this.validUsername() ? 'green' : 'red'}
                 placeholder="Username"
                 onChange={this.handleUsername}
@@ -97,6 +101,7 @@ class Registration extends Component {
               <input
                 type="password"
                 name="password"
+                autoComplete="new-password"
                 className={this.validPassword() ? 'green' : 'red'}
                 placeholder="Password"
                 onChange={this.handlePassword}

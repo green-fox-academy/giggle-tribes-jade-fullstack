@@ -108,7 +108,10 @@ test('username already in use returns error "Username is already taken."', done 
 });
 
 test('proper data returns object', done => {
-  db.query.mockImplementation(() => ({ results: { insertId: 4 } }));
+  db.query.mockImplementationOnce(() => ({ results: { insertId: 4 } }));
+  db.query.mockImplementationOnce(() => ({ results: { insertId: 4 } }));
+  db.query.mockImplementation(() => ({ results: [] }));
+
   request(app)
     .post('/api/users')
     .set('Accept', 'application/json')
@@ -120,6 +123,7 @@ test('proper data returns object', done => {
     .expect('Content-Type', /json/)
     .expect(201)
     .end((err, data) => {
+      if (err) return done(err);
       expect(data.body).toEqual({
         id: 4,
         username: 'superuser',

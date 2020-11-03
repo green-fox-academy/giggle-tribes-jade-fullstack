@@ -1,88 +1,128 @@
 import { TroopRepo } from '../../repos';
 import { errorCodes } from '../../repos';
 
-const db = {
+describe('add', () => {
+  const db = {
     query: (...query) => {
-        return {
-            results: {
-                query: query[0],
-                params: query[1]
-            }
-        }
-    }
+      return {
+        results: {
+          insertId: 2,
+        },
+      };
+    },
   };
 
-const troop = new TroopRepo(db,errorCodes);
-
-test('add: missing kingdomId returns error 104', async () => {
+  const troop = new TroopRepo(db, errorCodes);
+  test('add: missing kingdomId returns error 104', async () => {
     try {
-      const result = await troop.add({level: 0, hp: 0, attack: 0, defence: 0, started_at: '2020-08-19 19:06:22', finished_at: '2020-08-19 19:07:22'});
-    } catch(err) {
-      expect(err).toStrictEqual( Error(104) );
+      await troop.add({
+        level: 0,
+        hp: 0,
+        attack: 0,
+        defence: 0,
+        started_at: '2020-08-19 19:06:22',
+        finished_at: '2020-08-19 19:07:22',
+      });
+    } catch (err) {
+      expect(err).toStrictEqual(Error(104));
     }
-});
+  });
 
-test('add: invalid (missing) data returns error 100', async () => {
-  try {
-    const result = await troop.add({kingdomId: 1, level: 0, hp: 0, started_at: '2020-08-19 19:06:22', finished_at: '2020-08-19 19:07:22'});
-  } catch(err) {
-    expect(err).toStrictEqual( Error(100) );
-  }
-});
+  test('add: invalid (missing) data returns error 100', async () => {
+    try {
+      await troop.add({
+        kingdom_id: 1,
+        level: 0,
+        hp: 0,
+        started_at: '2020-08-19 19:06:22',
+        finished_at: '2020-08-19 19:07:22',
+      });
+    } catch (err) {
+      expect(err).toStrictEqual(Error(100));
+    }
+  });
 
-test('add: more invalid (missing) data returns error 100', async () => {
-  try {
-    const result = await troop.add({kingdomId: 1, level: 0, hp: 0});
-  } catch(err) {
-    expect(err).toStrictEqual( Error(100) );
-  }
-});
+  test('add: more invalid (missing) data returns error 100', async () => {
+    try {
+      await troop.add({ kingdom_id: 1, level: 0, hp: 0 });
+    } catch (err) {
+      expect(err).toStrictEqual(Error(100));
+    }
+  });
 
-test('add: valid params return db query with params', async () => {
-  const result = await troop.add({kingdomId: 1, level: 0, hp: 0, attack: 0, defence: 0, started_at: '2020-08-19 19:06:22', finished_at: '2020-08-19 19:07:22'});
-  expect(result).toStrictEqual({
-    query: `
-            INSERT INTO kingdom_troops
-            (kingdom_id,level,hp,attack,defence,started_at,finished_at) 
-            VALUES(?,?,?,?,?,?,?)
-        `,
-    params: [ 1, 0, 0, 0, 0, '2020-08-19 19:06:22', '2020-08-19 19:07:22' ]
+  test('add: valid params return db query with params', async () => {
+    const result = await troop.add({
+      kingdom_id: 1,
+      level: 0,
+      hp: 0,
+      attack: 0,
+      defence: 0,
+      started_at: '2020-08-19 19:06:22',
+      finished_at: '2020-08-19 19:07:22',
+    });
+    expect(result).toStrictEqual({
+      insertId: 2,
+    });
   });
 });
 
-test('getByKingdomId: missing kingdomId returns error 104', async () => {
-  try {
-    const result = await troop.getByKingdomId({});
-  } catch(err) {
-    expect(err).toStrictEqual( Error(104) );
-  }
-});
+describe('getByKingdom', () => {
+  const db = {
+    query: (...query) => {
+      return {
+        results: [],
+      };
+    },
+  };
+  const troop = new TroopRepo(db, errorCodes);
+  test('getByKingdomId: missing kingdomId returns error 104', async () => {
+    try {
+      await troop.getByKingdomId({});
+    } catch (err) {
+      expect(err).toStrictEqual(Error(104));
+    }
+  });
 
-test('getByKingdomId: valid params return db query with params', async () => {
-  const result = await troop.getByKingdomId({kingdomId: 1});
-  expect(result).toStrictEqual({
-    query: `SELECT * FROM kingdom_troops WHERE kingdom_id = ?`,
-    params: [ 1 ]
+  test('getByKingdomId: valid params return troops', async () => {
+    const result = await troop.getByKingdomId({ kingdomId: 1 });
+    expect(result).toStrictEqual([]);
   });
 });
 
-test('update: missing troopId returns error 113', async () => {
-  try {
-    const result = await troop.update({});
-  } catch(err) {
-    expect(err).toStrictEqual( Error(113) );
-  }
-});
+describe('update', () => {
+  const db = {
+    query: (...query) => {
+      return {
+        results: {
+          changedRows: 2,
+        },
+      };
+    },
+  };
 
-test('update: valid params return db query with params', async () => {
-  const result = await troop.update({troopId: 99, level: 1, hp: 1, attack: 1, defence: 1, started_at: '2020-08-19 19:06:22', finished_at: '2020-08-19 19:07:22'});
-  expect(result).toStrictEqual({
-    query: `
-            UPDATE kingdom_troops
-            SET level=?, hp=?, attack=?, defence=?,
-            started_at=?, finished_at=?
-            WHERE id=?
-        `,
-    params: [ 1, 1, 1, 1, '2020-08-19 19:06:22', '2020-08-19 19:07:22', 99 ]
+  const troop = new TroopRepo(db, errorCodes);
+  test('update: missing troopId returns error 113', async () => {
+    try {
+      await troop.update({}, []);
+    } catch (err) {
+      expect(err).toStrictEqual(Error(113));
+    }
+  });
+
+  test('update: valid params return db query with params', async () => {
+    const result = await troop.update(
+      {
+        level: 1,
+        hp: 1,
+        attack: 1,
+        defence: 1,
+        started_at: '2020-08-19 19:06:22',
+        finished_at: '2020-08-19 19:07:22',
+      },
+      [99]
+    );
+    expect(result).toStrictEqual({
+      changedRows: 2,
+    });
   });
 });
