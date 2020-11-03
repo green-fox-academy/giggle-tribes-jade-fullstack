@@ -129,8 +129,8 @@ class TroopRepo {
     ];
   }
 
-  async update(troopData) {
-    troopData.id.forEach(e => {
+  async update(troopData, ids) {
+    ids.forEach(e => {
       const troop = this.troops.find(troop => troop.id == e);
 
       troop.level = troopData.level;
@@ -255,7 +255,7 @@ describe('TroopService.add', () => {
 });
 
 describe('TroopService.upgrade', () => {
-  test('add: missing kingdomId returns error 104', async () => {
+  test('upgrade: missing kingdomId returns error 104', async () => {
     try {
       const result = await troop.upgrade({});
     } catch (err) {
@@ -263,7 +263,7 @@ describe('TroopService.upgrade', () => {
     }
   });
 
-  test('add: missing kingdomId returns error 104', async () => {
+  test('upgrade: missing kingdomId returns error 104', async () => {
     try {
       const result = await troop.upgrade({ kingdomId: 1 });
     } catch (err) {
@@ -271,7 +271,7 @@ describe('TroopService.upgrade', () => {
     }
   });
 
-  test('add: missing kingdomId returns error 104', async () => {
+  test('upgrade: missing kingdomId returns error 104', async () => {
     try {
       const result = await troop.upgrade({ kingdomId: 1, level: 1 });
     } catch (err) {
@@ -339,10 +339,10 @@ describe('TroopService.upgrade', () => {
         {
           id: 3,
           kingdom_id: 12,
-          level: 1,
-          hp: 1,
-          attack: 1,
-          defence: 1,
+          level: 2,
+          hp: 2,
+          attack: 2,
+          defence: 2,
           started_at: '2020-08-19 19:06:22',
           finished_at: '2020-08-19 19:07:22',
         },

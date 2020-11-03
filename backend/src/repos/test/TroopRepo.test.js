@@ -103,22 +103,24 @@ describe('update', () => {
   const troop = new TroopRepo(db, errorCodes);
   test('update: missing troopId returns error 113', async () => {
     try {
-      await troop.update({});
+      await troop.update({}, []);
     } catch (err) {
       expect(err).toStrictEqual(Error(113));
     }
   });
 
   test('update: valid params return db query with params', async () => {
-    const result = await troop.update({
-      id: [99],
-      level: 1,
-      hp: 1,
-      attack: 1,
-      defence: 1,
-      started_at: '2020-08-19 19:06:22',
-      finished_at: '2020-08-19 19:07:22',
-    });
+    const result = await troop.update(
+      {
+        level: 1,
+        hp: 1,
+        attack: 1,
+        defence: 1,
+        started_at: '2020-08-19 19:06:22',
+        finished_at: '2020-08-19 19:07:22',
+      },
+      [99]
+    );
     expect(result).toStrictEqual({
       changedRows: 2,
     });

@@ -87,12 +87,9 @@ export class TroopService extends ResourceSpender {
 
     this.setTroopData({ kingdomId, level: parseInt(level) + 1, upgrade: true });
 
-    for (let i = 0; i < amount; i++) {
-      if (i === 0) this.troopData.id = [];
-      this.troopData.id.push(upgradebleTroops[i].id);
-    }
+    const ids = upgradebleTroops.map(t => t.id);
 
-    await this.troop.update(this.troopData);
+    await this.troop.update(this.troopData, ids);
     await this.spendResources();
 
     return await this.getByKingdomId({ kingdomId });

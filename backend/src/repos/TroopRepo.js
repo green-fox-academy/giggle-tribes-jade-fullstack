@@ -28,9 +28,9 @@ export class TroopRepo extends QueryHandler {
     if (!kingdomId) throw new Error(this.errorCodes.missingKingdomId);
     const query = this
       .validateQuery`SELECT * FROM kingdom_troops WHERE kingdom_id = ${kingdomId}`;
-    let troops = [];
-    (await this.sendQuery(query)).map(troop => {
-      troops.push(
+
+    return (await this.sendQuery(query)).map(
+      troop =>
         new Troop(
           troop.id,
           troop.kingdom_id,
@@ -41,18 +41,16 @@ export class TroopRepo extends QueryHandler {
           troop.started_at,
           troop.finished_at
         )
-      );
-    });
-    return troops;
+    );
   }
 
-  async update({ id, level, hp, attack, defence, started_at, finished_at }) {
-    if (!id) throw new Error(this.errorCodes.missingTroopId);
+  async update({ level, hp, attack, defence, started_at, finished_at }, ids) {
+    if (ids.length === 0) throw new Error(this.errorCodes.missingTroopId);
     const query = this.validateQuery`
             UPDATE kingdom_troops
             SET level=${level}, hp=${hp}, attack=${attack}, defence=${defence},
             started_at=${started_at}, finished_at=${finished_at}
-            WHERE id IN (${id})
+            WHERE id IN (${ids})
         `;
 
     return await this.sendQuery(query);
